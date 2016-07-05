@@ -33,6 +33,11 @@ var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 	Description("A faction")
 	Attributes(func() {
 		Attribute("id", Integer, "Unique faction ID")
+		Attribute("href", String, "API href for making requests on the faction")
+		Attribute("name", String, "Name of the faction")
+	})
+	View("default", func() {
+		Attribute("id")
 		Attribute("href")
 		Attribute("name")
 	})
