@@ -5,6 +5,31 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
+var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
+	Description("Listing of all available resource endpoint")
+	Attributes(func() {
+		Attribute("cards", String, "API href for making requests on cards")
+		Attribute("factions", String, "API href for making requests on factions")
+		Attribute("glyphs", String, "API href for making requests on glyphs")
+		Attribute("rarities", String, "API href for making requests on rarities")
+		Attribute("rows", String, "API href for making requests on rows")
+		Attribute("types", String, "API href for making requests on types")
+		Attribute("patches", String, "API href for making requests on patches")
+
+		Required("cards", "factions", "glyphs", "rarities", "rows", "types", "patches")
+	})
+
+	View("default", func() {
+		Attribute("cards")
+		Attribute("factions")
+		Attribute("glyphs")
+		Attribute("rarities")
+		Attribute("rows")
+		Attribute("types")
+		Attribute("patches")
+	})
+})
+
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
 	Attributes(func() {

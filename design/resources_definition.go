@@ -5,6 +5,18 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
+var _ = Resource("phonebook", func() {
+	DefaultMedia(ResourceMedia)
+	BasePath("/")
+
+	Action("show", func() {
+		Description("Listing of all supported resources endpoint")
+		Routing(GET(""))
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
 var _ = Resource("faction", func() {
 
 	DefaultMedia(FactionMedia)
@@ -12,8 +24,8 @@ var _ = Resource("faction", func() {
 
 	Action("list", func() {
 		Routing(GET(""))
-
 		Description("Return all factions.")
+
 		Response(OK, CollectionOf(FactionMedia))
 		Response(NotFound)
 	})
@@ -27,5 +39,181 @@ var _ = Resource("faction", func() {
 		Response(OK)
 		Response(NotFound)
 
+	})
+})
+
+var _ = Resource("rarity", func() {
+	DefaultMedia(RarityMedia)
+	BasePath("/rarities")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all rarities.")
+
+		Response(OK, CollectionOf(RarityMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return rarity with given id.")
+		Routing(GET("/:rarityID"))
+		Params(func() {
+			Param("rarityID", String, "Rarity ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
+var _ = Resource("glyph", func() {
+	DefaultMedia(GlyphMedia)
+	BasePath("/glyphs")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all glyphs.")
+
+		Response(OK, CollectionOf(GlyphMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return glyph with given id.")
+		Routing(GET("/:glyphID"))
+		Params(func() {
+			Param("glyphID", String, "Glyph ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
+var _ = Resource("type", func() {
+	DefaultMedia(TypeMedia)
+	BasePath("/types")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all card types.")
+
+		Response(OK, CollectionOf(TypeMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return card type with given id.")
+		Routing(GET("/:typeID"))
+		Params(func() {
+			Param("typeID", String, "Card type ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
+var _ = Resource("row", func() {
+	DefaultMedia(RowMedia)
+	BasePath("/rows")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all rows.")
+
+		Response(OK, CollectionOf(RowMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return row with given id.")
+		Routing(GET("/:rowID"))
+		Params(func() {
+			Param("rowID", String, "Row ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
+var _ = Resource("patch", func() {
+	DefaultMedia(PatchMedia)
+	BasePath("/patches")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all patches.")
+
+		Response(OK, CollectionOf(PatchMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return patch with given id.")
+		Routing(GET("/:patchID"))
+		Params(func() {
+			Param("patchID", String, "Patch ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+
+	Action("latest", func() {
+		Description("Return latest patch.")
+		Routing(GET("/latest"))
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
+var _ = Resource("card", func() {
+	DefaultMedia(CardMedia)
+	BasePath("/cards")
+
+	Action("list", func() {
+		Routing(GET(""))
+		Description("Return all cards.")
+
+		Response(OK, CollectionOf(CardMedia))
+		Response(NotFound)
+	})
+
+	Action("show", func() {
+		Description("Return card with given id.")
+		Routing(GET("/:cardID"))
+
+		Params(func() {
+			Param("cardID", String, "Card ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+
+	Action("cardFaction", func() {
+		Description("Return all cards with given faction id.")
+		Routing(GET("/factions/:factionID"))
+
+		Params(func() {
+			Param("factionID", String, "Faction ID")
+		})
+		Response(OK, CollectionOf(CardMedia))
+		Response(NotFound)
+	})
+
+	Action("cardRarity", func() {
+		Description("Return all cards with given rarity id.")
+		Routing(GET("/rarities/:rarityID"))
+
+		Params(func() {
+			Param("rarityID", String, "Rarity ID")
+		})
+		Response(OK, CollectionOf(CardMedia))
+		Response(NotFound)
+	})
+
+	Action("cardLeader", func() {
+		Description("Return all leader cards.")
+		Routing(GET("/leaders"))
+
+		Response(OK, CollectionOf(CardMedia))
+		Response(NotFound)
 	})
 })
