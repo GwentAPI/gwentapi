@@ -8,6 +8,7 @@ import (
 var _ = API("gwentapi", func() {
 	Title("Gwent API")
 	Description("A consumption-only API of all Gwent data")
+	Version("0.0")
 	Contact(func() {
 		Name("Tristan S.")
 		Email("gwentapi@gmail.com")
