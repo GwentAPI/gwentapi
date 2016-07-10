@@ -169,8 +169,10 @@ func FetchCard(id string) (CardModel, error) {
 		card.TypeCard = cardType
 
 		cardRows, _ := fetchCardRows(id)
+		cardSubtypes, _ := fetchCardSubTypes(id)
 
 		card.Rows = cardRows
+		card.Subtypes = cardSubtypes
 
 		if strength.Valid {
 			var converted = int(strength.Int64)
@@ -216,4 +218,27 @@ func fetchCardRows(id string) ([]*RowModel, error) {
 	}
 
 	return cardRows, err
+}
+
+func fetchCardSubTypes(id string) ([]*TypeModel, error) {
+	var cardSubtypes []*TypeModel
+
+	rows, err := DBCon.Query("SELECT t.id, t.name FROM Types AS t INNER JOIN CardsSubtypes AS st ON t.idType = st.idType INNER JOIN Cards AS c ON c.idCard = st.idCard WHERE c.id =?", id)
+	defer rows.Close()
+
+	if err != nil {
+		return cardSubtypes, err
+	}
+
+	for rows.Next() {
+		var typeModel TypeModel
+		err := rows.Scan(&typeModel.ID, &typeModel.Name)
+
+		if err != nil {
+			continue
+		}
+		cardSubtypes = append(cardSubtypes, &typeModel)
+	}
+
+	return cardSubtypes, err
 }
