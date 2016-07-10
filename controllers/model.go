@@ -1,0 +1,57 @@
+package controllers
+
+import (
+	"time"
+)
+
+type TypeModel struct {
+	Name string
+	ID   string
+}
+
+type RowModel struct {
+	Name string
+	ID   string
+}
+
+type RarityModel struct {
+	Name string
+	ID   string
+}
+
+type PatchModel struct {
+	Version     string
+	ID          string
+	ReleaseDate time.Time
+	Changelog   *string
+}
+
+type GlyphModel struct {
+	Name           string
+	ID             string
+	IsWeatherGlyph bool
+	Text           string
+}
+
+type FactionModel struct {
+	Name string
+	ID   string
+}
+
+type IllustratorModel struct {
+	Name string
+	ID   string
+}
+
+type CardModel struct {
+	Name     string
+	ID       string
+	Rarity   RarityModel
+	Faction  FactionModel
+	TypeCard TypeModel //as to not conflict with the reserved type keyword
+	Subtypes []*TypeModel
+	Rows     []*RowModel
+	Strength *int
+	Text     *string
+	Flavor   *string
+}
