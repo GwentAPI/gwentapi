@@ -28,6 +28,29 @@ func FetchType(id string) (TypeModel, error) {
 	return myType, err
 }
 
+func FetchAllTypes() ([]*TypeModel, error) {
+	var cardTypes []*TypeModel
+
+	rows, err := DBCon.Query("SELECT id, name FROM Types ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return cardTypes, err
+	}
+
+	for rows.Next() {
+		var typeModel TypeModel
+		err := rows.Scan(&typeModel.ID, &typeModel.Name)
+
+		if err != nil {
+			continue
+		}
+		cardTypes = append(cardTypes, &typeModel)
+	}
+
+	return cardTypes, err
+}
+
 func FetchRow(id string) (RowModel, error) {
 	var combatRow RowModel
 	row := DBCon.QueryRow("SELECT id, name FROM Rows WHERE id=?", id)
@@ -40,6 +63,28 @@ func FetchRow(id string) (RowModel, error) {
 	return combatRow, err
 }
 
+func FetchAllRows() ([]*RowModel, error) {
+	var combatRows []*RowModel
+	rows, err := DBCon.Query("SELECT id, name FROM Rows ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return combatRows, err
+	}
+
+	for rows.Next() {
+		var typeRow RowModel
+		err := rows.Scan(&typeRow.ID, &typeRow.Name)
+
+		if err != nil {
+			continue
+		}
+		combatRows = append(combatRows, &typeRow)
+	}
+
+	return combatRows, err
+}
+
 func FetchRarity(id string) (RarityModel, error) {
 	var rarity RarityModel
 	row := DBCon.QueryRow("SELECT id, name FROM Rarities WHERE id=?", id)
@@ -50,6 +95,28 @@ func FetchRarity(id string) (RarityModel, error) {
 	}
 
 	return rarity, err
+}
+
+func FetchAllRarities() ([]*RarityModel, error) {
+	var rarities []*RarityModel
+	rows, err := DBCon.Query("SELECT id, name FROM Rarities ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return rarities, err
+	}
+
+	for rows.Next() {
+		var rarity RarityModel
+		err := rows.Scan(&rarity.ID, &rarity.Name)
+
+		if err != nil {
+			continue
+		}
+		rarities = append(rarities, &rarity)
+	}
+
+	return rarities, err
 }
 
 func FetchPatch(id string) (PatchModel, error) {
@@ -98,6 +165,39 @@ func FetchLatestPatch() (PatchModel, error) {
 	return patch, err
 }
 
+func FetchAllPatches() ([]*PatchModel, error) {
+	var patches []*PatchModel
+	var emptyString = ""
+
+	rows, err := DBCon.Query("SELECT id, version, releaseDate, changelog FROM Patches ORDER BY releaseDate ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return patches, err
+	}
+
+	for rows.Next() {
+		var patch PatchModel
+		var changeLog sql.NullString
+
+		err := rows.Scan(&patch.ID, &patch.Version, &patch.ReleaseDate, &changeLog)
+
+		if err != nil {
+			continue
+		}
+
+		if changeLog.Valid {
+			patch.Changelog = &changeLog.String
+		} else {
+			patch.Changelog = &emptyString
+		}
+
+		patches = append(patches, &patch)
+	}
+
+	return patches, err
+}
+
 func FetchGlyph(id string) (GlyphModel, error) {
 	var glyph GlyphModel
 	row := DBCon.QueryRow("SELECT id, name, isWeatherGlyph, text FROM Glyphs WHERE id=?", id)
@@ -112,6 +212,31 @@ func FetchGlyph(id string) (GlyphModel, error) {
 	return glyph, err
 }
 
+func FetchAllGlyphs() ([]*GlyphModel, error) {
+	var glyphs []*GlyphModel
+
+	rows, err := DBCon.Query("SELECT id, name, isWeatherGlyph, text FROM Glyphs ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return glyphs, err
+	}
+
+	for rows.Next() {
+		var glyph GlyphModel
+
+		err := rows.Scan(&glyph.ID, &glyph.Name, &glyph.IsWeatherGlyph, &glyph.Text)
+
+		if err != nil {
+			continue
+		}
+
+		glyphs = append(glyphs, &glyph)
+	}
+
+	return glyphs, err
+}
+
 func FetchFaction(id string) (FactionModel, error) {
 	var faction FactionModel
 	row := DBCon.QueryRow("SELECT id, name FROM Factions WHERE id=?", id)
@@ -124,6 +249,27 @@ func FetchFaction(id string) (FactionModel, error) {
 	return faction, err
 }
 
+func FetchAllFactions() ([]*FactionModel, error) {
+	var factions []*FactionModel
+	rows, err := DBCon.Query("SELECT id, name FROM Factions ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return factions, err
+	}
+
+	for rows.Next() {
+		var faction FactionModel
+		err := rows.Scan(&faction.ID, &faction.Name)
+		if err != nil {
+			continue
+		}
+
+		factions = append(factions, &faction)
+	}
+	return factions, err
+}
+
 func FetchIllustrator(id string) (IllustratorModel, error) {
 	var illustrator IllustratorModel
 	row := DBCon.QueryRow("SELECT id, name FROM Illustrators WHERE id=?", id)
@@ -134,6 +280,27 @@ func FetchIllustrator(id string) (IllustratorModel, error) {
 	}
 
 	return illustrator, err
+}
+
+func FetchAllIllustrators() ([]*IllustratorModel, error) {
+	var illustrators []*IllustratorModel
+	rows, err := DBCon.Query("SELECT id, name FROM Illustrators ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return illustrators, err
+	}
+
+	for rows.Next() {
+		var illustrator IllustratorModel
+
+		err := rows.Scan(&illustrator.ID, &illustrator.Name)
+		if err != nil {
+			continue
+		}
+		illustrators = append(illustrators, &illustrator)
+	}
+	return illustrators, err
 }
 
 func FetchCard(id string) (CardModel, error) {
@@ -195,6 +362,63 @@ func FetchCard(id string) (CardModel, error) {
 	}
 
 	return card, err
+}
+
+func FetchAllCards() ([]*CardModel, error) {
+	var cards []*CardModel
+
+	rows, err := DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY id ASC")
+	defer rows.Close()
+
+	if err != nil {
+		return cards, err
+	}
+
+	for rows.Next() {
+		var card CardModel
+		var rarity RarityModel
+		var faction FactionModel
+		var cardType TypeModel
+
+		var flavor, text sql.NullString
+		var strength sql.NullInt64
+
+		err := rows.Scan(&card.Name, &card.ID, &rarity.ID, &rarity.Name, &faction.ID, &faction.Name, &cardType.ID, &cardType.Name, &strength, &text, &flavor)
+		if err != nil {
+			continue
+		}
+
+		card.Faction = faction
+		card.Rarity = rarity
+		card.TypeCard = cardType
+
+		cardRows, _ := fetchCardRows(card.ID)
+		cardSubtypes, _ := fetchCardSubTypes(card.ID)
+
+		card.Rows = cardRows
+		card.Subtypes = cardSubtypes
+
+		if strength.Valid {
+			var converted = int(strength.Int64)
+			card.Strength = &converted
+		} else {
+			card.Strength = nil
+		}
+
+		if text.Valid {
+			card.Text = &text.String
+		} else {
+			card.Text = nil
+		}
+
+		if flavor.Valid {
+			card.Flavor = &flavor.String
+		} else {
+			card.Flavor = nil
+		}
+		cards = append(cards, &card)
+	}
+	return cards, err
 }
 
 func fetchCardRows(id string) ([]*RowModel, error) {
