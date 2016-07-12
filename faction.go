@@ -22,8 +22,8 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 	// FactionController_List: start_implement
 	factions, err := controllers.FetchAllFactions()
 	if err != nil {
-		ctx.NotFound()
 		log.Println(err)
+		return ctx.NotFound()
 	}
 	res := make(app.GwentapiFactionCollection, len(factions))
 
@@ -45,8 +45,8 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	// FactionController_Show: start_implement
 	faction, err := controllers.FetchFaction(ctx.FactionID)
 	if err != nil {
-		ctx.NotFound()
 		log.Println(err)
+		return ctx.NotFound()
 	}
 	// FactionController_Show: end_implement
 	res := &app.GwentapiFaction{

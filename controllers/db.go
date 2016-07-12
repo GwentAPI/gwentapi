@@ -3,7 +3,6 @@ package controllers
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"time"
 )
 
 var DBCon *sql.DB
@@ -32,11 +31,11 @@ func FetchAllTypes() ([]*TypeModel, error) {
 	var cardTypes []*TypeModel
 
 	rows, err := DBCon.Query("SELECT id, name FROM Types ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return cardTypes, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var typeModel TypeModel
@@ -66,11 +65,11 @@ func FetchRow(id string) (RowModel, error) {
 func FetchAllRows() ([]*RowModel, error) {
 	var combatRows []*RowModel
 	rows, err := DBCon.Query("SELECT id, name FROM Rows ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return combatRows, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var typeRow RowModel
@@ -100,11 +99,11 @@ func FetchRarity(id string) (RarityModel, error) {
 func FetchAllRarities() ([]*RarityModel, error) {
 	var rarities []*RarityModel
 	rows, err := DBCon.Query("SELECT id, name FROM Rarities ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return rarities, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var rarity RarityModel
@@ -127,10 +126,7 @@ func FetchPatch(id string) (PatchModel, error) {
 	row := DBCon.QueryRow("SELECT id, version, releaseDate, changelog FROM Patches WHERE id=?", id)
 	err := row.Scan(&patch.ID, &patch.Version, &patch.ReleaseDate, &changeLog)
 	if err != nil {
-		patch.ID = ""
-		patch.Version = ""
-		patch.ReleaseDate = time.Time{}
-		patch.Changelog = &emptyString
+		return patch, err
 	}
 
 	if changeLog.Valid {
@@ -150,10 +146,7 @@ func FetchLatestPatch() (PatchModel, error) {
 	row := DBCon.QueryRow("SELECT id, version, releaseDate, changelog FROM Patches WHERE releaseDate = (SELECT MAX(releaseDate) FROM Patches)")
 	err := row.Scan(&patch.ID, &patch.Version, &patch.ReleaseDate, &changeLog)
 	if err != nil {
-		patch.ID = ""
-		patch.Version = ""
-		patch.ReleaseDate = time.Time{}
-		patch.Changelog = &emptyString
+		return patch, err
 	}
 
 	if changeLog.Valid {
@@ -170,11 +163,11 @@ func FetchAllPatches() ([]*PatchModel, error) {
 	var emptyString = ""
 
 	rows, err := DBCon.Query("SELECT id, version, releaseDate, changelog FROM Patches ORDER BY releaseDate ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return patches, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var patch PatchModel
@@ -216,11 +209,11 @@ func FetchAllGlyphs() ([]*GlyphModel, error) {
 	var glyphs []*GlyphModel
 
 	rows, err := DBCon.Query("SELECT id, name, isWeatherGlyph, text FROM Glyphs ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return glyphs, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var glyph GlyphModel
@@ -252,11 +245,11 @@ func FetchFaction(id string) (FactionModel, error) {
 func FetchAllFactions() ([]*FactionModel, error) {
 	var factions []*FactionModel
 	rows, err := DBCon.Query("SELECT id, name FROM Factions ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return factions, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var faction FactionModel
@@ -285,11 +278,11 @@ func FetchIllustrator(id string) (IllustratorModel, error) {
 func FetchAllIllustrators() ([]*IllustratorModel, error) {
 	var illustrators []*IllustratorModel
 	rows, err := DBCon.Query("SELECT id, name FROM Illustrators ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return illustrators, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var illustrator IllustratorModel
@@ -368,11 +361,11 @@ func FetchAllCards() ([]*CardModel, error) {
 	var cards []*CardModel
 
 	rows, err := DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY id ASC")
-	defer rows.Close()
 
 	if err != nil {
 		return cards, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var card CardModel
@@ -425,11 +418,11 @@ func fetchCardRows(id string) ([]*RowModel, error) {
 	var cardRows []*RowModel
 
 	rows, err := DBCon.Query("SELECT r.id, r.name FROM Rows AS r INNER JOIN CardsRows AS cr ON r.idRow = cr.idRow INNER JOIN Cards AS c ON c.idCard = cr.idCard WHERE c.id =?", id)
-	defer rows.Close()
 
 	if err != nil {
 		return cardRows, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var rowModel RowModel
@@ -448,11 +441,11 @@ func fetchCardSubTypes(id string) ([]*TypeModel, error) {
 	var cardSubtypes []*TypeModel
 
 	rows, err := DBCon.Query("SELECT t.id, t.name FROM Types AS t INNER JOIN CardsSubtypes AS st ON t.idType = st.idType INNER JOIN Cards AS c ON c.idCard = st.idCard WHERE c.id =?", id)
-	defer rows.Close()
 
 	if err != nil {
 		return cardSubtypes, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var typeModel TypeModel
