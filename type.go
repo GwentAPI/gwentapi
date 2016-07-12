@@ -23,7 +23,7 @@ func (c *TypeController) List(ctx *app.ListTypeContext) error {
 	cardTypes, err := controllers.FetchAllTypes()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := make(app.GwentapiTypeCollection, len(cardTypes))
@@ -46,7 +46,7 @@ func (c *TypeController) Show(ctx *app.ShowTypeContext) error {
 	cardType, err := controllers.FetchType(ctx.TypeID)
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiType{

@@ -23,7 +23,7 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 	rarities, err := controllers.FetchAllRarities()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiRarityCollection, len(rarities))
 
@@ -46,7 +46,7 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 	rarity, err := controllers.FetchRarity(ctx.RarityID)
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiRarity{

@@ -23,7 +23,7 @@ func (c *GlyphController) List(ctx *app.ListGlyphContext) error {
 	glyphs, err := controllers.FetchAllGlyphs()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 	// GlyphController_List: end_implement
 	res := make(app.GwentapiGlyphCollection, len(glyphs))
@@ -47,7 +47,7 @@ func (c *GlyphController) Show(ctx *app.ShowGlyphContext) error {
 	glyph, err := controllers.FetchGlyph(ctx.GlyphID)
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiGlyph{

@@ -26,10 +26,4 @@ var _ = API("gwentapi", func() {
 		Methods("GET")
 		MaxAge(600)
 	})
-
-	ResponseTemplate("static", func(description string) {
-		Description(description)
-		Status(404)
-		Media("application/json")
-	})
 })

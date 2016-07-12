@@ -23,7 +23,7 @@ func (c *PatchController) Latest(ctx *app.LatestPatchContext) error {
 	patch, err := controllers.FetchLatestPatch()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiPatch{
@@ -42,7 +42,7 @@ func (c *PatchController) List(ctx *app.ListPatchContext) error {
 	patches, err := controllers.FetchAllPatches()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiPatchCollection, len(patches))
 	for i, patch := range patches {
@@ -64,7 +64,7 @@ func (c *PatchController) Show(ctx *app.ShowPatchContext) error {
 	patch, err := controllers.FetchPatch(ctx.PatchID)
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiPatch{

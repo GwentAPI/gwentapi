@@ -22,6 +22,8 @@ var _ = Resource("faction", func() {
 	DefaultMedia(FactionMedia)
 	BasePath("/factions")
 
+	Response(InternalServerError)
+
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return all factions.")
@@ -46,6 +48,8 @@ var _ = Resource("rarity", func() {
 	DefaultMedia(RarityMedia)
 	BasePath("/rarities")
 
+	Response(InternalServerError)
+
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return all rarities.")
@@ -68,6 +72,8 @@ var _ = Resource("rarity", func() {
 var _ = Resource("glyph", func() {
 	DefaultMedia(GlyphMedia)
 	BasePath("/glyphs")
+
+	Response(InternalServerError)
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -92,6 +98,8 @@ var _ = Resource("type", func() {
 	DefaultMedia(TypeMedia)
 	BasePath("/types")
 
+	Response(InternalServerError)
+
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return all card types.")
@@ -115,6 +123,8 @@ var _ = Resource("row", func() {
 	DefaultMedia(RowMedia)
 	BasePath("/rows")
 
+	Response(InternalServerError)
+
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return all rows.")
@@ -137,6 +147,8 @@ var _ = Resource("row", func() {
 var _ = Resource("patch", func() {
 	DefaultMedia(PatchMedia)
 	BasePath("/patches")
+
+	Response(InternalServerError)
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -167,6 +179,8 @@ var _ = Resource("patch", func() {
 var _ = Resource("card", func() {
 	DefaultMedia(CardMedia)
 	BasePath("/cards")
+
+	Response(InternalServerError)
 
 	Action("list", func() {
 		Routing(GET(""))

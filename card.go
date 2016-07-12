@@ -43,7 +43,9 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	// CardController_CardRarity: start_implement
 
-	// Put your logic here
+	return ctx.NotFound()
+
+	//res := make(app.GwentapiCardCollection, len(cards))
 
 	// CardController_CardRarity: end_implement
 	res := app.GwentapiCardCollection{}
@@ -57,27 +59,15 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	cards, err := controllers.FetchAllCards()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
-	return ctx.NotFound()
+
 	res := make(app.GwentapiCardCollection, len(cards))
-	/*
-		for i, card := range cards {
-			c := &app.GwentapiCard{
-				ID:       card.ID,
-				Href:     app.CardHref(card.ID),
-				Name:     card.Name,
-				Faction:  card.Faction,
-				Type:     card.TypeCard,
-				Rarity:   card.Rarity,
-				Subtypes: card.Subtypes,
-				Rows:     card.Rows,
-				Text:     card.Text,
-				Flavor:   card.Flavor,
-			}
-			res[i] = c
-		}
-	*/
+	for i, card := range cards {
+
+		res[i] = createCard(card)
+	}
+
 	// CardController_List: end_implement
 	return ctx.OK(res)
 }
@@ -91,4 +81,59 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	// CardController_Show: end_implement
 	res := &app.GwentapiCard{}
 	return ctx.OK(res)
+}
+
+func createCard(card *controllers.CardModel) *app.GwentapiCard {
+	c := &app.GwentapiCard{
+		ID:     card.ID,
+		Href:   app.CardHref(card.ID),
+		Name:   card.Name,
+		Text:   card.Text,
+		Flavor: card.Flavor,
+	}
+
+	f := &app.GwentapiFaction{
+		ID:   card.Faction.ID,
+		Href: app.FactionHref(card.Faction.ID),
+		Name: card.Faction.Name,
+	}
+	c.Faction = f
+
+	t := &app.GwentapiType{
+		ID:   card.TypeCard.ID,
+		Href: app.TypeHref(card.TypeCard.ID),
+		Name: card.TypeCard.Name,
+	}
+	c.Type = t
+
+	rar := &app.GwentapiRarity{
+		ID:   card.Rarity.ID,
+		Href: app.RarityHref(card.Rarity.ID),
+		Name: card.Rarity.Name,
+	}
+	c.Rarity = rar
+
+	typeCollection := make(app.GwentapiTypeCollection, len(card.Subtypes))
+	for i, cardType := range card.Subtypes {
+		subt := &app.GwentapiType{
+			ID:   cardType.ID,
+			Href: app.TypeHref(cardType.ID),
+			Name: cardType.Name,
+		}
+		typeCollection[i] = subt
+	}
+	c.Subtypes = typeCollection
+
+	rowCollection := make(app.GwentapiRowCollection, len(card.Rows))
+	for i, row := range card.Rows {
+		r := &app.GwentapiRow{
+			ID:   row.ID,
+			Href: app.RowHref(row.ID),
+			Name: row.Name,
+		}
+		rowCollection[i] = r
+	}
+	c.Rows = rowCollection
+
+	return c
 }

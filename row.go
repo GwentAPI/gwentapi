@@ -23,7 +23,7 @@ func (c *RowController) List(ctx *app.ListRowContext) error {
 	rows, err := controllers.FetchAllRows()
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiRowCollection, len(rows))
 
@@ -45,7 +45,7 @@ func (c *RowController) Show(ctx *app.ShowRowContext) error {
 	row, err := controllers.FetchRow(ctx.RowID)
 	if err != nil {
 		log.Println(err)
-		return ctx.NotFound()
+		return ctx.InternalServerError()
 	}
 
 	res := &app.GwentapiRow{
