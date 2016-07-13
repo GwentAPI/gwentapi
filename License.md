@@ -1,4 +1,4 @@
-Copyright (c) 2016, Tristan S.
+Copyright (c) 2016, Tristan Savaria.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
