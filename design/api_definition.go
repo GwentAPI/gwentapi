@@ -22,7 +22,8 @@ var _ = API("gwentapi", func() {
 	Scheme("https")
 	Produces("application/json")
 
-	Origin("localhost", func() {
+	Origin("*", func() {
+		Expose("Access-Control-Allow-Origin")
 		Methods("GET")
 		MaxAge(600)
 	})

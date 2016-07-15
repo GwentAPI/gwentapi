@@ -77,9 +77,14 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	// CardController_Show: start_implement
 
 	// Put your logic here
-
+	card, err := controllers.FetchCard(ctx.CardID)
+	if err != nil {
+		log.Println(err)
+		return ctx.InternalServerError()
+	}
 	// CardController_Show: end_implement
-	res := &app.GwentapiCard{}
+	res := createCard(&card)
+
 	return ctx.OK(res)
 }
 
