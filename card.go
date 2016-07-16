@@ -129,16 +129,18 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 	}
 	c.Subtypes = typeCollection
 
-	rowCollection := make(app.GwentapiRowCollection, len(card.Rows))
-	for i, row := range card.Rows {
-		r := &app.GwentapiRow{
-			ID:   row.ID,
-			Href: app.RowHref(row.ID),
-			Name: row.Name,
+	if len(card.Rows) != 0 {
+		rowCollection := make(app.GwentapiRowCollection, len(card.Rows))
+		for i, row := range card.Rows {
+			r := &app.GwentapiRow{
+				ID:   row.ID,
+				Href: app.RowHref(row.ID),
+				Name: row.Name,
+			}
+			rowCollection[i] = r
 		}
-		rowCollection[i] = r
+		c.Rows = rowCollection
 	}
-	c.Rows = rowCollection
 
 	return c
 }
