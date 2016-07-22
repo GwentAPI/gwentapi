@@ -119,31 +119,6 @@ var _ = Resource("type", func() {
 	})
 })
 
-var _ = Resource("row", func() {
-	DefaultMedia(RowMedia)
-	BasePath("/rows")
-
-	Response(InternalServerError)
-
-	Action("list", func() {
-		Routing(GET(""))
-		Description("Return all rows.")
-
-		Response(OK, CollectionOf(RowMedia))
-		Response(NotFound)
-	})
-
-	Action("show", func() {
-		Description("Return row with given id.")
-		Routing(GET("/:rowID"))
-		Params(func() {
-			Param("rowID", String, "Row ID")
-		})
-		Response(OK)
-		Response(NotFound)
-	})
-})
-
 var _ = Resource("patch", func() {
 	DefaultMedia(PatchMedia)
 	BasePath("/patches")

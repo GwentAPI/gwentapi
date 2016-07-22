@@ -50,40 +50,6 @@ func FetchAllTypes() ([]*TypeModel, error) {
 	return cardTypes, err
 }
 
-func FetchRow(id string) (RowModel, error) {
-	var combatRow RowModel
-	row := DBCon.QueryRow("SELECT id, name FROM Rows WHERE id=?", id)
-	err := row.Scan(&combatRow.ID, &combatRow.Name)
-	if err != nil {
-		combatRow.ID = ""
-		combatRow.Name = ""
-	}
-
-	return combatRow, err
-}
-
-func FetchAllRows() ([]*RowModel, error) {
-	var combatRows []*RowModel
-	rows, err := DBCon.Query("SELECT id, name FROM Rows ORDER BY id ASC")
-
-	if err != nil {
-		return combatRows, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var typeRow RowModel
-		err := rows.Scan(&typeRow.ID, &typeRow.Name)
-
-		if err != nil {
-			continue
-		}
-		combatRows = append(combatRows, &typeRow)
-	}
-
-	return combatRows, err
-}
-
 func FetchRarity(id string) (RarityModel, error) {
 	var rarity RarityModel
 	row := DBCon.QueryRow("SELECT id, name FROM Rarities WHERE id=?", id)
@@ -414,10 +380,10 @@ func FetchAllCards() ([]*CardModel, error) {
 	return cards, err
 }
 
-func fetchCardRows(id string) ([]*RowModel, error) {
-	var cardRows []*RowModel
+func fetchCardRows(id string) ([]string, error) {
+	var cardRows []string
 
-	rows, err := DBCon.Query("SELECT r.id, r.name FROM Rows AS r INNER JOIN CardsRows AS cr ON r.idRow = cr.idRow INNER JOIN Cards AS c ON c.idCard = cr.idCard WHERE c.id =?", id)
+	rows, err := DBCon.Query("SELECT r.name FROM Rows AS r INNER JOIN CardsRows AS cr ON r.idRow = cr.idRow INNER JOIN Cards AS c ON c.idCard = cr.idCard WHERE c.id =?", id)
 
 	if err != nil {
 		return cardRows, err
@@ -425,13 +391,13 @@ func fetchCardRows(id string) ([]*RowModel, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var rowModel RowModel
-		err := rows.Scan(&rowModel.ID, &rowModel.Name)
+		var row string
+		err := rows.Scan(&row)
 
 		if err != nil {
 			continue
 		}
-		cardRows = append(cardRows, &rowModel)
+		cardRows = append(cardRows, row)
 	}
 
 	return cardRows, err

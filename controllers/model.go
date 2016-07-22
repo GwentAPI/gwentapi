@@ -9,11 +9,6 @@ type TypeModel struct {
 	ID   string
 }
 
-type RowModel struct {
-	Name string
-	ID   string
-}
-
 type RarityModel struct {
 	Name string
 	ID   string
@@ -50,7 +45,7 @@ type CardModel struct {
 	Faction  FactionModel
 	TypeCard TypeModel //as to not conflict with the reserved type keyword
 	Subtypes []*TypeModel
-	Rows     []*RowModel
+	Rows     []string
 	Strength *int
 	Text     *string
 	Flavor   *string

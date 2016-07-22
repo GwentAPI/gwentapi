@@ -12,11 +12,10 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 		Attribute("factions", String, "API href for making requests on factions")
 		Attribute("glyphs", String, "API href for making requests on glyphs")
 		Attribute("rarities", String, "API href for making requests on rarities")
-		Attribute("rows", String, "API href for making requests on rows")
 		Attribute("types", String, "API href for making requests on types")
 		Attribute("patches", String, "API href for making requests on patches")
 
-		Required("cards", "factions", "glyphs", "rarities", "rows", "types", "patches")
+		Required("cards", "factions", "glyphs", "rarities", "types", "patches")
 	})
 
 	View("default", func() {
@@ -24,7 +23,6 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 		Attribute("factions")
 		Attribute("glyphs")
 		Attribute("rarities")
-		Attribute("rows")
 		Attribute("types")
 		Attribute("patches")
 	})
@@ -40,7 +38,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("faction", FactionMedia, "Faction of the card")
 
 		Attribute("subtypes", CollectionOf(TypeMedia), "Subtypes of the card")
-		Attribute("rows", CollectionOf(RowMedia), "Rows where the card can be played")
+		Attribute("rows", ArrayOf(String), "Rows where the card can be played")
 
 		Attribute("rarity", RarityMedia, "Rarity of the card")
 		Attribute("strength", Integer, "Strength of the card")
@@ -54,7 +52,6 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Link("type")
 		Link("faction")
 		Link("subtypes")
-		Link("rows")
 		Link("rarity")
 	})
 
@@ -62,6 +59,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("id")
 		Attribute("href")
 		Attribute("name")
+		Attribute("rows")
 		Attribute("type", func() {
 			View("link")
 		})
@@ -69,9 +67,6 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 			View("link")
 		})
 		Attribute("subtypes", func() {
-			View("link")
-		})
-		Attribute("rows", func() {
 			View("link")
 		})
 		Attribute("rarity", func() {
@@ -83,7 +78,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
+		Attribute("name")
 		Attribute("href")
 	})
 
@@ -105,7 +100,7 @@ var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
+		Attribute("name")
 		Attribute("href")
 	})
 })
@@ -130,7 +125,7 @@ var GlyphMedia = MediaType("application/vnd.gwentapi.glyph+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
+		Attribute("name")
 		Attribute("href")
 	})
 })
@@ -152,7 +147,7 @@ var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
+		Attribute("name")
 		Attribute("href")
 	})
 })
@@ -174,34 +169,8 @@ var TypeMedia = MediaType("application/vnd.gwentapi.type+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
-		Attribute("href")
-	})
-})
-
-var RowMedia = MediaType("application/vnd.gwentapi.row+json", func() {
-	Description("A row where a card can be played to")
-	Attributes(func() {
-		Attribute("id", String, "Unique row ID")
-		Attribute("href", String, "API href for making requests on the row")
-		Attribute("name", String, "Name of the row")
-
-		Required("id", "href", "name")
-	})
-
-	View("default", func() {
-		Attribute("id")
-		Attribute("href")
 		Attribute("name")
-	})
-
-	View("link", func() {
-		Attribute("id")
 		Attribute("href")
-	})
-
-	View("noModel", func() {
-		Attribute("name")
 	})
 })
 
@@ -225,7 +194,7 @@ var PatchMedia = MediaType("application/vnd.gwentapi.patch+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
+		Attribute("version")
 		Attribute("href")
 	})
 

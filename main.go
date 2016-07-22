@@ -38,9 +38,6 @@ func main() {
 	// Mount "rarity" controller
 	c6 := NewRarityController(service)
 	app.MountRarityController(service, c6)
-	// Mount "row" controller
-	c7 := NewRowController(service)
-	app.MountRowController(service, c7)
 	// Mount "type" controller
 	c8 := NewTypeController(service)
 	app.MountTypeController(service, c8)

@@ -44,11 +44,6 @@ func RarityHref(rarityID interface{}) string {
 	return fmt.Sprintf("/v0/rarities/%v", rarityID)
 }
 
-// RowHref returns the resource href.
-func RowHref(rowID interface{}) string {
-	return fmt.Sprintf("/v0/rows/%v", rowID)
-}
-
 // TypeHref returns the resource href.
 func TypeHref(typeID interface{}) string {
 	return fmt.Sprintf("/v0/types/%v", typeID)

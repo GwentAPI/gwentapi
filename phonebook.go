@@ -24,7 +24,6 @@ func (c *PhonebookController) Show(ctx *app.ShowPhonebookContext) error {
 		Factions: app.FactionHref(""),
 		Glyphs:   app.GlyphHref(""),
 		Rarities: app.RarityHref(""),
-		Rows:     app.RowHref(""),
 		Types:    app.TypeHref(""),
 		Patches:  app.PatchHref(""),
 		Cards:    app.CardHref(""),
