@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// ListFactionInternalServerError List runs the method List of the given controller with the given parameters.
+// ListFactionInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func ListFactionInternalServerError(t *testing.T, ctx context.Context, service *
 	return rw
 }
 
-// ListFactionNotFound List runs the method List of the given controller with the given parameters.
+// ListFactionNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -127,7 +127,7 @@ func ListFactionNotFound(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// ListFactionOK List runs the method List of the given controller with the given parameters.
+// ListFactionOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -195,7 +195,7 @@ func ListFactionOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl
 	return rw, mt
 }
 
-// ListFactionOKLink List runs the method List of the given controller with the given parameters.
+// ListFactionOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -263,7 +263,7 @@ func ListFactionOKLink(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// ShowFactionInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowFactionInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -320,7 +320,7 @@ func ShowFactionInternalServerError(t *testing.T, ctx context.Context, service *
 	return rw
 }
 
-// ShowFactionNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowFactionNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -377,7 +377,7 @@ func ShowFactionNotFound(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// ShowFactionOK Show runs the method Show of the given controller with the given parameters.
+// ShowFactionOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -446,7 +446,7 @@ func ShowFactionOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl
 	return rw, mt
 }
 
-// ShowFactionOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowFactionOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

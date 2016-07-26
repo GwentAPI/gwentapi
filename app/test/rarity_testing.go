@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// ListRarityInternalServerError List runs the method List of the given controller with the given parameters.
+// ListRarityInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func ListRarityInternalServerError(t *testing.T, ctx context.Context, service *g
 	return rw
 }
 
-// ListRarityNotFound List runs the method List of the given controller with the given parameters.
+// ListRarityNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -127,7 +127,7 @@ func ListRarityNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	return rw
 }
 
-// ListRarityOK List runs the method List of the given controller with the given parameters.
+// ListRarityOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -195,7 +195,7 @@ func ListRarityOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	return rw, mt
 }
 
-// ListRarityOKLink List runs the method List of the given controller with the given parameters.
+// ListRarityOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -263,7 +263,7 @@ func ListRarityOKLink(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// ShowRarityInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowRarityInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -320,7 +320,7 @@ func ShowRarityInternalServerError(t *testing.T, ctx context.Context, service *g
 	return rw
 }
 
-// ShowRarityNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowRarityNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -377,7 +377,7 @@ func ShowRarityNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	return rw
 }
 
-// ShowRarityOK Show runs the method Show of the given controller with the given parameters.
+// ShowRarityOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -446,7 +446,7 @@ func ShowRarityOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	return rw, mt
 }
 
-// ShowRarityOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowRarityOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

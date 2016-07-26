@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// CardFactionCardInternalServerError CardFaction runs the method CardFaction of the given controller with the given parameters.
+// CardFactionCardInternalServerError runs the method CardFaction of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -72,7 +72,7 @@ func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, servi
 	return rw
 }
 
-// CardFactionCardNotFound CardFaction runs the method CardFaction of the given controller with the given parameters.
+// CardFactionCardNotFound runs the method CardFaction of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -129,7 +129,7 @@ func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Ser
 	return rw
 }
 
-// CardFactionCardOK CardFaction runs the method CardFaction of the given controller with the given parameters.
+// CardFactionCardOK runs the method CardFaction of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -198,7 +198,7 @@ func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// CardFactionCardOKLink CardFaction runs the method CardFaction of the given controller with the given parameters.
+// CardFactionCardOKLink runs the method CardFaction of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -267,7 +267,7 @@ func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Servi
 	return rw, mt
 }
 
-// CardLeaderCardInternalServerError CardLeader runs the method CardLeader of the given controller with the given parameters.
+// CardLeaderCardInternalServerError runs the method CardLeader of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -323,7 +323,7 @@ func CardLeaderCardInternalServerError(t *testing.T, ctx context.Context, servic
 	return rw
 }
 
-// CardLeaderCardNotFound CardLeader runs the method CardLeader of the given controller with the given parameters.
+// CardLeaderCardNotFound runs the method CardLeader of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -379,7 +379,7 @@ func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 	return rw
 }
 
-// CardLeaderCardOK CardLeader runs the method CardLeader of the given controller with the given parameters.
+// CardLeaderCardOK runs the method CardLeader of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -447,7 +447,7 @@ func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// CardLeaderCardOKLink CardLeader runs the method CardLeader of the given controller with the given parameters.
+// CardLeaderCardOKLink runs the method CardLeader of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -515,7 +515,7 @@ func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 	return rw, mt
 }
 
-// CardRarityCardInternalServerError CardRarity runs the method CardRarity of the given controller with the given parameters.
+// CardRarityCardInternalServerError runs the method CardRarity of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -572,7 +572,7 @@ func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, servic
 	return rw
 }
 
-// CardRarityCardNotFound CardRarity runs the method CardRarity of the given controller with the given parameters.
+// CardRarityCardNotFound runs the method CardRarity of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -629,7 +629,7 @@ func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 	return rw
 }
 
-// CardRarityCardOK CardRarity runs the method CardRarity of the given controller with the given parameters.
+// CardRarityCardOK runs the method CardRarity of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -698,7 +698,7 @@ func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// CardRarityCardOKLink CardRarity runs the method CardRarity of the given controller with the given parameters.
+// CardRarityCardOKLink runs the method CardRarity of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -767,7 +767,7 @@ func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 	return rw, mt
 }
 
-// ListCardInternalServerError List runs the method List of the given controller with the given parameters.
+// ListCardInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -823,7 +823,7 @@ func ListCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 	return rw
 }
 
-// ListCardNotFound List runs the method List of the given controller with the given parameters.
+// ListCardNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -879,7 +879,7 @@ func ListCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw
 }
 
-// ListCardOK List runs the method List of the given controller with the given parameters.
+// ListCardOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -947,7 +947,7 @@ func ListCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 	return rw, mt
 }
 
-// ListCardOKLink List runs the method List of the given controller with the given parameters.
+// ListCardOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -1015,7 +1015,7 @@ func ListCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctr
 	return rw, mt
 }
 
-// ShowCardInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowCardInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -1072,7 +1072,7 @@ func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 	return rw
 }
 
-// ShowCardNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowCardNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -1129,7 +1129,7 @@ func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw
 }
 
-// ShowCardOK Show runs the method Show of the given controller with the given parameters.
+// ShowCardOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -1198,7 +1198,7 @@ func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 	return rw, mt
 }
 
-// ShowCardOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowCardOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

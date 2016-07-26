@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// ShowPhonebookNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowPhonebookNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func ShowPhonebookNotFound(t *testing.T, ctx context.Context, service *goa.Servi
 	return rw
 }
 
-// ShowPhonebookOK Show runs the method Show of the given controller with the given parameters.
+// ShowPhonebookOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

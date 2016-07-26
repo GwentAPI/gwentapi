@@ -98,31 +98,27 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 		Rows:   card.Rows,
 	}
 
-	f := &app.GwentapiFaction{
-		ID:   card.Faction.ID,
+	f := &app.GwentapiFactionLink{
 		Href: app.FactionHref(card.Faction.ID),
 		Name: card.Faction.Name,
 	}
 	c.Faction = f
 
-	t := &app.GwentapiType{
-		ID:   card.TypeCard.ID,
+	t := &app.GwentapiTypeLink{
 		Href: app.TypeHref(card.TypeCard.ID),
 		Name: card.TypeCard.Name,
 	}
 	c.Type = t
 
-	rar := &app.GwentapiRarity{
-		ID:   card.Rarity.ID,
+	rar := &app.GwentapiRarityLink{
 		Href: app.RarityHref(card.Rarity.ID),
 		Name: card.Rarity.Name,
 	}
 	c.Rarity = rar
 
-	typeCollection := make(app.GwentapiTypeCollection, len(card.Subtypes))
+	typeCollection := make(app.GwentapiTypeLinkCollection, len(card.Subtypes))
 	for i, cardType := range card.Subtypes {
-		subt := &app.GwentapiType{
-			ID:   cardType.ID,
+		subt := &app.GwentapiTypeLink{
 			Href: app.TypeHref(cardType.ID),
 			Name: cardType.Name,
 		}

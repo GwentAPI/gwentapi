@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// ListTypeInternalServerError List runs the method List of the given controller with the given parameters.
+// ListTypeInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func ListTypeInternalServerError(t *testing.T, ctx context.Context, service *goa
 	return rw
 }
 
-// ListTypeNotFound List runs the method List of the given controller with the given parameters.
+// ListTypeNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -127,7 +127,7 @@ func ListTypeNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw
 }
 
-// ListTypeOK List runs the method List of the given controller with the given parameters.
+// ListTypeOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -195,7 +195,7 @@ func ListTypeOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 	return rw, mt
 }
 
-// ListTypeOKLink List runs the method List of the given controller with the given parameters.
+// ListTypeOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -263,7 +263,7 @@ func ListTypeOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctr
 	return rw, mt
 }
 
-// ShowTypeInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowTypeInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -320,7 +320,7 @@ func ShowTypeInternalServerError(t *testing.T, ctx context.Context, service *goa
 	return rw
 }
 
-// ShowTypeNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowTypeNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -377,7 +377,7 @@ func ShowTypeNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw
 }
 
-// ShowTypeOK Show runs the method Show of the given controller with the given parameters.
+// ShowTypeOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -446,7 +446,7 @@ func ShowTypeOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 	return rw, mt
 }
 
-// ShowTypeOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowTypeOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

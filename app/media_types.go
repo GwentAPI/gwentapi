@@ -22,27 +22,27 @@ import (
 // Identifier: application/vnd.gwentapi.card+json
 type GwentapiCard struct {
 	// Faction of the card
-	Faction *GwentapiFaction `json:"faction" xml:"faction" form:"faction"`
+	Faction *GwentapiFactionLink `form:"faction" json:"faction" xml:"faction"`
 	// Flavor text of the card
-	Flavor *string `json:"flavor,omitempty" xml:"flavor,omitempty" form:"flavor,omitempty"`
+	Flavor *string `form:"flavor,omitempty" json:"flavor,omitempty" xml:"flavor,omitempty"`
 	// API href for making requests on the card
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique card ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the card
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 	// Rarity of the card
-	Rarity *GwentapiRarity `json:"rarity" xml:"rarity" form:"rarity"`
+	Rarity *GwentapiRarityLink `form:"rarity" json:"rarity" xml:"rarity"`
 	// Rows where the card can be played
-	Rows []string `json:"rows,omitempty" xml:"rows,omitempty" form:"rows,omitempty"`
+	Rows []string `form:"rows,omitempty" json:"rows,omitempty" xml:"rows,omitempty"`
 	// Strength of the card
-	Strength *int `json:"strength,omitempty" xml:"strength,omitempty" form:"strength,omitempty"`
+	Strength *int `form:"strength,omitempty" json:"strength,omitempty" xml:"strength,omitempty"`
 	// Subtypes of the card
-	Subtypes GwentapiTypeCollection `json:"subtypes,omitempty" xml:"subtypes,omitempty" form:"subtypes,omitempty"`
+	Subtypes GwentapiTypeLinkCollection `form:"subtypes,omitempty" json:"subtypes,omitempty" xml:"subtypes,omitempty"`
 	// Text of the card detailing its abilities and how it plays
-	Text *string `json:"text,omitempty" xml:"text,omitempty" form:"text,omitempty"`
+	Text *string `form:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
 	// Type of the card
-	Type *GwentapiType `json:"type" xml:"type" form:"type"`
+	Type *GwentapiTypeLink `form:"type" json:"type" xml:"type"`
 }
 
 // Validate validates the GwentapiCard media type instance.
@@ -92,9 +92,9 @@ func (mt *GwentapiCard) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.card+json
 type GwentapiCardLink struct {
 	// API href for making requests on the card
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Name of the card
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiCardLink media type instance.
@@ -182,11 +182,11 @@ func (mt GwentapiCardLinkCollection) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.faction+json
 type GwentapiFaction struct {
 	// API href for making requests on the faction
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique faction ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the faction
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiFaction media type instance.
@@ -209,9 +209,9 @@ func (mt *GwentapiFaction) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.faction+json
 type GwentapiFactionLink struct {
 	// API href for making requests on the faction
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Name of the faction
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiFactionLink media type instance.
@@ -272,15 +272,15 @@ func (mt GwentapiFactionLinkCollection) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.glyph+json
 type GwentapiGlyph struct {
 	// API href for making requests on the glyph
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique glyph ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Indicate whether or not the glyph is a weather glyph
-	IsWeatherGlyph bool `json:"isWeatherGlyph" xml:"isWeatherGlyph" form:"isWeatherGlyph"`
+	IsWeatherGlyph bool `form:"isWeatherGlyph" json:"isWeatherGlyph" xml:"isWeatherGlyph"`
 	// Name of the glyph
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 	// Text of the glyph
-	Text string `json:"text" xml:"text" form:"text"`
+	Text string `form:"text" json:"text" xml:"text"`
 }
 
 // Validate validates the GwentapiGlyph media type instance.
@@ -306,9 +306,9 @@ func (mt *GwentapiGlyph) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.glyph+json
 type GwentapiGlyphLink struct {
 	// API href for making requests on the glyph
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Name of the glyph
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiGlyphLink media type instance.
@@ -372,13 +372,13 @@ func (mt GwentapiGlyphLinkCollection) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.patch+json
 type GwentapiPatch struct {
 	// API href for making requests on the patch
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique Patch ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Release date of the patch
-	ReleaseDate time.Time `json:"releaseDate" xml:"releaseDate" form:"releaseDate"`
+	ReleaseDate time.Time `form:"releaseDate" json:"releaseDate" xml:"releaseDate"`
 	// Patch version
-	Version string `json:"version" xml:"version" form:"version"`
+	Version string `form:"version" json:"version" xml:"version"`
 }
 
 // Validate validates the GwentapiPatch media type instance.
@@ -401,15 +401,15 @@ func (mt *GwentapiPatch) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.patch+json
 type GwentapiPatchFull struct {
 	// Patch changelog
-	Changelog *string `json:"changelog,omitempty" xml:"changelog,omitempty" form:"changelog,omitempty"`
+	Changelog *string `form:"changelog,omitempty" json:"changelog,omitempty" xml:"changelog,omitempty"`
 	// API href for making requests on the patch
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique Patch ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Release date of the patch
-	ReleaseDate time.Time `json:"releaseDate" xml:"releaseDate" form:"releaseDate"`
+	ReleaseDate time.Time `form:"releaseDate" json:"releaseDate" xml:"releaseDate"`
 	// Patch version
-	Version string `json:"version" xml:"version" form:"version"`
+	Version string `form:"version" json:"version" xml:"version"`
 }
 
 // Validate validates the GwentapiPatchFull media type instance.
@@ -432,9 +432,9 @@ func (mt *GwentapiPatchFull) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.patch+json
 type GwentapiPatchLink struct {
 	// API href for making requests on the patch
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Patch version
-	Version string `json:"version" xml:"version" form:"version"`
+	Version string `form:"version" json:"version" xml:"version"`
 }
 
 // Validate validates the GwentapiPatchLink media type instance.
@@ -517,11 +517,11 @@ func (mt GwentapiPatchLinkCollection) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.rarity+json
 type GwentapiRarity struct {
 	// API href for making requests on the rarity
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique rarity ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the rarity
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiRarity media type instance.
@@ -544,9 +544,9 @@ func (mt *GwentapiRarity) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.rarity+json
 type GwentapiRarityLink struct {
 	// API href for making requests on the rarity
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Name of the rarity
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiRarityLink media type instance.
@@ -607,17 +607,17 @@ func (mt GwentapiRarityLinkCollection) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.resource+json
 type GwentapiResource struct {
 	// API href for making requests on cards
-	Cards string `json:"cards" xml:"cards" form:"cards"`
+	Cards string `form:"cards" json:"cards" xml:"cards"`
 	// API href for making requests on factions
-	Factions string `json:"factions" xml:"factions" form:"factions"`
+	Factions string `form:"factions" json:"factions" xml:"factions"`
 	// API href for making requests on glyphs
-	Glyphs string `json:"glyphs" xml:"glyphs" form:"glyphs"`
+	Glyphs string `form:"glyphs" json:"glyphs" xml:"glyphs"`
 	// API href for making requests on patches
-	Patches string `json:"patches" xml:"patches" form:"patches"`
+	Patches string `form:"patches" json:"patches" xml:"patches"`
 	// API href for making requests on rarities
-	Rarities string `json:"rarities" xml:"rarities" form:"rarities"`
+	Rarities string `form:"rarities" json:"rarities" xml:"rarities"`
 	// API href for making requests on types
-	Types string `json:"types" xml:"types" form:"types"`
+	Types string `form:"types" json:"types" xml:"types"`
 }
 
 // Validate validates the GwentapiResource media type instance.
@@ -649,11 +649,11 @@ func (mt *GwentapiResource) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.type+json
 type GwentapiType struct {
 	// API href for making requests on the type
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Unique type ID
-	ID string `json:"id" xml:"id" form:"id"`
+	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the type
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiType media type instance.
@@ -676,9 +676,9 @@ func (mt *GwentapiType) Validate() (err error) {
 // Identifier: application/vnd.gwentapi.type+json
 type GwentapiTypeLink struct {
 	// API href for making requests on the type
-	Href string `json:"href" xml:"href" form:"href"`
+	Href string `form:"href" json:"href" xml:"href"`
 	// Name of the type
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate validates the GwentapiTypeLink media type instance.

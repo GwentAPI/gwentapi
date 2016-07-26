@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// LatestPatchInternalServerError Latest runs the method Latest of the given controller with the given parameters.
+// LatestPatchInternalServerError runs the method Latest of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func LatestPatchInternalServerError(t *testing.T, ctx context.Context, service *
 	return rw
 }
 
-// LatestPatchNotFound Latest runs the method Latest of the given controller with the given parameters.
+// LatestPatchNotFound runs the method Latest of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -127,7 +127,7 @@ func LatestPatchNotFound(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// LatestPatchOK Latest runs the method Latest of the given controller with the given parameters.
+// LatestPatchOK runs the method Latest of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -195,7 +195,7 @@ func LatestPatchOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl
 	return rw, mt
 }
 
-// LatestPatchOKFull Latest runs the method Latest of the given controller with the given parameters.
+// LatestPatchOKFull runs the method Latest of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -263,7 +263,7 @@ func LatestPatchOKFull(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// LatestPatchOKLink Latest runs the method Latest of the given controller with the given parameters.
+// LatestPatchOKLink runs the method Latest of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -331,7 +331,7 @@ func LatestPatchOKLink(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// ListPatchInternalServerError List runs the method List of the given controller with the given parameters.
+// ListPatchInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -387,7 +387,7 @@ func ListPatchInternalServerError(t *testing.T, ctx context.Context, service *go
 	return rw
 }
 
-// ListPatchNotFound List runs the method List of the given controller with the given parameters.
+// ListPatchNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -443,7 +443,7 @@ func ListPatchNotFound(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw
 }
 
-// ListPatchOK List runs the method List of the given controller with the given parameters.
+// ListPatchOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -511,7 +511,7 @@ func ListPatchOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl a
 	return rw, mt
 }
 
-// ListPatchOKFull List runs the method List of the given controller with the given parameters.
+// ListPatchOKFull runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -579,7 +579,7 @@ func ListPatchOKFull(t *testing.T, ctx context.Context, service *goa.Service, ct
 	return rw, mt
 }
 
-// ListPatchOKLink List runs the method List of the given controller with the given parameters.
+// ListPatchOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -647,7 +647,7 @@ func ListPatchOKLink(t *testing.T, ctx context.Context, service *goa.Service, ct
 	return rw, mt
 }
 
-// ShowPatchInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowPatchInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -704,7 +704,7 @@ func ShowPatchInternalServerError(t *testing.T, ctx context.Context, service *go
 	return rw
 }
 
-// ShowPatchNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowPatchNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -761,7 +761,7 @@ func ShowPatchNotFound(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw
 }
 
-// ShowPatchOK Show runs the method Show of the given controller with the given parameters.
+// ShowPatchOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -830,7 +830,7 @@ func ShowPatchOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl a
 	return rw, mt
 }
 
-// ShowPatchOKFull Show runs the method Show of the given controller with the given parameters.
+// ShowPatchOKFull runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -899,7 +899,7 @@ func ShowPatchOKFull(t *testing.T, ctx context.Context, service *goa.Service, ct
 	return rw, mt
 }
 
-// ShowPatchOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowPatchOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.

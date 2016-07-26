@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// ListGlyphInternalServerError List runs the method List of the given controller with the given parameters.
+// ListGlyphInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -71,7 +71,7 @@ func ListGlyphInternalServerError(t *testing.T, ctx context.Context, service *go
 	return rw
 }
 
-// ListGlyphNotFound List runs the method List of the given controller with the given parameters.
+// ListGlyphNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -127,7 +127,7 @@ func ListGlyphNotFound(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw
 }
 
-// ListGlyphOK List runs the method List of the given controller with the given parameters.
+// ListGlyphOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -195,7 +195,7 @@ func ListGlyphOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl a
 	return rw, mt
 }
 
-// ListGlyphOKLink List runs the method List of the given controller with the given parameters.
+// ListGlyphOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -263,7 +263,7 @@ func ListGlyphOKLink(t *testing.T, ctx context.Context, service *goa.Service, ct
 	return rw, mt
 }
 
-// ShowGlyphInternalServerError Show runs the method Show of the given controller with the given parameters.
+// ShowGlyphInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -320,7 +320,7 @@ func ShowGlyphInternalServerError(t *testing.T, ctx context.Context, service *go
 	return rw
 }
 
-// ShowGlyphNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowGlyphNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -377,7 +377,7 @@ func ShowGlyphNotFound(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw
 }
 
-// ShowGlyphOK Show runs the method Show of the given controller with the given parameters.
+// ShowGlyphOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -446,7 +446,7 @@ func ShowGlyphOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl a
 	return rw, mt
 }
 
-// ShowGlyphOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowGlyphOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
