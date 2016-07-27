@@ -4,8 +4,10 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
+	log "github.com/inconshreveable/log15"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
 )
@@ -17,10 +19,21 @@ var gzipLevel int = -1
 
 var certFile string = "pathToCertFile"
 var keyFile string = "pathToKeyFile"
+var logFile string = "./access.log"
 
 func main() {
+
 	// Create service
 	service := goa.New("gwentapi")
+
+	//Create logger
+	logger := log.New("module", "app/server")
+
+	//Logger configuration
+	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(logFile, log.LogfmtFormat())))
+
+	//Inject logger
+	service.WithLogger(goalog15.New(logger))
 
 	// Mount middleware
 	service.Use(middleware.RequestID())
