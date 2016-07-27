@@ -67,7 +67,7 @@ func main() {
 			service.LogError("startup", "err", err)
 		}
 	} else {
-		if err := service.ListenAndServeTLS(":8080", "certFile", "keyfile"); err != nil {
+		if err := service.ListenAndServeTLS(":8080", certFile, keyFile); err != nil {
 			service.LogError("startup", "err", err)
 		}
 	}
