@@ -470,10 +470,10 @@ definitions:
       $ref: '#/definitions/GwentapiTypeLinkLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.type+json; type=collection'
     type: array
-host: localhost:8080
+host: api.gwentapi.com
 info:
   contact:
-    email: gwentapi@gmail.com
+    email: api.gwent@gmail.com
     name: Tristan S.
     url: https://twitter.com/GwentAPI
   description: A consumption-only API of all Gwent data

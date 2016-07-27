@@ -14,7 +14,6 @@ package app
 
 import (
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa/cors"
 	"golang.org/x/net/context"
 	"net/http"
 )
@@ -46,11 +45,6 @@ type CardController interface {
 func MountCardController(service *goa.Service, ctrl CardController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/cards/factions/:factionID", ctrl.MuxHandler("preflight", handleCardOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/cards/leaders", ctrl.MuxHandler("preflight", handleCardOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/cards/rarities/:rarityID", ctrl.MuxHandler("preflight", handleCardOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/cards", ctrl.MuxHandler("preflight", handleCardOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/cards/:cardID", ctrl.MuxHandler("preflight", handleCardOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -64,7 +58,6 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardFaction(rctx)
 	}
-	h = handleCardOrigin(h)
 	service.Mux.Handle("GET", "/v0/cards/factions/:factionID", ctrl.MuxHandler("CardFaction", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardFaction", "route", "GET /v0/cards/factions/:factionID")
 
@@ -80,7 +73,6 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardLeader(rctx)
 	}
-	h = handleCardOrigin(h)
 	service.Mux.Handle("GET", "/v0/cards/leaders", ctrl.MuxHandler("CardLeader", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardLeader", "route", "GET /v0/cards/leaders")
 
@@ -96,7 +88,6 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardRarity(rctx)
 	}
-	h = handleCardOrigin(h)
 	service.Mux.Handle("GET", "/v0/cards/rarities/:rarityID", ctrl.MuxHandler("CardRarity", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardRarity", "route", "GET /v0/cards/rarities/:rarityID")
 
@@ -112,7 +103,6 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleCardOrigin(h)
 	service.Mux.Handle("GET", "/v0/cards", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "List", "route", "GET /v0/cards")
 
@@ -128,34 +118,8 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handleCardOrigin(h)
 	service.Mux.Handle("GET", "/v0/cards/:cardID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "Show", "route", "GET /v0/cards/:cardID")
-}
-
-// handleCardOrigin applies the CORS response headers corresponding to the origin.
-func handleCardOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // FactionController is the controller interface for the Faction actions.
@@ -169,8 +133,6 @@ type FactionController interface {
 func MountFactionController(service *goa.Service, ctrl FactionController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/factions", ctrl.MuxHandler("preflight", handleFactionOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/factions/:factionID", ctrl.MuxHandler("preflight", handleFactionOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -184,7 +146,6 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleFactionOrigin(h)
 	service.Mux.Handle("GET", "/v0/factions", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Faction", "action", "List", "route", "GET /v0/factions")
 
@@ -200,34 +161,8 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handleFactionOrigin(h)
 	service.Mux.Handle("GET", "/v0/factions/:factionID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Faction", "action", "Show", "route", "GET /v0/factions/:factionID")
-}
-
-// handleFactionOrigin applies the CORS response headers corresponding to the origin.
-func handleFactionOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // GlyphController is the controller interface for the Glyph actions.
@@ -241,8 +176,6 @@ type GlyphController interface {
 func MountGlyphController(service *goa.Service, ctrl GlyphController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/glyphs", ctrl.MuxHandler("preflight", handleGlyphOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/glyphs/:glyphID", ctrl.MuxHandler("preflight", handleGlyphOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -256,7 +189,6 @@ func MountGlyphController(service *goa.Service, ctrl GlyphController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleGlyphOrigin(h)
 	service.Mux.Handle("GET", "/v0/glyphs", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Glyph", "action", "List", "route", "GET /v0/glyphs")
 
@@ -272,34 +204,8 @@ func MountGlyphController(service *goa.Service, ctrl GlyphController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handleGlyphOrigin(h)
 	service.Mux.Handle("GET", "/v0/glyphs/:glyphID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Glyph", "action", "Show", "route", "GET /v0/glyphs/:glyphID")
-}
-
-// handleGlyphOrigin applies the CORS response headers corresponding to the origin.
-func handleGlyphOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // PatchController is the controller interface for the Patch actions.
@@ -314,9 +220,6 @@ type PatchController interface {
 func MountPatchController(service *goa.Service, ctrl PatchController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/patches/latest", ctrl.MuxHandler("preflight", handlePatchOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/patches", ctrl.MuxHandler("preflight", handlePatchOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/patches/:patchID", ctrl.MuxHandler("preflight", handlePatchOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -330,7 +233,6 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 		}
 		return ctrl.Latest(rctx)
 	}
-	h = handlePatchOrigin(h)
 	service.Mux.Handle("GET", "/v0/patches/latest", ctrl.MuxHandler("Latest", h, nil))
 	service.LogInfo("mount", "ctrl", "Patch", "action", "Latest", "route", "GET /v0/patches/latest")
 
@@ -346,7 +248,6 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handlePatchOrigin(h)
 	service.Mux.Handle("GET", "/v0/patches", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Patch", "action", "List", "route", "GET /v0/patches")
 
@@ -362,34 +263,8 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handlePatchOrigin(h)
 	service.Mux.Handle("GET", "/v0/patches/:patchID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Patch", "action", "Show", "route", "GET /v0/patches/:patchID")
-}
-
-// handlePatchOrigin applies the CORS response headers corresponding to the origin.
-func handlePatchOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // PhonebookController is the controller interface for the Phonebook actions.
@@ -402,7 +277,6 @@ type PhonebookController interface {
 func MountPhonebookController(service *goa.Service, ctrl PhonebookController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0", ctrl.MuxHandler("preflight", handlePhonebookOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -416,34 +290,8 @@ func MountPhonebookController(service *goa.Service, ctrl PhonebookController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handlePhonebookOrigin(h)
 	service.Mux.Handle("GET", "/v0", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Phonebook", "action", "Show", "route", "GET /v0")
-}
-
-// handlePhonebookOrigin applies the CORS response headers corresponding to the origin.
-func handlePhonebookOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // RarityController is the controller interface for the Rarity actions.
@@ -457,8 +305,6 @@ type RarityController interface {
 func MountRarityController(service *goa.Service, ctrl RarityController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/rarities", ctrl.MuxHandler("preflight", handleRarityOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/rarities/:rarityID", ctrl.MuxHandler("preflight", handleRarityOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -472,7 +318,6 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleRarityOrigin(h)
 	service.Mux.Handle("GET", "/v0/rarities", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Rarity", "action", "List", "route", "GET /v0/rarities")
 
@@ -488,34 +333,8 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handleRarityOrigin(h)
 	service.Mux.Handle("GET", "/v0/rarities/:rarityID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Rarity", "action", "Show", "route", "GET /v0/rarities/:rarityID")
-}
-
-// handleRarityOrigin applies the CORS response headers corresponding to the origin.
-func handleRarityOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }
 
 // TypeController is the controller interface for the Type actions.
@@ -529,8 +348,6 @@ type TypeController interface {
 func MountTypeController(service *goa.Service, ctrl TypeController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/v0/types", ctrl.MuxHandler("preflight", handleTypeOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/v0/types/:typeID", ctrl.MuxHandler("preflight", handleTypeOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -544,7 +361,6 @@ func MountTypeController(service *goa.Service, ctrl TypeController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleTypeOrigin(h)
 	service.Mux.Handle("GET", "/v0/types", ctrl.MuxHandler("List", h, nil))
 	service.LogInfo("mount", "ctrl", "Type", "action", "List", "route", "GET /v0/types")
 
@@ -560,32 +376,6 @@ func MountTypeController(service *goa.Service, ctrl TypeController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	h = handleTypeOrigin(h)
 	service.Mux.Handle("GET", "/v0/types/:typeID", ctrl.MuxHandler("Show", h, nil))
 	service.LogInfo("mount", "ctrl", "Type", "action", "Show", "route", "GET /v0/types/:typeID")
-}
-
-// handleTypeOrigin applies the CORS response headers corresponding to the origin.
-func handleTypeOrigin(h goa.Handler) goa.Handler {
-	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		origin := req.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
-			rw.Header().Set("Access-Control-Max-Age", "600")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
-			return h(ctx, rw, req)
-		}
-
-		return h(ctx, rw, req)
-	}
 }

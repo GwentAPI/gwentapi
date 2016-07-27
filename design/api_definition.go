@@ -11,20 +11,14 @@ var _ = API("gwentapi", func() {
 	Version("0.0")
 	Contact(func() {
 		Name("Tristan S.")
-		Email("gwentapi@gmail.com")
+		Email("api.gwent@gmail.com")
 		URL("https://twitter.com/GwentAPI")
 	})
 	License(func() {
 		Name("The textual information presented through this API about GWENT: The Witcher Card Game is copyrighted by CD Projekt RED")
 	})
 	BasePath("/v0")
-	Host("localhost:8080")
+	Host("api.gwentapi.com")
 	Scheme("https")
 	Produces("application/json")
-
-	Origin("*", func() {
-		Expose("Access-Control-Allow-Origin")
-		Methods("GET")
-		MaxAge(600)
-	})
 })
