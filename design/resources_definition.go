@@ -157,6 +157,11 @@ var _ = Resource("card", func() {
 
 	Response(InternalServerError)
 
+	Params(func() {
+		Param("limit", Integer, "Number of cards to receive")
+		Param("offset", Integer, "Offset of the starting count")
+	})
+
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return all cards.")

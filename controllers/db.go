@@ -324,9 +324,13 @@ func FetchCard(id string) (CardModel, error) {
 }
 
 func FetchAllCards() ([]*CardModel, error) {
+	return FetchLimitOffsetCards(20, 0)
+}
+
+func FetchLimitOffsetCards(limit int, offset int) ([]*CardModel, error) {
 	var cards []*CardModel
 
-	rows, err := DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY c.id ASC")
+	rows, err := DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY c.id ASC LIMIT ? OFFSET ?", limit, offset)
 
 	if err != nil {
 		return cards, err

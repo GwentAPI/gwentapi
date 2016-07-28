@@ -503,6 +503,17 @@ paths:
     get:
       description: Return all cards.
       operationId: card#list
+      parameters:
+      - description: Number of cards to receive
+        in: query
+        name: limit
+        required: false
+        type: integer
+      - description: Offset of the starting count
+        in: query
+        name: offset
+        required: false
+        type: integer
       responses:
         "200":
           description: OK
@@ -527,6 +538,16 @@ paths:
         name: cardID
         required: true
         type: string
+      - description: Number of cards to receive
+        in: query
+        name: limit
+        required: false
+        type: integer
+      - description: Offset of the starting count
+        in: query
+        name: offset
+        required: false
+        type: integer
       responses:
         "200":
           description: OK
@@ -551,6 +572,16 @@ paths:
         name: factionID
         required: true
         type: string
+      - description: Number of cards to receive
+        in: query
+        name: limit
+        required: false
+        type: integer
+      - description: Offset of the starting count
+        in: query
+        name: offset
+        required: false
+        type: integer
       responses:
         "200":
           description: OK
@@ -569,6 +600,17 @@ paths:
     get:
       description: Return all leader cards.
       operationId: card#cardLeader
+      parameters:
+      - description: Number of cards to receive
+        in: query
+        name: limit
+        required: false
+        type: integer
+      - description: Offset of the starting count
+        in: query
+        name: offset
+        required: false
+        type: integer
       responses:
         "200":
           description: OK
@@ -588,6 +630,16 @@ paths:
       description: Return all cards with given rarity id.
       operationId: card#cardRarity
       parameters:
+      - description: Number of cards to receive
+        in: query
+        name: limit
+        required: false
+        type: integer
+      - description: Offset of the starting count
+        in: query
+        name: offset
+        required: false
+        type: integer
       - description: Rarity ID
         in: path
         name: rarityID

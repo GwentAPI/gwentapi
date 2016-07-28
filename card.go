@@ -43,8 +43,6 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	// CardController_CardRarity: start_implement
 
-	return ctx.NotFound()
-
 	//res := make(app.GwentapiCardCollection, len(cards))
 
 	// CardController_CardRarity: end_implement
@@ -55,8 +53,15 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 // List runs the list action.
 func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: start_implement
+	var cards []*controllers.CardModel
+	var err error
 
-	cards, err := controllers.FetchAllCards()
+	if ctx.Offset != nil && ctx.Limit != nil {
+		cards, err = controllers.FetchLimitOffsetCards(*ctx.Limit, *ctx.Offset)
+	} else {
+		cards, err = controllers.FetchAllCards()
+	}
+
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

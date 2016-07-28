@@ -15,6 +15,7 @@ package app
 import (
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
+	"strconv"
 )
 
 // CardFactionCardContext provides the card cardFaction action context.
@@ -23,6 +24,8 @@ type CardFactionCardContext struct {
 	*goa.ResponseData
 	*goa.RequestData
 	FactionID string
+	Limit     *int
+	Offset    *int
 }
 
 // NewCardFactionCardContext parses the incoming request URL and body, performs validations and creates the
@@ -37,6 +40,28 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 	if len(paramFactionID) > 0 {
 		rawFactionID := paramFactionID[0]
 		rctx.FactionID = rawFactionID
+	}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp2 := limit
+			tmp1 := &tmp2
+			rctx.Limit = tmp1
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp4 := offset
+			tmp3 := &tmp4
+			rctx.Offset = tmp3
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
 	}
 	return &rctx, err
 }
@@ -64,6 +89,8 @@ type CardLeaderCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	Limit  *int
+	Offset *int
 }
 
 // NewCardLeaderCardContext parses the incoming request URL and body, performs validations and creates the
@@ -74,6 +101,28 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	rctx := CardLeaderCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp6 := limit
+			tmp5 := &tmp6
+			rctx.Limit = tmp5
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp8 := offset
+			tmp7 := &tmp8
+			rctx.Offset = tmp7
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+	}
 	return &rctx, err
 }
 
@@ -100,6 +149,8 @@ type CardRarityCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	Limit    *int
+	Offset   *int
 	RarityID string
 }
 
@@ -111,6 +162,28 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	rctx := CardRarityCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp10 := limit
+			tmp9 := &tmp10
+			rctx.Limit = tmp9
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp12 := offset
+			tmp11 := &tmp12
+			rctx.Offset = tmp11
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+	}
 	paramRarityID := req.Params["rarityID"]
 	if len(paramRarityID) > 0 {
 		rawRarityID := paramRarityID[0]
@@ -142,6 +215,8 @@ type ListCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	Limit  *int
+	Offset *int
 }
 
 // NewListCardContext parses the incoming request URL and body, performs validations and creates the
@@ -152,6 +227,28 @@ func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardCon
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	rctx := ListCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp14 := limit
+			tmp13 := &tmp14
+			rctx.Limit = tmp13
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp16 := offset
+			tmp15 := &tmp16
+			rctx.Offset = tmp15
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+	}
 	return &rctx, err
 }
 
@@ -179,6 +276,8 @@ type ShowCardContext struct {
 	*goa.ResponseData
 	*goa.RequestData
 	CardID string
+	Limit  *int
+	Offset *int
 }
 
 // NewShowCardContext parses the incoming request URL and body, performs validations and creates the
@@ -193,6 +292,28 @@ func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardCon
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
 		rctx.CardID = rawCardID
+	}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp18 := limit
+			tmp17 := &tmp18
+			rctx.Limit = tmp17
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp20 := offset
+			tmp19 := &tmp20
+			rctx.Offset = tmp19
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
 	}
 	return &rctx, err
 }
