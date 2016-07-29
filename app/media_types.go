@@ -367,6 +367,32 @@ func (mt GwentapiGlyphLinkCollection) Validate() (err error) {
 	return
 }
 
+// Paginated card (default view)
+//
+// Identifier: application/vnd.gwentapi.pagecard+json
+type GwentapiPagecard struct {
+	// Total number of cards stored in the database
+	Count int `form:"count" json:"count" xml:"count"`
+	// Href to the next page
+	Next *string `form:"next,omitempty" json:"next,omitempty" xml:"next,omitempty"`
+	// Href to the previous page
+	Previous *string `form:"previous,omitempty" json:"previous,omitempty" xml:"previous,omitempty"`
+	// Results of the page containing cards
+	Results GwentapiCardLinkCollection `form:"results" json:"results" xml:"results"`
+}
+
+// Validate validates the GwentapiPagecard media type instance.
+func (mt *GwentapiPagecard) Validate() (err error) {
+	if mt.Results == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "results"))
+	}
+
+	if err2 := mt.Results.Validate(); err2 != nil {
+		err = goa.MergeErrors(err, err2)
+	}
+	return
+}
+
 // A game patch (default view)
 //
 // Identifier: application/vnd.gwentapi.patch+json

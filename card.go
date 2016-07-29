@@ -67,10 +67,17 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		return ctx.InternalServerError()
 	}
 
-	res := make(app.GwentapiCardCollection, len(cards))
-	for i, card := range cards {
+	cardResult := make(app.GwentapiCardLinkCollection, len(cards))
 
-		res[i] = createCard(card)
+	for i, card := range cards {
+		cardResult[i] = createLinkCard(card)
+	}
+
+	res := &app.GwentapiPagecard{
+		Count:    0,
+		Next:     nil,
+		Previous: nil,
+		Results:  cardResult,
 	}
 
 	// CardController_List: end_implement
@@ -131,5 +138,13 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 	}
 	c.Subtypes = typeCollection
 
+	return c
+}
+
+func createLinkCard(card *controllers.CardModel) *app.GwentapiCardLink {
+	c := &app.GwentapiCardLink{
+		Href: app.CardHref(card.ID),
+		Name: card.Name,
+	}
 	return c
 }

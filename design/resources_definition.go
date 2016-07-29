@@ -158,15 +158,21 @@ var _ = Resource("card", func() {
 	Response(InternalServerError)
 
 	Params(func() {
-		Param("limit", Integer, "Number of cards to receive")
-		Param("offset", Integer, "Offset of the starting count")
+		Param("limit", Integer, "Number of cards to receive", func() {
+			Minimum(1)
+			Maximum(1000)
+		})
+		Param("offset", Integer, "Offset of the starting count", func() {
+			Minimum(0)
+			Maximum(1000)
+		})
 	})
 
 	Action("list", func() {
 		Routing(GET(""))
-		Description("Return all cards.")
+		Description("Return a page of cards.")
 
-		Response(OK, CollectionOf(CardMedia))
+		Response(OK, PageCard)
 		Response(NotFound)
 	})
 

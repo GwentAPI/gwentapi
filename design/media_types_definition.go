@@ -28,6 +28,31 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 	})
 })
 
+var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
+	Description("Paginated card")
+	Attributes(func() {
+		Attribute("count", Integer, "Total number of cards stored in the database")
+		Attribute("previous", String, "Href to the previous page")
+		Attribute("next", String, "Href to the next page")
+		Attribute("results", CollectionOf(CardMedia), "Results of the page containing cards")
+
+		Required("count", "results")
+	})
+
+	Links(func() {
+		Link("results")
+	})
+
+	View("default", func() {
+		Attribute("count")
+		Attribute("previous")
+		Attribute("next")
+		Attribute("results", func() {
+			View("link")
+		})
+	})
+})
+
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
 	Attributes(func() {

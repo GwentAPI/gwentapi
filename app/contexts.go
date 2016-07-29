@@ -51,6 +51,16 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
+		if rctx.Limit != nil {
+			if *rctx.Limit < 1 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1, true))
+			}
+		}
+		if rctx.Limit != nil {
+			if *rctx.Limit > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1000, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) > 0 {
@@ -61,6 +71,16 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 			rctx.Offset = tmp3
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset < 0 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 0, true))
+			}
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 1000, false))
+			}
 		}
 	}
 	return &rctx, err
@@ -111,6 +131,16 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
+		if rctx.Limit != nil {
+			if *rctx.Limit < 1 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1, true))
+			}
+		}
+		if rctx.Limit != nil {
+			if *rctx.Limit > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1000, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) > 0 {
@@ -121,6 +151,16 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 			rctx.Offset = tmp7
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset < 0 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 0, true))
+			}
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 1000, false))
+			}
 		}
 	}
 	return &rctx, err
@@ -172,6 +212,16 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
+		if rctx.Limit != nil {
+			if *rctx.Limit < 1 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1, true))
+			}
+		}
+		if rctx.Limit != nil {
+			if *rctx.Limit > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1000, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) > 0 {
@@ -182,6 +232,16 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 			rctx.Offset = tmp11
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset < 0 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 0, true))
+			}
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 1000, false))
+			}
 		}
 	}
 	paramRarityID := req.Params["rarityID"]
@@ -237,6 +297,16 @@ func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardCon
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
+		if rctx.Limit != nil {
+			if *rctx.Limit < 1 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1, true))
+			}
+		}
+		if rctx.Limit != nil {
+			if *rctx.Limit > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1000, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) > 0 {
@@ -248,13 +318,23 @@ func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardCon
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}
+		if rctx.Offset != nil {
+			if *rctx.Offset < 0 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 0, true))
+			}
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 1000, false))
+			}
+		}
 	}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ListCardContext) OK(r GwentapiCardCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
+func (ctx *ListCardContext) OK(r *GwentapiPagecard) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -303,6 +383,16 @@ func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardCon
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
+		if rctx.Limit != nil {
+			if *rctx.Limit < 1 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1, true))
+			}
+		}
+		if rctx.Limit != nil {
+			if *rctx.Limit > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, *rctx.Limit, 1000, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) > 0 {
@@ -313,6 +403,16 @@ func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardCon
 			rctx.Offset = tmp19
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset < 0 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 0, true))
+			}
+		}
+		if rctx.Offset != nil {
+			if *rctx.Offset > 1000 {
+				err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, *rctx.Offset, 1000, false))
+			}
 		}
 	}
 	return &rctx, err
