@@ -5,6 +5,7 @@ import (
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
 	"log"
+	"strconv"
 )
 
 // CardController implements the card resource.
@@ -55,12 +56,43 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: start_implement
 	var cards []*controllers.CardModel
 	var err error
+	var offset, limit int
 
-	if ctx.Offset != nil && ctx.Limit != nil {
-		cards, err = controllers.FetchLimitOffsetCards(*ctx.Limit, *ctx.Offset)
+	if ctx.Offset == nil {
+		offset = 0
 	} else {
-		cards, err = controllers.FetchAllCards()
+		offset = *ctx.Offset
 	}
+	if ctx.Limit == nil {
+		limit = 20
+	} else {
+		limit = *ctx.Limit
+	}
+
+	count, err := controllers.CountCards()
+
+	if err != nil {
+		log.Println(err)
+		return ctx.InternalServerError()
+	}
+
+	if offset < 0 {
+		offset = 0
+	}
+
+	if offset > count {
+		offset = count
+	}
+
+	if limit < 0 {
+		limit = 1
+	}
+
+	if limit > count {
+		limit = count
+	}
+
+	cards, err = controllers.FetchLimitOffsetCards(limit, offset)
 
 	if err != nil {
 		log.Println(err)
@@ -73,10 +105,12 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		cardResult[i] = createLinkCard(card)
 	}
 
+	prev, next := generatePrevNextPageHref(count, limit, offset, app.CardHref(""))
+
 	res := &app.GwentapiPagecard{
-		Count:    0,
-		Next:     nil,
-		Previous: nil,
+		Count:    count,
+		Next:     next,
+		Previous: prev,
 		Results:  cardResult,
 	}
 
@@ -147,4 +181,31 @@ func createLinkCard(card *controllers.CardModel) *app.GwentapiCardLink {
 		Name: card.Name,
 	}
 	return c
+}
+
+func generatePrevNextPageHref(count int, limit int, offset int, href string) (*string, *string) {
+	var nextHref, prevHref string
+	var next, prev *string
+
+	nextHref = href + "?limit=" + strconv.Itoa(limit) + "&offset="
+	prevHref = nextHref
+
+	prevOffset := offset - limit
+	nextOffset := offset + limit
+
+	if prevOffset < 0 {
+		prevOffset = 0
+	}
+
+	if offset > 0 {
+		prevHref += strconv.Itoa(prevOffset)
+		prev = &prevHref
+	}
+
+	if nextOffset <= count && limit != count {
+		nextHref += strconv.Itoa(nextOffset)
+		next = &nextHref
+	}
+
+	return prev, next
 }

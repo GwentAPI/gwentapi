@@ -705,14 +705,11 @@ paths:
       parameters:
       - description: Number of cards to receive
         in: query
-        maximum: 1000
-        minimum: 1
         name: limit
         required: false
         type: integer
       - description: Offset of the starting count
         in: query
-        maximum: 1000
         name: offset
         required: false
         type: integer
@@ -742,14 +739,11 @@ paths:
         type: string
       - description: Number of cards to receive
         in: query
-        maximum: 1000
-        minimum: 1
         name: limit
         required: false
         type: integer
       - description: Offset of the starting count
         in: query
-        maximum: 1000
         name: offset
         required: false
         type: integer
@@ -779,14 +773,11 @@ paths:
         type: string
       - description: Number of cards to receive
         in: query
-        maximum: 1000
-        minimum: 1
         name: limit
         required: false
         type: integer
       - description: Offset of the starting count
         in: query
-        maximum: 1000
         name: offset
         required: false
         type: integer
@@ -811,14 +802,11 @@ paths:
       parameters:
       - description: Number of cards to receive
         in: query
-        maximum: 1000
-        minimum: 1
         name: limit
         required: false
         type: integer
       - description: Offset of the starting count
         in: query
-        maximum: 1000
         name: offset
         required: false
         type: integer
@@ -843,14 +831,11 @@ paths:
       parameters:
       - description: Number of cards to receive
         in: query
-        maximum: 1000
-        minimum: 1
         name: limit
         required: false
         type: integer
       - description: Offset of the starting count
         in: query
-        maximum: 1000
         name: offset
         required: false
         type: integer

@@ -158,14 +158,8 @@ var _ = Resource("card", func() {
 	Response(InternalServerError)
 
 	Params(func() {
-		Param("limit", Integer, "Number of cards to receive", func() {
-			Minimum(1)
-			Maximum(1000)
-		})
-		Param("offset", Integer, "Offset of the starting count", func() {
-			Minimum(0)
-			Maximum(1000)
-		})
+		Param("limit", Integer, "Number of cards to receive")
+		Param("offset", Integer, "Offset of the starting count")
 	})
 
 	Action("list", func() {

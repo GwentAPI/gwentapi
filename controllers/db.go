@@ -323,8 +323,13 @@ func FetchCard(id string) (CardModel, error) {
 	return card, err
 }
 
-func FetchAllCards() ([]*CardModel, error) {
-	return FetchLimitOffsetCards(20, 0)
+func CountCards() (int, error) {
+	var count int
+
+	row := DBCon.QueryRow("SELECT COUNT(*) FROM Cards")
+	err := row.Scan(&count)
+
+	return count, err
 }
 
 func FetchLimitOffsetCards(limit int, offset int) ([]*CardModel, error) {
