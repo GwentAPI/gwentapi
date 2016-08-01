@@ -21,12 +21,12 @@ func (c *PhonebookController) Show(ctx *app.ShowPhonebookContext) error {
 
 	// PhonebookController_Show: end_implement
 	res := &app.GwentapiResource{
-		Factions: app.FactionHref(""),
-		Glyphs:   app.GlyphHref(""),
-		Rarities: app.RarityHref(""),
-		Types:    app.TypeHref(""),
-		Patches:  app.PatchHref(""),
-		Cards:    app.CardHref(""),
+		Factions: app.FactionURL(""),
+		Glyphs:   app.GlyphURL(""),
+		Rarities: app.RarityURL(""),
+		Types:    app.TypeURL(""),
+		Patches:  app.PatchURL(""),
+		Cards:    app.CardURL(""),
 	}
 	return ctx.OK(res)
 }

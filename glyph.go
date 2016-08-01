@@ -31,7 +31,7 @@ func (c *GlyphController) List(ctx *app.ListGlyphContext) error {
 	for i, glyph := range glyphs {
 		g := &app.GwentapiGlyph{
 			ID:             glyph.ID,
-			Href:           app.GlyphHref(glyph.ID),
+			Href:           app.GlyphURL(glyph.ID),
 			IsWeatherGlyph: glyph.IsWeatherGlyph,
 			Text:           glyph.Text,
 			Name:           glyph.Name,
@@ -52,7 +52,7 @@ func (c *GlyphController) Show(ctx *app.ShowGlyphContext) error {
 
 	res := &app.GwentapiGlyph{
 		ID:             glyph.ID,
-		Href:           app.GlyphHref(glyph.ID),
+		Href:           app.GlyphURL(glyph.ID),
 		IsWeatherGlyph: glyph.IsWeatherGlyph,
 		Text:           glyph.Text,
 		Name:           glyph.Name,
