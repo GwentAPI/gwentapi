@@ -151,6 +151,24 @@ var _ = Resource("patch", func() {
 	})
 })
 
+var _ = Resource("artwork", func() {
+	DefaultMedia(ArtworkMedia)
+	BasePath("/artworks")
+
+	Response(InternalServerError)
+
+	Action("show", func() {
+		Description("Return artwork with given id.")
+		Routing(GET("/:cardID"))
+
+		Params(func() {
+			Param("cardID", String, "Card ID")
+		})
+		Response(OK)
+		Response(NotFound)
+	})
+})
+
 var _ = Resource("card", func() {
 	DefaultMedia(CardMedia)
 	BasePath("/cards")

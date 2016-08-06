@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strconv"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ import (
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string) http.ResponseWriter {
+func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -39,8 +40,18 @@ func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, servi
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -48,6 +59,14 @@ func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, servi
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -76,7 +95,7 @@ func CardFactionCardInternalServerError(t *testing.T, ctx context.Context, servi
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string) http.ResponseWriter {
+func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -96,8 +115,18 @@ func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Ser
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -105,6 +134,14 @@ func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Ser
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -133,7 +170,7 @@ func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Ser
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -153,8 +190,18 @@ func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, 
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -162,6 +209,14 @@ func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, 
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -202,7 +257,7 @@ func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, 
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
+func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -222,8 +277,18 @@ func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Servi
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -231,6 +296,14 @@ func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Servi
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -271,7 +344,7 @@ func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Servi
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) http.ResponseWriter {
+func CardLeaderCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -291,14 +364,32 @@ func CardLeaderCardInternalServerError(t *testing.T, ctx context.Context, servic
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/leaders"),
+		Path:     fmt.Sprintf("/v0/cards/leaders"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -327,7 +418,7 @@ func CardLeaderCardInternalServerError(t *testing.T, ctx context.Context, servic
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) http.ResponseWriter {
+func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -347,14 +438,32 @@ func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/leaders"),
+		Path:     fmt.Sprintf("/v0/cards/leaders"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -383,7 +492,7 @@ func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -403,14 +512,32 @@ func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/leaders"),
+		Path:     fmt.Sprintf("/v0/cards/leaders"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -451,7 +578,7 @@ func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
+func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -471,14 +598,32 @@ func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/leaders"),
+		Path:     fmt.Sprintf("/v0/cards/leaders"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -519,7 +664,7 @@ func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string) http.ResponseWriter {
+func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -539,8 +684,18 @@ func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, servic
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		Path:     fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -548,6 +703,14 @@ func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, servic
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -576,7 +739,7 @@ func CardRarityCardInternalServerError(t *testing.T, ctx context.Context, servic
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string) http.ResponseWriter {
+func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -596,8 +759,18 @@ func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		Path:     fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -605,6 +778,14 @@ func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -633,7 +814,7 @@ func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -653,8 +834,18 @@ func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		Path:     fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -662,6 +853,14 @@ func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -702,7 +901,7 @@ func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
+func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -722,8 +921,18 @@ func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		Path:     fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -731,6 +940,14 @@ func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -771,7 +988,7 @@ func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Servic
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) http.ResponseWriter {
+func ListCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -791,14 +1008,32 @@ func ListCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards"),
+		Path:     fmt.Sprintf("/v0/cards"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -827,7 +1062,7 @@ func ListCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) http.ResponseWriter {
+func ListCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -847,14 +1082,32 @@ func ListCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards"),
+		Path:     fmt.Sprintf("/v0/cards"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -883,7 +1136,7 @@ func ListCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController) (http.ResponseWriter, *app.GwentapiPagecard) {
+func ListCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiPagecard) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -903,14 +1156,32 @@ func ListCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards"),
+		Path:     fmt.Sprintf("/v0/cards"),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -951,7 +1222,7 @@ func ListCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string) http.ResponseWriter {
+func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -971,8 +1242,18 @@ func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/%v", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v", cardID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -980,6 +1261,14 @@ func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -1008,7 +1297,7 @@ func ShowCardInternalServerError(t *testing.T, ctx context.Context, service *goa
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string) http.ResponseWriter {
+func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1028,8 +1317,18 @@ func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/%v", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v", cardID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1037,6 +1336,14 @@ func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -1065,7 +1372,7 @@ func ShowCardNotFound(t *testing.T, ctx context.Context, service *goa.Service, c
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string) (http.ResponseWriter, *app.GwentapiCard) {
+func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiCard) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1085,8 +1392,18 @@ func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/%v", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v", cardID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1094,6 +1411,14 @@ func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -1134,7 +1459,7 @@ func ShowCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl ap
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string) (http.ResponseWriter, *app.GwentapiCardLink) {
+func ShowCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiCardLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1154,8 +1479,18 @@ func ShowCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctr
 
 	// Setup request context
 	rw := httptest.NewRecorder()
+	query := url.Values{}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		query["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		query["offset"] = sliceVal
+	}
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/cards/%v", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v", cardID),
+		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1163,6 +1498,14 @@ func ShowCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctr
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	if limit != nil {
+		sliceVal := []string{strconv.Itoa(*limit)}
+		prms["limit"] = sliceVal
+	}
+	if offset != nil {
+		sliceVal := []string{strconv.Itoa(*offset)}
+		prms["offset"] = sliceVal
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}

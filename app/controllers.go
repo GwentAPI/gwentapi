@@ -1,11 +1,11 @@
 //************************************************************************//
 // API "gwentapi": Application Controllers
 //
-// Generated with goagen v0.2.dev, command line:
+// Generated with goagen v1.0.0, command line:
 // $ goagen
 // --design=github.com/tri125/gwentapi/design
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
-// --version=v0.2.dev
+// --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
@@ -29,6 +29,33 @@ func initService(service *goa.Service) {
 	// Setup default encoder and decoder
 	service.Encoder.Register(goa.NewJSONEncoder, "*/*")
 	service.Decoder.Register(goa.NewJSONDecoder, "*/*")
+}
+
+// ArtworkController is the controller interface for the Artwork actions.
+type ArtworkController interface {
+	goa.Muxer
+	Show(*ShowArtworkContext) error
+}
+
+// MountArtworkController "mounts" a Artwork resource controller on the given service.
+func MountArtworkController(service *goa.Service, ctrl ArtworkController) {
+	initService(service)
+	var h goa.Handler
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewShowArtworkContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.Show(rctx)
+	}
+	service.Mux.Handle("GET", "/v0/artworks/:cardID", ctrl.MuxHandler("Show", h, nil))
+	service.LogInfo("mount", "ctrl", "Artwork", "action", "Show", "route", "GET /v0/artworks/:cardID")
 }
 
 // CardController is the controller interface for the Card actions.

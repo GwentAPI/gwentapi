@@ -2,6 +2,11 @@ package app
 
 const host string = "http://localhost:8080"
 
+// ArtworkHref returns the resource href.
+func ArtworkURL(cardID interface{}) string {
+	return host + ArtworkHref(cardID)
+}
+
 // CardHref returns the resource href.
 func CardURL(cardID interface{}) string {
 	return host + CardHref(cardID)

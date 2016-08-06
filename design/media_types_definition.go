@@ -53,6 +53,38 @@ var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 	})
 })
 
+var ArtworkMedia = MediaType("application/vnd.gwentapi.artwork+json", func() {
+	Description("Artwork for a card")
+	Attributes(func() {
+		Attribute("id", String, "Unique artwork ID")
+		Attribute("href", String, "API href for making requests on the artwork")
+		Attribute("artwork", ArtworkType, "Principal artwork of the card")
+		//Attribute("card", CardMedia, "Card referred to by the artwork")
+		Attribute("alternatives", ArrayOf(ArtworkType), "Alternatives artwork for the card")
+
+		Required("id", "href", "artwork")
+	})
+
+	//Links(func() {
+	//	Link("card")
+	//})
+
+	View("default", func() {
+		Attribute("id")
+		Attribute("href")
+		Attribute("artwork")
+		Attribute("alternatives")
+		//Attribute("card", func() {
+		//	View("link")
+		//})
+	})
+
+	View("link", func() {
+		Attribute("id")
+		Attribute("href")
+	})
+})
+
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
 	Attributes(func() {

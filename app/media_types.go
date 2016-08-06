@@ -1,11 +1,11 @@
 //************************************************************************//
 // API "gwentapi": Application Media Types
 //
-// Generated with goagen v0.2.dev, command line:
+// Generated with goagen v1.0.0, command line:
 // $ goagen
 // --design=github.com/tri125/gwentapi/design
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
-// --version=v0.2.dev
+// --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
@@ -16,6 +16,71 @@ import (
 	"github.com/goadesign/goa"
 	"time"
 )
+
+// Artwork for a card (default view)
+//
+// Identifier: application/vnd.gwentapi.artwork+json
+type GwentapiArtwork struct {
+	// Alternatives artwork for the card
+	Alternatives []*ArtworkType `form:"alternatives,omitempty" json:"alternatives,omitempty" xml:"alternatives,omitempty"`
+	// Principal artwork of the card
+	Artwork *ArtworkType `form:"artwork" json:"artwork" xml:"artwork"`
+	// API href for making requests on the artwork
+	Href string `form:"href" json:"href" xml:"href"`
+	// Unique artwork ID
+	ID string `form:"id" json:"id" xml:"id"`
+}
+
+// Validate validates the GwentapiArtwork media type instance.
+func (mt *GwentapiArtwork) Validate() (err error) {
+	if mt.ID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+	}
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Artwork == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "artwork"))
+	}
+
+	for _, e := range mt.Alternatives {
+		if e.Full == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "full"))
+		}
+		if e.Small == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "small"))
+		}
+
+	}
+	if mt.Artwork != nil {
+		if err2 := mt.Artwork.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
+	}
+	return
+}
+
+// Artwork for a card (link view)
+//
+// Identifier: application/vnd.gwentapi.artwork+json
+type GwentapiArtworkLink struct {
+	// API href for making requests on the artwork
+	Href string `form:"href" json:"href" xml:"href"`
+	// Unique artwork ID
+	ID string `form:"id" json:"id" xml:"id"`
+}
+
+// Validate validates the GwentapiArtworkLink media type instance.
+func (mt *GwentapiArtworkLink) Validate() (err error) {
+	if mt.ID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+	}
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+
+	return
+}
 
 // A card (default view)
 //

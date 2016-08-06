@@ -1,11 +1,11 @@
 //************************************************************************//
 // API "gwentapi": Application Resource Href Factories
 //
-// Generated with goagen v0.2.dev, command line:
+// Generated with goagen v1.0.0, command line:
 // $ goagen
 // --design=github.com/tri125/gwentapi/design
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
-// --version=v0.2.dev
+// --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
@@ -13,6 +13,11 @@
 package app
 
 import "fmt"
+
+// ArtworkHref returns the resource href.
+func ArtworkHref(cardID interface{}) string {
+	return fmt.Sprintf("/v0/artworks/%v", cardID)
+}
 
 // CardHref returns the resource href.
 func CardHref(cardID interface{}) string {
