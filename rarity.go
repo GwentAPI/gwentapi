@@ -30,7 +30,7 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 	for i, rarity := range rarities {
 		r := &app.GwentapiRarity{
 			ID:   rarity.ID,
-			Href: app.RarityURL(rarity.ID),
+			Href: controllers.RarityURL(rarity.ID),
 			Name: rarity.Name,
 		}
 		res[i] = r
@@ -51,7 +51,7 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 
 	res := &app.GwentapiRarity{
 		ID:   rarity.ID,
-		Href: app.RarityURL(rarity.ID),
+		Href: controllers.RarityURL(rarity.ID),
 		Name: rarity.Name,
 	}
 	// RarityController_Show: end_implement

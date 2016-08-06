@@ -29,7 +29,7 @@ func (c *PatchController) Latest(ctx *app.LatestPatchContext) error {
 	res := &app.GwentapiPatch{
 		Version:     patch.Version,
 		ID:          patch.ID,
-		Href:        app.PatchURL(patch.ID),
+		Href:        controllers.PatchURL(patch.ID),
 		ReleaseDate: patch.ReleaseDate,
 	}
 	// PatchController_Latest: end_implement
@@ -49,7 +49,7 @@ func (c *PatchController) List(ctx *app.ListPatchContext) error {
 		p := &app.GwentapiPatch{
 			Version:     patch.Version,
 			ID:          patch.ID,
-			Href:        app.PatchURL(patch.ID),
+			Href:        controllers.PatchURL(patch.ID),
 			ReleaseDate: patch.ReleaseDate,
 		}
 		res[i] = p
@@ -70,7 +70,7 @@ func (c *PatchController) Show(ctx *app.ShowPatchContext) error {
 	res := &app.GwentapiPatch{
 		Version:     patch.Version,
 		ID:          patch.ID,
-		Href:        app.PatchURL(patch.ID),
+		Href:        controllers.PatchURL(patch.ID),
 		ReleaseDate: patch.ReleaseDate,
 	}
 	// PatchController_Show: end_implement

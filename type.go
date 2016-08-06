@@ -31,7 +31,7 @@ func (c *TypeController) List(ctx *app.ListTypeContext) error {
 	for i, cardType := range cardTypes {
 		t := &app.GwentapiType{
 			ID:   cardType.ID,
-			Href: app.TypeURL(cardType.ID),
+			Href: controllers.TypeURL(cardType.ID),
 			Name: cardType.Name,
 		}
 		res[i] = t
@@ -51,7 +51,7 @@ func (c *TypeController) Show(ctx *app.ShowTypeContext) error {
 
 	res := &app.GwentapiType{
 		ID:   cardType.ID,
-		Href: app.TypeURL(cardType.ID),
+		Href: controllers.TypeURL(cardType.ID),
 		Name: cardType.Name,
 	}
 	// TypeController_Show: end_implement

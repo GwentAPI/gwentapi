@@ -58,7 +58,7 @@ var ArtworkMedia = MediaType("application/vnd.gwentapi.artwork+json", func() {
 	Attributes(func() {
 		Attribute("id", String, "Unique artwork ID")
 		Attribute("href", String, "API href for making requests on the artwork")
-		Attribute("artwork", ArtworkType, "Principal artwork of the card")
+		Attribute("artwork", ArtworkType, "Primary artwork of the card")
 		//Attribute("card", CardMedia, "Card referred to by the artwork")
 		Attribute("alternatives", ArrayOf(ArtworkType), "Alternatives artwork for the card")
 

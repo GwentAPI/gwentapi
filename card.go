@@ -105,7 +105,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		cardResult[i] = createLinkCard(card)
 	}
 
-	prev, next := generatePrevNextPageHref(count, limit, offset, app.CardURL(""))
+	prev, next := generatePrevNextPageHref(count, limit, offset, controllers.CardURL(""))
 
 	res := &app.GwentapiPagecard{
 		Count:    count,
@@ -137,7 +137,7 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 func createCard(card *controllers.CardModel) *app.GwentapiCard {
 	c := &app.GwentapiCard{
 		ID:     card.ID,
-		Href:   app.CardURL(card.ID),
+		Href:   controllers.CardURL(card.ID),
 		Name:   card.Name,
 		Text:   card.Text,
 		Flavor: card.Flavor,
@@ -145,19 +145,19 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 	}
 
 	f := &app.GwentapiFactionLink{
-		Href: app.FactionURL(card.Faction.ID),
+		Href: controllers.FactionURL(card.Faction.ID),
 		Name: card.Faction.Name,
 	}
 	c.Faction = f
 
 	t := &app.GwentapiTypeLink{
-		Href: app.TypeURL(card.TypeCard.ID),
+		Href: controllers.TypeURL(card.TypeCard.ID),
 		Name: card.TypeCard.Name,
 	}
 	c.Type = t
 
 	rar := &app.GwentapiRarityLink{
-		Href: app.RarityURL(card.Rarity.ID),
+		Href: controllers.RarityURL(card.Rarity.ID),
 		Name: card.Rarity.Name,
 	}
 	c.Rarity = rar
@@ -165,7 +165,7 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 	typeCollection := make(app.GwentapiTypeLinkCollection, len(card.Subtypes))
 	for i, cardType := range card.Subtypes {
 		subt := &app.GwentapiTypeLink{
-			Href: app.TypeURL(cardType.ID),
+			Href: controllers.TypeURL(cardType.ID),
 			Name: cardType.Name,
 		}
 		typeCollection[i] = subt
@@ -177,7 +177,7 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 
 func createLinkCard(card *controllers.CardModel) *app.GwentapiCardLink {
 	c := &app.GwentapiCardLink{
-		Href: app.CardURL(card.ID),
+		Href: controllers.CardURL(card.ID),
 		Name: card.Name,
 	}
 	return c

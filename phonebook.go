@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/goadesign/goa"
 	"github.com/tri125/gwentapi/app"
+	"github.com/tri125/gwentapi/controllers"
 )
 
 // PhonebookController implements the phonebook resource.
@@ -21,12 +22,12 @@ func (c *PhonebookController) Show(ctx *app.ShowPhonebookContext) error {
 
 	// PhonebookController_Show: end_implement
 	res := &app.GwentapiResource{
-		Factions: app.FactionURL(""),
-		Glyphs:   app.GlyphURL(""),
-		Rarities: app.RarityURL(""),
-		Types:    app.TypeURL(""),
-		Patches:  app.PatchURL(""),
-		Cards:    app.CardURL(""),
+		Factions: controllers.FactionURL(""),
+		Glyphs:   controllers.GlyphURL(""),
+		Rarities: controllers.RarityURL(""),
+		Types:    controllers.TypeURL(""),
+		Patches:  controllers.PatchURL(""),
+		Cards:    controllers.CardURL(""),
 	}
 	return ctx.OK(res)
 }

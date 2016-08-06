@@ -30,7 +30,7 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 	for i, faction := range factions {
 		f := &app.GwentapiFaction{
 			ID:   faction.ID,
-			Href: app.FactionURL(faction.ID),
+			Href: controllers.FactionURL(faction.ID),
 			Name: faction.Name,
 		}
 		res[i] = f
@@ -52,7 +52,7 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	res := &app.GwentapiFaction{
 		ID:   faction.ID,
 		Name: faction.Name,
-		Href: app.FactionURL(faction.ID),
+		Href: controllers.FactionURL(faction.ID),
 	}
 	return ctx.OK(res)
 }
