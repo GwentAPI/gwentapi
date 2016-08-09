@@ -44,8 +44,8 @@ func (mt *GwentapiArtwork) Validate() (err error) {
 	}
 
 	for _, e := range mt.Alternatives {
-		if e.Normal == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "normal"))
+		if e.NormalSize == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "normal_size"))
 		}
 
 	}

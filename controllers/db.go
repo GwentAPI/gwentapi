@@ -468,7 +468,7 @@ func FetchArtwork(id string) (ArtworkMediaModel, error) {
 		}
 
 		if category == "normal" {
-			artworkType.Normal = filename
+			artworkType.NormalSize = filename
 		}
 
 		//if artistID.Valid {

@@ -10,15 +10,15 @@ definitions:
     example:
       alternatives:
       - artist: Et non ipsum veritatis occaecati.
-        full: Quia fugiat culpa.
-        normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+        full_size: Quia fugiat culpa.
+        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
       - artist: Et non ipsum veritatis occaecati.
-        full: Quia fugiat culpa.
-        normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+        full_size: Quia fugiat culpa.
+        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
       artwork:
         artist: Et non ipsum veritatis occaecati.
-        full: Quia fugiat culpa.
-        normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+        full_size: Quia fugiat culpa.
+        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
       href: Consequatur quod repudiandae.
       id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
     properties:
@@ -26,11 +26,11 @@ definitions:
         description: Alternatives artwork for the card
         example:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         items:
           $ref: '#/definitions/artworkType'
         type: array
@@ -69,15 +69,15 @@ definitions:
       artwork:
         alternatives:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         artwork:
           artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         href: Consequatur quod repudiandae.
         id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
       faction:
@@ -166,15 +166,15 @@ definitions:
     - artwork:
         alternatives:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         artwork:
           artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         href: Consequatur quod repudiandae.
         id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
       faction:
@@ -205,15 +205,15 @@ definitions:
     - artwork:
         alternatives:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         artwork:
           artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         href: Consequatur quod repudiandae.
         id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
       faction:
@@ -271,15 +271,15 @@ definitions:
     - artwork:
         alternatives:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         artwork:
           artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         href: Consequatur quod repudiandae.
         id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
       faction:
@@ -310,15 +310,15 @@ definitions:
     - artwork:
         alternatives:
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         - artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         artwork:
           artist: Et non ipsum veritatis occaecati.
-          full: Quia fugiat culpa.
-          normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+          full_size: Quia fugiat culpa.
+          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
         href: Consequatur quod repudiandae.
         id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
       faction:
@@ -390,16 +390,16 @@ definitions:
   GwentapiFactionLink:
     description: A card faction (link view)
     example:
-      href: Voluptate est voluptas illo eum rerum et.
-      name: Totam dignissimos modi praesentium deleniti.
+      href: Totam dignissimos modi praesentium deleniti.
+      name: Voluptate est voluptas illo eum rerum et.
     properties:
       href:
         description: API href for making requests on the faction
-        example: Voluptate est voluptas illo eum rerum et.
+        example: Totam dignissimos modi praesentium deleniti.
         type: string
       name:
         description: Name of the faction
-        example: Totam dignissimos modi praesentium deleniti.
+        example: Voluptate est voluptas illo eum rerum et.
         type: string
     required:
     - href
@@ -466,15 +466,15 @@ definitions:
       - artwork:
           alternatives:
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           artwork:
             artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           href: Consequatur quod repudiandae.
           id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
         faction:
@@ -505,15 +505,15 @@ definitions:
       - artwork:
           alternatives:
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           artwork:
             artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           href: Consequatur quod repudiandae.
           id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
         faction:
@@ -544,15 +544,15 @@ definitions:
       - artwork:
           alternatives:
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           - artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           artwork:
             artist: Et non ipsum veritatis occaecati.
-            full: Quia fugiat culpa.
-            normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+            full_size: Quia fugiat culpa.
+            normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
           href: Consequatur quod repudiandae.
           id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
         faction:
@@ -687,16 +687,16 @@ definitions:
   GwentapiRarityLink:
     description: A card rarity (link view)
     example:
-      href: At numquam cumque libero.
-      name: Eius aut amet.
+      href: Dolor possimus ut et veniam.
+      name: Sed sed eveniet est quisquam.
     properties:
       href:
         description: API href for making requests on the rarity
-        example: At numquam cumque libero.
+        example: Dolor possimus ut et veniam.
         type: string
       name:
         description: Name of the rarity
-        example: Eius aut amet.
+        example: Sed sed eveniet est quisquam.
         type: string
     required:
     - href
@@ -785,16 +785,16 @@ definitions:
   GwentapiTypeLink:
     description: A card type (link view)
     example:
-      href: Sed sed eveniet est quisquam.
-      name: Dolor possimus ut et veniam.
+      href: Qui eius aut amet dolorem at.
+      name: Cumque libero illo nam nobis ut eaque.
     properties:
       href:
         description: API href for making requests on the type
-        example: Sed sed eveniet est quisquam.
+        example: Qui eius aut amet dolorem at.
         type: string
       name:
         description: Name of the type
-        example: Dolor possimus ut et veniam.
+        example: Cumque libero illo nam nobis ut eaque.
         type: string
     required:
     - href
@@ -805,10 +805,12 @@ definitions:
     description: GwentapiTypeLinkCollection is the media type for an array of GwentapiTypeLink
       (default view)
     example:
-    - href: Sed sed eveniet est quisquam.
-      name: Dolor possimus ut et veniam.
-    - href: Sed sed eveniet est quisquam.
-      name: Dolor possimus ut et veniam.
+    - href: Qui eius aut amet dolorem at.
+      name: Cumque libero illo nam nobis ut eaque.
+    - href: Qui eius aut amet dolorem at.
+      name: Cumque libero illo nam nobis ut eaque.
+    - href: Qui eius aut amet dolorem at.
+      name: Cumque libero illo nam nobis ut eaque.
     items:
       $ref: '#/definitions/GwentapiTypeLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.type+json; type=collection;
@@ -818,23 +820,23 @@ definitions:
     description: Type of card artwork
     example:
       artist: Et non ipsum veritatis occaecati.
-      full: Quia fugiat culpa.
-      normal: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      full_size: Quia fugiat culpa.
+      normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
     properties:
       artist:
         description: Name of the artist
         example: Et non ipsum veritatis occaecati.
         type: string
-      full:
+      full_size:
         description: Href to full size artwork
         example: Quia fugiat culpa.
         type: string
-      normal:
+      normal_size:
         description: Href to normal size artwork
         example: Consequatur necessitatibus aut rerum expedita impedit architecto.
         type: string
     required:
-    - normal
+    - normal_size
     title: artworkType
     type: object
 host: api.gwentapi.com

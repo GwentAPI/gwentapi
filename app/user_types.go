@@ -19,15 +19,15 @@ type artworkType struct {
 	// Name of the artist
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
-	Full *string `form:"full,omitempty" json:"full,omitempty" xml:"full,omitempty"`
+	FullSize *string `form:"full_size,omitempty" json:"full_size,omitempty" xml:"full_size,omitempty"`
 	// Href to normal size artwork
-	Normal *string `form:"normal,omitempty" json:"normal,omitempty" xml:"normal,omitempty"`
+	NormalSize *string `form:"normal_size,omitempty" json:"normal_size,omitempty" xml:"normal_size,omitempty"`
 }
 
 // Validate validates the artworkType type instance.
 func (ut *artworkType) Validate() (err error) {
-	if ut.Normal == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal"))
+	if ut.NormalSize == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal_size"))
 	}
 
 	return
@@ -39,11 +39,11 @@ func (ut *artworkType) Publicize() *ArtworkType {
 	if ut.Artist != nil {
 		pub.Artist = ut.Artist
 	}
-	if ut.Full != nil {
-		pub.Full = ut.Full
+	if ut.FullSize != nil {
+		pub.FullSize = ut.FullSize
 	}
-	if ut.Normal != nil {
-		pub.Normal = *ut.Normal
+	if ut.NormalSize != nil {
+		pub.NormalSize = *ut.NormalSize
 	}
 	return &pub
 }
@@ -53,15 +53,15 @@ type ArtworkType struct {
 	// Name of the artist
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
-	Full *string `form:"full,omitempty" json:"full,omitempty" xml:"full,omitempty"`
+	FullSize *string `form:"full_size,omitempty" json:"full_size,omitempty" xml:"full_size,omitempty"`
 	// Href to normal size artwork
-	Normal string `form:"normal" json:"normal" xml:"normal"`
+	NormalSize string `form:"normal_size" json:"normal_size" xml:"normal_size"`
 }
 
 // Validate validates the ArtworkType type instance.
 func (ut *ArtworkType) Validate() (err error) {
-	if ut.Normal == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal"))
+	if ut.NormalSize == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal_size"))
 	}
 
 	return

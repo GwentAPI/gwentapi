@@ -7,9 +7,9 @@ import (
 
 var ArtworkType = Type("artworkType", func() {
 	Description("Type of card artwork")
-	Attribute("full", String, "Href to full size artwork")
+	Attribute("full_size", String, "Href to full size artwork")
 	Attribute("artist", String, "Name of the artist")
-	Attribute("normal", String, "Href to normal size artwork")
+	Attribute("normal_size", String, "Href to normal size artwork")
 
-	Required("normal")
+	Required("normal_size")
 })

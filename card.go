@@ -61,10 +61,10 @@ func (c *CardController) CardArtworks(ctx *app.CardArtworksCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// ArtworkController_Show: end_implement
-	artwork.Artwork.Normal = controllers.MediaURL(artwork.Artwork.Normal)
+	artwork.Artwork.NormalSize = controllers.MediaURL(artwork.Artwork.NormalSize)
 
 	for index, _ := range artwork.Alternatives {
-		artwork.Alternatives[index].Normal = controllers.MediaURL(artwork.Alternatives[index].Normal)
+		artwork.Alternatives[index].NormalSize = controllers.MediaURL(artwork.Alternatives[index].NormalSize)
 	}
 
 	res := &app.GwentapiArtwork{
