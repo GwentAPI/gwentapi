@@ -80,7 +80,6 @@ var ArtworkMedia = MediaType("application/vnd.gwentapi.artwork+json", func() {
 	})
 
 	View("link", func() {
-		Attribute("id")
 		Attribute("href")
 	})
 })
@@ -101,6 +100,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("strength", Integer, "Strength of the card")
 		Attribute("text", String, "Text of the card detailing its abilities and how it plays")
 		Attribute("flavor", String, "Flavor text of the card")
+		Attribute("artwork", ArtworkMedia, "Artworks of the card")
 
 		Required("id", "href", "name", "type", "faction", "rarity")
 	})
@@ -110,6 +110,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Link("faction")
 		Link("subtypes")
 		Link("rarity")
+		Link("artwork")
 	})
 
 	View("default", func() {
@@ -132,6 +133,9 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("strength")
 		Attribute("text")
 		Attribute("flavor")
+		Attribute("artwork", func() {
+			View("link")
+		})
 	})
 
 	View("link", func() {

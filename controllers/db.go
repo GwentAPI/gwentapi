@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"database/sql"
+	"errors"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/tri125/gwentapi/app"
 )
 
 var DBCon *sql.DB
@@ -433,4 +435,55 @@ func fetchCardSubTypes(id string) ([]*TypeModel, error) {
 	}
 
 	return cardSubtypes, err
+}
+
+func FetchArtwork(id string) (ArtworkMediaModel, error) {
+	var artworkMedia ArtworkMediaModel
+
+	rows, err := DBCon.Query("SELECT c.name AS card, c.id, arti.name AS artist, arti.id, art.isAlternative, art.filename, cat.name AS category FROM Artworks AS art INNER JOIN Cards AS c ON c.idCard = art.idCard INNER JOIN Categories AS cat ON cat.idCategory = art.idCategory LEFT JOIN Artists AS arti ON arti.idArtist = art.idArtist WHERE c.id =? ORDER BY isAlternative, filename ASC", id)
+
+	if err != nil {
+		return artworkMedia, err
+	}
+	defer rows.Close()
+
+	artworkMedia.ID = id
+	var count int = 0
+	for rows.Next() {
+		count++
+		//var artist IllustratorModel
+		var artworkType app.ArtworkType
+		var isAlternative bool
+		var filename, category, cardName, cardID string
+
+		var artistName, artistID sql.NullString
+
+		err := rows.Scan(&cardName, &cardID, &artistName, &artistID, &isAlternative, &filename, &category)
+		if err != nil {
+			continue
+		}
+
+		if artistName.Valid {
+			artworkType.Artist = &artistName.String
+		}
+
+		if category == "normal" {
+			artworkType.Normal = filename
+		}
+
+		//if artistID.Valid {
+		//	artist.ID = &artistID.String
+		//}
+		if isAlternative {
+			artworkMedia.Alternatives = append(artworkMedia.Alternatives, &artworkType)
+		} else {
+			artworkMedia.Artwork = &artworkType
+		}
+	}
+
+	if count == 0 {
+		return artworkMedia, errors.New("No rows on Artworks")
+	}
+
+	return artworkMedia, nil
 }

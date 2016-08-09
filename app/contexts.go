@@ -18,50 +18,74 @@ import (
 	"strconv"
 )
 
-// ShowArtworkContext provides the artwork show action context.
-type ShowArtworkContext struct {
+// CardArtworksCardContext provides the card cardArtworks action context.
+type CardArtworksCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 	CardID string
+	Limit  *int
+	Offset *int
 }
 
-// NewShowArtworkContext parses the incoming request URL and body, performs validations and creates the
-// context used by the artwork controller show action.
-func NewShowArtworkContext(ctx context.Context, service *goa.Service) (*ShowArtworkContext, error) {
+// NewCardArtworksCardContext parses the incoming request URL and body, performs validations and creates the
+// context used by the card controller cardArtworks action.
+func NewCardArtworksCardContext(ctx context.Context, service *goa.Service) (*CardArtworksCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := ShowArtworkContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := CardArtworksCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
 		rctx.CardID = rawCardID
 	}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) > 0 {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			tmp2 := limit
+			tmp1 := &tmp2
+			rctx.Limit = tmp1
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) > 0 {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			tmp4 := offset
+			tmp3 := &tmp4
+			rctx.Offset = tmp3
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+	}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ShowArtworkContext) OK(r *GwentapiArtwork) error {
+func (ctx *CardArtworksCardContext) OK(r *GwentapiArtwork) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.artwork+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
-func (ctx *ShowArtworkContext) OKLink(r *GwentapiArtworkLink) error {
+func (ctx *CardArtworksCardContext) OKLink(r *GwentapiArtworkLink) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.artwork+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
-func (ctx *ShowArtworkContext) NotFound() error {
+func (ctx *CardArtworksCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
 
 // InternalServerError sends a HTTP response with status code 500.
-func (ctx *ShowArtworkContext) InternalServerError() error {
+func (ctx *CardArtworksCardContext) InternalServerError() error {
 	ctx.ResponseData.WriteHeader(500)
 	return nil
 }
@@ -93,9 +117,9 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 	if len(paramLimit) > 0 {
 		rawLimit := paramLimit[0]
 		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
-			tmp2 := limit
-			tmp1 := &tmp2
-			rctx.Limit = tmp1
+			tmp6 := limit
+			tmp5 := &tmp6
+			rctx.Limit = tmp5
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
@@ -104,9 +128,9 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 	if len(paramOffset) > 0 {
 		rawOffset := paramOffset[0]
 		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
-			tmp4 := offset
-			tmp3 := &tmp4
-			rctx.Offset = tmp3
+			tmp8 := offset
+			tmp7 := &tmp8
+			rctx.Offset = tmp7
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}
@@ -159,9 +183,9 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 	if len(paramLimit) > 0 {
 		rawLimit := paramLimit[0]
 		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
-			tmp6 := limit
-			tmp5 := &tmp6
-			rctx.Limit = tmp5
+			tmp10 := limit
+			tmp9 := &tmp10
+			rctx.Limit = tmp9
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
@@ -170,9 +194,9 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 	if len(paramOffset) > 0 {
 		rawOffset := paramOffset[0]
 		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
-			tmp8 := offset
-			tmp7 := &tmp8
-			rctx.Offset = tmp7
+			tmp12 := offset
+			tmp11 := &tmp12
+			rctx.Offset = tmp11
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}
@@ -226,9 +250,9 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 	if len(paramLimit) > 0 {
 		rawLimit := paramLimit[0]
 		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
-			tmp10 := limit
-			tmp9 := &tmp10
-			rctx.Limit = tmp9
+			tmp14 := limit
+			tmp13 := &tmp14
+			rctx.Limit = tmp13
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
@@ -237,9 +261,9 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 	if len(paramOffset) > 0 {
 		rawOffset := paramOffset[0]
 		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
-			tmp12 := offset
-			tmp11 := &tmp12
-			rctx.Offset = tmp11
+			tmp16 := offset
+			tmp15 := &tmp16
+			rctx.Offset = tmp15
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}
@@ -297,9 +321,9 @@ func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardCon
 	if len(paramLimit) > 0 {
 		rawLimit := paramLimit[0]
 		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
-			tmp14 := limit
-			tmp13 := &tmp14
-			rctx.Limit = tmp13
+			tmp18 := limit
+			tmp17 := &tmp18
+			rctx.Limit = tmp17
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
@@ -308,9 +332,9 @@ func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardCon
 	if len(paramOffset) > 0 {
 		rawOffset := paramOffset[0]
 		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
-			tmp16 := offset
-			tmp15 := &tmp16
-			rctx.Offset = tmp15
+			tmp20 := offset
+			tmp19 := &tmp20
+			rctx.Offset = tmp19
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}
@@ -363,9 +387,9 @@ func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardCon
 	if len(paramLimit) > 0 {
 		rawLimit := paramLimit[0]
 		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
-			tmp18 := limit
-			tmp17 := &tmp18
-			rctx.Limit = tmp17
+			tmp22 := limit
+			tmp21 := &tmp22
+			rctx.Limit = tmp21
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
 		}
@@ -374,9 +398,9 @@ func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardCon
 	if len(paramOffset) > 0 {
 		rawOffset := paramOffset[0]
 		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
-			tmp20 := offset
-			tmp19 := &tmp20
-			rctx.Offset = tmp19
+			tmp24 := offset
+			tmp23 := &tmp24
+			rctx.Offset = tmp23
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
 		}

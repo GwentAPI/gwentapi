@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/tri125/gwentapi/app"
 	"time"
 )
 
@@ -49,4 +50,10 @@ type CardModel struct {
 	Strength *int
 	Text     *string
 	Flavor   *string
+}
+
+type ArtworkMediaModel struct {
+	ID           string
+	Alternatives []*app.ArtworkType
+	Artwork      *app.ArtworkType
 }

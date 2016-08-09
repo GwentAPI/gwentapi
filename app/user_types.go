@@ -20,17 +20,14 @@ type artworkType struct {
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
 	Full *string `form:"full,omitempty" json:"full,omitempty" xml:"full,omitempty"`
-	// Href to thumbnail
-	Small *string `form:"small,omitempty" json:"small,omitempty" xml:"small,omitempty"`
+	// Href to normal size artwork
+	Normal *string `form:"normal,omitempty" json:"normal,omitempty" xml:"normal,omitempty"`
 }
 
 // Validate validates the artworkType type instance.
 func (ut *artworkType) Validate() (err error) {
-	if ut.Full == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "full"))
-	}
-	if ut.Small == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "small"))
+	if ut.Normal == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal"))
 	}
 
 	return
@@ -43,10 +40,10 @@ func (ut *artworkType) Publicize() *ArtworkType {
 		pub.Artist = ut.Artist
 	}
 	if ut.Full != nil {
-		pub.Full = *ut.Full
+		pub.Full = ut.Full
 	}
-	if ut.Small != nil {
-		pub.Small = *ut.Small
+	if ut.Normal != nil {
+		pub.Normal = *ut.Normal
 	}
 	return &pub
 }
@@ -56,18 +53,15 @@ type ArtworkType struct {
 	// Name of the artist
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
-	Full string `form:"full" json:"full" xml:"full"`
-	// Href to thumbnail
-	Small string `form:"small" json:"small" xml:"small"`
+	Full *string `form:"full,omitempty" json:"full,omitempty" xml:"full,omitempty"`
+	// Href to normal size artwork
+	Normal string `form:"normal" json:"normal" xml:"normal"`
 }
 
 // Validate validates the ArtworkType type instance.
 func (ut *ArtworkType) Validate() (err error) {
-	if ut.Full == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "full"))
-	}
-	if ut.Small == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "small"))
+	if ut.Normal == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal"))
 	}
 
 	return

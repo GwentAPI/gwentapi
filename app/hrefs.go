@@ -14,11 +14,6 @@ package app
 
 import "fmt"
 
-// ArtworkHref returns the resource href.
-func ArtworkHref(cardID interface{}) string {
-	return fmt.Sprintf("/v0/artworks/%v", cardID)
-}
-
 // CardHref returns the resource href.
 func CardHref(cardID interface{}) string {
 	return fmt.Sprintf("/v0/cards/%v", cardID)

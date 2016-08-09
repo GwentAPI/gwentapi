@@ -9,7 +9,7 @@ var ArtworkType = Type("artworkType", func() {
 	Description("Type of card artwork")
 	Attribute("full", String, "Href to full size artwork")
 	Attribute("artist", String, "Name of the artist")
-	Attribute("small", String, "Href to thumbnail")
+	Attribute("normal", String, "Href to normal size artwork")
 
-	Required("full", "small")
+	Required("normal")
 })

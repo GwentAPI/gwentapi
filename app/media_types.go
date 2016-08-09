@@ -19,11 +19,11 @@ import (
 
 // Artwork for a card (default view)
 //
-// Identifier: application/vnd.gwentapi.artwork+json
+// Identifier: application/vnd.gwentapi.artwork+json; view=default
 type GwentapiArtwork struct {
 	// Alternatives artwork for the card
 	Alternatives []*ArtworkType `form:"alternatives,omitempty" json:"alternatives,omitempty" xml:"alternatives,omitempty"`
-	// Principal artwork of the card
+	// Primary artwork of the card
 	Artwork *ArtworkType `form:"artwork" json:"artwork" xml:"artwork"`
 	// API href for making requests on the artwork
 	Href string `form:"href" json:"href" xml:"href"`
@@ -44,11 +44,8 @@ func (mt *GwentapiArtwork) Validate() (err error) {
 	}
 
 	for _, e := range mt.Alternatives {
-		if e.Full == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "full"))
-		}
-		if e.Small == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "small"))
+		if e.Normal == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.alternatives[*]`, "normal"))
 		}
 
 	}
@@ -62,19 +59,14 @@ func (mt *GwentapiArtwork) Validate() (err error) {
 
 // Artwork for a card (link view)
 //
-// Identifier: application/vnd.gwentapi.artwork+json
+// Identifier: application/vnd.gwentapi.artwork+json; view=link
 type GwentapiArtworkLink struct {
 	// API href for making requests on the artwork
 	Href string `form:"href" json:"href" xml:"href"`
-	// Unique artwork ID
-	ID string `form:"id" json:"id" xml:"id"`
 }
 
 // Validate validates the GwentapiArtworkLink media type instance.
 func (mt *GwentapiArtworkLink) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
-	}
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -84,8 +76,10 @@ func (mt *GwentapiArtworkLink) Validate() (err error) {
 
 // A card (default view)
 //
-// Identifier: application/vnd.gwentapi.card+json
+// Identifier: application/vnd.gwentapi.card+json; view=default
 type GwentapiCard struct {
+	// Artworks of the card
+	Artwork *GwentapiArtworkLink `form:"artwork,omitempty" json:"artwork,omitempty" xml:"artwork,omitempty"`
 	// Faction of the card
 	Faction *GwentapiFactionLink `form:"faction" json:"faction" xml:"faction"`
 	// Flavor text of the card
@@ -131,6 +125,11 @@ func (mt *GwentapiCard) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
 	}
 
+	if mt.Artwork != nil {
+		if err2 := mt.Artwork.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
+	}
 	if mt.Faction != nil {
 		if err2 := mt.Faction.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
@@ -154,7 +153,7 @@ func (mt *GwentapiCard) Validate() (err error) {
 
 // A card (link view)
 //
-// Identifier: application/vnd.gwentapi.card+json
+// Identifier: application/vnd.gwentapi.card+json; view=link
 type GwentapiCardLink struct {
 	// API href for making requests on the card
 	Href string `form:"href" json:"href" xml:"href"`
@@ -176,7 +175,7 @@ func (mt *GwentapiCardLink) Validate() (err error) {
 
 // GwentapiCardCollection is the media type for an array of GwentapiCard (default view)
 //
-// Identifier: application/vnd.gwentapi.card+json; type=collection
+// Identifier: application/vnd.gwentapi.card+json; type=collection; view=default
 type GwentapiCardCollection []*GwentapiCard
 
 // Validate validates the GwentapiCardCollection media type instance.
@@ -201,6 +200,11 @@ func (mt GwentapiCardCollection) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "rarity"))
 		}
 
+		if e.Artwork != nil {
+			if err2 := e.Artwork.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
 		if e.Faction != nil {
 			if err2 := e.Faction.Validate(); err2 != nil {
 				err = goa.MergeErrors(err, err2)
@@ -225,7 +229,7 @@ func (mt GwentapiCardCollection) Validate() (err error) {
 
 // GwentapiCardCollection is the media type for an array of GwentapiCard (link view)
 //
-// Identifier: application/vnd.gwentapi.card+json; type=collection
+// Identifier: application/vnd.gwentapi.card+json; type=collection; view=link
 type GwentapiCardLinkCollection []*GwentapiCardLink
 
 // Validate validates the GwentapiCardLinkCollection media type instance.
@@ -244,7 +248,7 @@ func (mt GwentapiCardLinkCollection) Validate() (err error) {
 
 // A card faction (default view)
 //
-// Identifier: application/vnd.gwentapi.faction+json
+// Identifier: application/vnd.gwentapi.faction+json; view=default
 type GwentapiFaction struct {
 	// API href for making requests on the faction
 	Href string `form:"href" json:"href" xml:"href"`
@@ -271,7 +275,7 @@ func (mt *GwentapiFaction) Validate() (err error) {
 
 // A card faction (link view)
 //
-// Identifier: application/vnd.gwentapi.faction+json
+// Identifier: application/vnd.gwentapi.faction+json; view=link
 type GwentapiFactionLink struct {
 	// API href for making requests on the faction
 	Href string `form:"href" json:"href" xml:"href"`
@@ -293,7 +297,7 @@ func (mt *GwentapiFactionLink) Validate() (err error) {
 
 // GwentapiFactionCollection is the media type for an array of GwentapiFaction (default view)
 //
-// Identifier: application/vnd.gwentapi.faction+json; type=collection
+// Identifier: application/vnd.gwentapi.faction+json; type=collection; view=default
 type GwentapiFactionCollection []*GwentapiFaction
 
 // Validate validates the GwentapiFactionCollection media type instance.
@@ -315,7 +319,7 @@ func (mt GwentapiFactionCollection) Validate() (err error) {
 
 // GwentapiFactionCollection is the media type for an array of GwentapiFaction (link view)
 //
-// Identifier: application/vnd.gwentapi.faction+json; type=collection
+// Identifier: application/vnd.gwentapi.faction+json; type=collection; view=link
 type GwentapiFactionLinkCollection []*GwentapiFactionLink
 
 // Validate validates the GwentapiFactionLinkCollection media type instance.
@@ -334,7 +338,7 @@ func (mt GwentapiFactionLinkCollection) Validate() (err error) {
 
 // A glyph (default view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json
+// Identifier: application/vnd.gwentapi.glyph+json; view=default
 type GwentapiGlyph struct {
 	// API href for making requests on the glyph
 	Href string `form:"href" json:"href" xml:"href"`
@@ -368,7 +372,7 @@ func (mt *GwentapiGlyph) Validate() (err error) {
 
 // A glyph (link view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json
+// Identifier: application/vnd.gwentapi.glyph+json; view=link
 type GwentapiGlyphLink struct {
 	// API href for making requests on the glyph
 	Href string `form:"href" json:"href" xml:"href"`
@@ -390,7 +394,7 @@ func (mt *GwentapiGlyphLink) Validate() (err error) {
 
 // GwentapiGlyphCollection is the media type for an array of GwentapiGlyph (default view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json; type=collection
+// Identifier: application/vnd.gwentapi.glyph+json; type=collection; view=default
 type GwentapiGlyphCollection []*GwentapiGlyph
 
 // Validate validates the GwentapiGlyphCollection media type instance.
@@ -415,7 +419,7 @@ func (mt GwentapiGlyphCollection) Validate() (err error) {
 
 // GwentapiGlyphCollection is the media type for an array of GwentapiGlyph (link view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json; type=collection
+// Identifier: application/vnd.gwentapi.glyph+json; type=collection; view=link
 type GwentapiGlyphLinkCollection []*GwentapiGlyphLink
 
 // Validate validates the GwentapiGlyphLinkCollection media type instance.
@@ -434,7 +438,7 @@ func (mt GwentapiGlyphLinkCollection) Validate() (err error) {
 
 // Paginated card (default view)
 //
-// Identifier: application/vnd.gwentapi.pagecard+json
+// Identifier: application/vnd.gwentapi.pagecard+json; view=default
 type GwentapiPagecard struct {
 	// Total number of cards stored in the database
 	Count int `form:"count" json:"count" xml:"count"`
@@ -460,7 +464,7 @@ func (mt *GwentapiPagecard) Validate() (err error) {
 
 // A game patch (default view)
 //
-// Identifier: application/vnd.gwentapi.patch+json
+// Identifier: application/vnd.gwentapi.patch+json; view=default
 type GwentapiPatch struct {
 	// API href for making requests on the patch
 	Href string `form:"href" json:"href" xml:"href"`
@@ -489,7 +493,7 @@ func (mt *GwentapiPatch) Validate() (err error) {
 
 // A game patch (full view)
 //
-// Identifier: application/vnd.gwentapi.patch+json
+// Identifier: application/vnd.gwentapi.patch+json; view=full
 type GwentapiPatchFull struct {
 	// Patch changelog
 	Changelog *string `form:"changelog,omitempty" json:"changelog,omitempty" xml:"changelog,omitempty"`
@@ -520,7 +524,7 @@ func (mt *GwentapiPatchFull) Validate() (err error) {
 
 // A game patch (link view)
 //
-// Identifier: application/vnd.gwentapi.patch+json
+// Identifier: application/vnd.gwentapi.patch+json; view=link
 type GwentapiPatchLink struct {
 	// API href for making requests on the patch
 	Href string `form:"href" json:"href" xml:"href"`
@@ -542,7 +546,7 @@ func (mt *GwentapiPatchLink) Validate() (err error) {
 
 // GwentapiPatchCollection is the media type for an array of GwentapiPatch (default view)
 //
-// Identifier: application/vnd.gwentapi.patch+json; type=collection
+// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=default
 type GwentapiPatchCollection []*GwentapiPatch
 
 // Validate validates the GwentapiPatchCollection media type instance.
@@ -564,7 +568,7 @@ func (mt GwentapiPatchCollection) Validate() (err error) {
 
 // GwentapiPatchCollection is the media type for an array of GwentapiPatch (full view)
 //
-// Identifier: application/vnd.gwentapi.patch+json; type=collection
+// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=full
 type GwentapiPatchFullCollection []*GwentapiPatchFull
 
 // Validate validates the GwentapiPatchFullCollection media type instance.
@@ -586,7 +590,7 @@ func (mt GwentapiPatchFullCollection) Validate() (err error) {
 
 // GwentapiPatchCollection is the media type for an array of GwentapiPatch (link view)
 //
-// Identifier: application/vnd.gwentapi.patch+json; type=collection
+// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=link
 type GwentapiPatchLinkCollection []*GwentapiPatchLink
 
 // Validate validates the GwentapiPatchLinkCollection media type instance.
@@ -605,7 +609,7 @@ func (mt GwentapiPatchLinkCollection) Validate() (err error) {
 
 // A card rarity (default view)
 //
-// Identifier: application/vnd.gwentapi.rarity+json
+// Identifier: application/vnd.gwentapi.rarity+json; view=default
 type GwentapiRarity struct {
 	// API href for making requests on the rarity
 	Href string `form:"href" json:"href" xml:"href"`
@@ -632,7 +636,7 @@ func (mt *GwentapiRarity) Validate() (err error) {
 
 // A card rarity (link view)
 //
-// Identifier: application/vnd.gwentapi.rarity+json
+// Identifier: application/vnd.gwentapi.rarity+json; view=link
 type GwentapiRarityLink struct {
 	// API href for making requests on the rarity
 	Href string `form:"href" json:"href" xml:"href"`
@@ -654,7 +658,7 @@ func (mt *GwentapiRarityLink) Validate() (err error) {
 
 // GwentapiRarityCollection is the media type for an array of GwentapiRarity (default view)
 //
-// Identifier: application/vnd.gwentapi.rarity+json; type=collection
+// Identifier: application/vnd.gwentapi.rarity+json; type=collection; view=default
 type GwentapiRarityCollection []*GwentapiRarity
 
 // Validate validates the GwentapiRarityCollection media type instance.
@@ -676,7 +680,7 @@ func (mt GwentapiRarityCollection) Validate() (err error) {
 
 // GwentapiRarityCollection is the media type for an array of GwentapiRarity (link view)
 //
-// Identifier: application/vnd.gwentapi.rarity+json; type=collection
+// Identifier: application/vnd.gwentapi.rarity+json; type=collection; view=link
 type GwentapiRarityLinkCollection []*GwentapiRarityLink
 
 // Validate validates the GwentapiRarityLinkCollection media type instance.
@@ -695,7 +699,7 @@ func (mt GwentapiRarityLinkCollection) Validate() (err error) {
 
 // Listing of all available resource endpoint (default view)
 //
-// Identifier: application/vnd.gwentapi.resource+json
+// Identifier: application/vnd.gwentapi.resource+json; view=default
 type GwentapiResource struct {
 	// API href for making requests on cards
 	Cards string `form:"cards" json:"cards" xml:"cards"`
@@ -737,7 +741,7 @@ func (mt *GwentapiResource) Validate() (err error) {
 
 // A card type (default view)
 //
-// Identifier: application/vnd.gwentapi.type+json
+// Identifier: application/vnd.gwentapi.type+json; view=default
 type GwentapiType struct {
 	// API href for making requests on the type
 	Href string `form:"href" json:"href" xml:"href"`
@@ -764,7 +768,7 @@ func (mt *GwentapiType) Validate() (err error) {
 
 // A card type (link view)
 //
-// Identifier: application/vnd.gwentapi.type+json
+// Identifier: application/vnd.gwentapi.type+json; view=link
 type GwentapiTypeLink struct {
 	// API href for making requests on the type
 	Href string `form:"href" json:"href" xml:"href"`
@@ -786,7 +790,7 @@ func (mt *GwentapiTypeLink) Validate() (err error) {
 
 // GwentapiTypeCollection is the media type for an array of GwentapiType (default view)
 //
-// Identifier: application/vnd.gwentapi.type+json; type=collection
+// Identifier: application/vnd.gwentapi.type+json; type=collection; view=default
 type GwentapiTypeCollection []*GwentapiType
 
 // Validate validates the GwentapiTypeCollection media type instance.
@@ -808,7 +812,7 @@ func (mt GwentapiTypeCollection) Validate() (err error) {
 
 // GwentapiTypeCollection is the media type for an array of GwentapiType (link view)
 //
-// Identifier: application/vnd.gwentapi.type+json; type=collection
+// Identifier: application/vnd.gwentapi.type+json; type=collection; view=link
 type GwentapiTypeLinkCollection []*GwentapiTypeLink
 
 // Validate validates the GwentapiTypeLinkCollection media type instance.

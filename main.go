@@ -64,9 +64,6 @@ func main() {
 	// Mount "type" controller
 	c8 := NewTypeController(service)
 	app.MountTypeController(service, c8)
-	// Mount "artwork" controller
-	c9 := NewArtworkController(service)
-	app.MountArtworkController(service, c9)
 
 	//database
 	var err error

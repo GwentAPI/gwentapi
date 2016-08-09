@@ -51,6 +51,31 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	return ctx.OK(res)
 }
 
+// CardArtworks runs the cardArtworks action.
+func (c *CardController) CardArtworks(ctx *app.CardArtworksCardContext) error {
+	// CardController_CardArtworks: start_implement
+
+	// CardController_CardArtworks: end_implement
+	artwork, err := controllers.FetchArtwork(ctx.CardID)
+	if err != nil {
+		return ctx.InternalServerError()
+	}
+	// ArtworkController_Show: end_implement
+	artwork.Artwork.Normal = controllers.MediaURL(artwork.Artwork.Normal)
+
+	for index, _ := range artwork.Alternatives {
+		artwork.Alternatives[index].Normal = controllers.MediaURL(artwork.Alternatives[index].Normal)
+	}
+
+	res := &app.GwentapiArtwork{
+		ID:           artwork.ID,
+		Href:         controllers.ArtworkURL(artwork.ID),
+		Alternatives: artwork.Alternatives,
+		Artwork:      artwork.Artwork,
+	}
+	return ctx.OK(res)
+}
+
 // List runs the list action.
 func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: start_implement
@@ -161,6 +186,12 @@ func createCard(card *controllers.CardModel) *app.GwentapiCard {
 		Name: card.Rarity.Name,
 	}
 	c.Rarity = rar
+
+	art := &app.GwentapiArtworkLink{
+		Href: controllers.ArtworkURL(card.ID),
+	}
+
+	c.Artwork = art
 
 	typeCollection := make(app.GwentapiTypeLinkCollection, len(card.Subtypes))
 	for i, cardType := range card.Subtypes {

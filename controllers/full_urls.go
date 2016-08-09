@@ -1,12 +1,15 @@
 package controllers
 
-import "github.com/tri125/gwentapi/app"
+import (
+	"fmt"
+	"github.com/tri125/gwentapi/app"
+)
 
 const host string = "http://localhost:8080"
 
 // ArtworkHref returns the resource href.
 func ArtworkURL(cardID interface{}) string {
-	return host + app.ArtworkHref(cardID)
+	return fmt.Sprintf("%v/v0/cards/%v/artworks", host, cardID)
 }
 
 // CardHref returns the resource href.
@@ -45,6 +48,6 @@ func TypeURL(typeID interface{}) string {
 }
 
 // TypeHref returns the resource href.
-func MediaURL(cardID string) string {
-	return host + "/media/" + cardID
+func MediaURL(filename string) string {
+	return host + "/media/" + filename
 }
