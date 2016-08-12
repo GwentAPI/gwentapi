@@ -8,45 +8,45 @@ import (
 
 // ArtworkHref returns the resource href.
 func ArtworkURL(cardID interface{}) string {
-	return fmt.Sprintf("%v/v0/cards/%v/artworks", configuration.Hostname, cardID)
+	return fmt.Sprintf("%v/v0/cards/%v/artworks", configuration.Conf.Server.BaseURL, cardID)
 }
 
 // CardHref returns the resource href.
 func CardURL(cardID interface{}) string {
-	return configuration.Hostname + app.CardHref(cardID)
+	return configuration.Conf.Server.BaseURL + app.CardHref(cardID)
 }
 
 // FactionHref returns the resource href.
 func FactionURL(factionID interface{}) string {
-	return configuration.Hostname + app.FactionHref(factionID)
+	return configuration.Conf.Server.BaseURL + app.FactionHref(factionID)
 }
 
 // GlyphHref returns the resource href.
 func GlyphURL(glyphID interface{}) string {
-	return configuration.Hostname + app.GlyphHref(glyphID)
+	return configuration.Conf.Server.BaseURL + app.GlyphHref(glyphID)
 }
 
 // PatchHref returns the resource href.
 func PatchURL(patchID interface{}) string {
-	return configuration.Hostname + app.PatchHref(patchID)
+	return configuration.Conf.Server.BaseURL + app.PatchHref(patchID)
 }
 
 // PhonebookHref returns the resource href.
 func PhonebookURL() string {
-	return configuration.Hostname
+	return configuration.Conf.Server.BaseURL
 }
 
 // RarityHref returns the resource href.
 func RarityURL(rarityID interface{}) string {
-	return configuration.Hostname + app.RarityHref(rarityID)
+	return configuration.Conf.Server.BaseURL + app.RarityHref(rarityID)
 }
 
 // TypeHref returns the resource href.
 func TypeURL(typeID interface{}) string {
-	return configuration.Hostname + app.TypeHref(typeID)
+	return configuration.Conf.Server.BaseURL + app.TypeHref(typeID)
 }
 
 // TypeHref returns the resource href.
 func MediaURL(filename string) string {
-	return configuration.Hostname + "/media/" + filename
+	return configuration.Conf.Server.BaseURL + "/media/" + filename
 }

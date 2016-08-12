@@ -8,11 +8,9 @@ import (
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
-	"github.com/joho/godotenv"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/configuration"
 	"github.com/tri125/gwentapi/controllers"
-	"os"
 )
 
 var isDebug bool = true
@@ -22,18 +20,14 @@ var gzipLevel int = -1
 
 var certFile string = "pathToCertFile"
 var keyFile string = "pathToKeyFile"
-var logFile string = "./access.log"
 
 func main() {
 
-	//environnement
-	errV := godotenv.Load()
-	if errV != nil {
-		panic("Error loading .env file")
+	//Load config
+	errC := configuration.ReadConfig()
+	if errC != nil {
+		panic("Error loading config file")
 	}
-	configuration.Hostname = os.Getenv("HOST")
-	configuration.DB_string = os.Getenv("DB_STRING")
-	configuration.LogFile = os.Getenv("LOG_FILE")
 
 	// Create service
 	service := goa.New("gwentapi")
@@ -42,7 +36,7 @@ func main() {
 	logger := log.New("module", "app/server")
 
 	//Logger configuration
-	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.LogFile, log.LogfmtFormat())))
+	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.Conf.LogFile, log.LogfmtFormat())))
 
 	//Inject logger
 	service.WithLogger(goalog15.New(logger))
@@ -79,7 +73,7 @@ func main() {
 
 	//database
 	var err error
-	controllers.DBCon, err = controllers.NewDBConnection(configuration.DB_string)
+	controllers.DBCon, err = controllers.NewDBConnection(configuration.Conf.DB.DSN)
 	if err != nil {
 		panic(err.Error())
 	}

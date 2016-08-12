@@ -1,0 +1,7 @@
+logfile = "./access.log"
+
+[database]
+dsn = "client:thereisonlyonekinginthenorth@tcp/gwentapi?timeout=90s&strict=true&parseTime=true"
+
+[server]
+baseURL= "http://localhost:8080"
