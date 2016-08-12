@@ -23,6 +23,10 @@ type database struct {
 
 // Reads info from config file
 func ReadConfig() error {
+	//Singleton
+	if Conf != (Config{}) {
+		return nil
+	}
 	if _, err := toml.DecodeFile("config.toml", &Conf); err != nil {
 		log.Println(err)
 		return err
