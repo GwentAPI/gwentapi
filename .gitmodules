@@ -1,3 +1,6 @@
 [submodule "data"]
 	path = data
 	url = https://github.com/GwentAPI/data.git
+[submodule "website"]
+	path = website
+	url = https://github.com/GwentAPI/website.git
