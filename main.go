@@ -73,7 +73,7 @@ func main() {
 
 	//database
 	var err error
-	controllers.DBCon, err = controllers.NewDBConnection(configuration.Conf.DB.DSN)
+	controllers.DBCon, err = controllers.NewDBConnection(configuration.Conf.FormatDSN())
 	if err != nil {
 		panic(err.Error())
 	}

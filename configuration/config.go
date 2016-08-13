@@ -2,34 +2,38 @@ package configuration
 
 import (
 	"github.com/BurntSushi/toml"
+	"github.com/go-sql-driver/mysql"
 	"log"
 )
 
-var Conf Config
+var Conf GwentConfig
+var isLoaded bool = false
 
-type Config struct {
+type GwentConfig struct {
 	LogFile string
-	Server  server   `toml:"server"`
-	DB      database `toml:"database"`
+	Server  server       `toml:"server"`
+	DB      mysql.Config `toml:"database"`
 }
 
 type server struct {
 	BaseURL string
 }
 
-type database struct {
-	DSN string
-}
-
 // Reads info from config file
 func ReadConfig() error {
 	//Singleton
-	if Conf != (Config{}) {
+	if isLoaded {
 		return nil
 	}
 	if _, err := toml.DecodeFile("config.toml", &Conf); err != nil {
 		log.Println(err)
 		return err
 	}
+	isLoaded = true
 	return nil
+}
+
+func (g GwentConfig) FormatDSN() string {
+	//log.Println(g.DB.FormatDSN())
+	return g.DB.FormatDSN()
 }
