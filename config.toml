@@ -6,9 +6,9 @@ passwd = "thereisonlyonekinginthenorth"
 net = "tcp"
 #addr = "127.0.0.1:3306"
 dbname = "gwentapi"
-#timeout = "90s"
 strict = true
 parseTime = true
 
 [server]
 baseURL= "http://localhost:8080"
+db_timeout = "90s"
