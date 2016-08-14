@@ -13,13 +13,8 @@ import (
 	"github.com/tri125/gwentapi/controllers"
 )
 
-var isDebug bool = true
-var isVerbose bool = false
 var enableGzip bool = true
 var gzipLevel int = -1
-
-var certFile string = "pathToCertFile"
-var keyFile string = "pathToKeyFile"
 
 func main() {
 
@@ -43,8 +38,8 @@ func main() {
 
 	// Mount middleware
 	service.Use(middleware.RequestID())
-	service.Use(middleware.LogRequest(isVerbose))
-	service.Use(middleware.ErrorHandler(service, isVerbose))
+	service.Use(middleware.LogRequest(configuration.Conf.Verbose))
+	service.Use(middleware.ErrorHandler(service, configuration.Conf.Verbose))
 	service.Use(middleware.Recover())
 	if enableGzip {
 		service.Use(gzip.Middleware(gzipLevel))
@@ -80,15 +75,8 @@ func main() {
 	defer controllers.DBCon.Close()
 
 	// Start service
-
-	if isDebug {
-		if err := service.ListenAndServe(":8080"); err != nil {
-			service.LogError("startup", "err", err)
-		}
-	} else {
-		if err := service.ListenAndServeTLS(":8080", certFile, keyFile); err != nil {
-			service.LogError("startup", "err", err)
-		}
+	if err := service.ListenAndServe(":8080"); err != nil {
+		service.LogError("startup", "err", err)
 	}
 
 }

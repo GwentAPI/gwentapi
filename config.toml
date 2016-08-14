@@ -1,4 +1,6 @@
 logfile = "./access.log"
+debug = false
+verbose = false
 
 [database]
 user = "client"

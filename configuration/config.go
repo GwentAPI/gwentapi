@@ -11,6 +11,8 @@ var Conf GwentConfig
 var isLoaded bool = false
 
 type GwentConfig struct {
+	Debug   bool
+	Verbose bool
 	LogFile string
 	Server  server       `toml:"server"`
 	DB      mysql.Config `toml:"database"`
