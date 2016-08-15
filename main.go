@@ -9,19 +9,20 @@ import (
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
 	"github.com/tri125/gwentapi/app"
+	"github.com/tri125/gwentapi/configuration"
 	"github.com/tri125/gwentapi/controllers"
 )
 
-var isDebug bool = true
-var isVerbose bool = false
 var enableGzip bool = true
 var gzipLevel int = -1
 
-var certFile string = "pathToCertFile"
-var keyFile string = "pathToKeyFile"
-var logFile string = "./access.log"
-
 func main() {
+
+	//Load config
+	errC := configuration.ReadConfig()
+	if errC != nil {
+		panic("Error loading config file")
+	}
 
 	// Create service
 	service := goa.New("gwentapi")
@@ -30,15 +31,15 @@ func main() {
 	logger := log.New("module", "app/server")
 
 	//Logger configuration
-	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(logFile, log.LogfmtFormat())))
+	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.Conf.LogFile, log.LogfmtFormat())))
 
 	//Inject logger
 	service.WithLogger(goalog15.New(logger))
 
 	// Mount middleware
 	service.Use(middleware.RequestID())
-	service.Use(middleware.LogRequest(isVerbose))
-	service.Use(middleware.ErrorHandler(service, isVerbose))
+	service.Use(middleware.LogRequest(configuration.Conf.Verbose))
+	service.Use(middleware.ErrorHandler(service, configuration.Conf.Verbose))
 	service.Use(middleware.Recover())
 	if enableGzip {
 		service.Use(gzip.Middleware(gzipLevel))
@@ -67,22 +68,15 @@ func main() {
 
 	//database
 	var err error
-	controllers.DBCon, err = controllers.NewDBConnection("client:thereisonlyonekinginthenorth@tcp/gwentapi?timeout=90s&strict=true&parseTime=true")
+	controllers.DBCon, err = controllers.NewDBConnection(configuration.Conf.FormatDSN())
 	if err != nil {
 		panic(err.Error())
 	}
 	defer controllers.DBCon.Close()
 
 	// Start service
-
-	if isDebug {
-		if err := service.ListenAndServe(":8080"); err != nil {
-			service.LogError("startup", "err", err)
-		}
-	} else {
-		if err := service.ListenAndServeTLS(":8080", certFile, keyFile); err != nil {
-			service.LogError("startup", "err", err)
-		}
+	if err := service.ListenAndServe(":8080"); err != nil {
+		service.LogError("startup", "err", err)
 	}
 
 }
