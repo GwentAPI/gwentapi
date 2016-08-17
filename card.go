@@ -25,7 +25,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	// Put your logic here
 
 	// CardController_CardFaction: end_implement
-	res := app.GwentapiCardCollection{}
+	res := &app.GwentapiPagecard{}
 	return ctx.OK(res)
 }
 
@@ -36,7 +36,7 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	// Put your logic here
 
 	// CardController_CardLeader: end_implement
-	res := app.GwentapiCardCollection{}
+	res := &app.GwentapiPagecard{}
 	return ctx.OK(res)
 }
 
@@ -47,7 +47,7 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	//res := make(app.GwentapiCardCollection, len(cards))
 
 	// CardController_CardRarity: end_implement
-	res := app.GwentapiCardCollection{}
+	res := &app.GwentapiPagecard{}
 	return ctx.OK(res)
 }
 
@@ -81,18 +81,6 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: start_implement
 	var cards []*controllers.CardModel
 	var err error
-	var offset, limit int
-
-	if ctx.Offset == nil {
-		offset = 0
-	} else {
-		offset = *ctx.Offset
-	}
-	if ctx.Limit == nil {
-		limit = 20
-	} else {
-		limit = *ctx.Limit
-	}
 
 	count, err := controllers.CountCards()
 
@@ -101,21 +89,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		return ctx.InternalServerError()
 	}
 
-	if offset < 0 {
-		offset = 0
-	}
-
-	if offset > count {
-		offset = count
-	}
-
-	if limit < 0 {
-		limit = 1
-	}
-
-	if limit > count {
-		limit = count
-	}
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
 
 	cards, err = controllers.FetchLimitOffsetCards(limit, offset)
 
@@ -124,20 +98,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		return ctx.InternalServerError()
 	}
 
-	cardResult := make(app.GwentapiCardLinkCollection, len(cards))
-
-	for i, card := range cards {
-		cardResult[i] = createLinkCard(card)
-	}
-
-	prev, next := generatePrevNextPageHref(count, limit, offset, controllers.CardURL(""))
-
-	res := &app.GwentapiPagecard{
-		Count:    count,
-		Next:     next,
-		Previous: prev,
-		Results:  cardResult,
-	}
+	res := generatePage(cards, count, limit, offset, controllers.CardURL(""))
 
 	// CardController_List: end_implement
 	return ctx.OK(res)
@@ -239,4 +200,57 @@ func generatePrevNextPageHref(count int, limit int, offset int, href string) (*s
 	}
 
 	return prev, next
+}
+
+func validateLimitOffset(count int, ctxLimit *int, ctxOffset *int) (int, int) {
+	var limit, offset int
+
+	if ctxOffset == nil {
+		offset = 0
+	} else {
+		offset = *ctxOffset
+	}
+	if ctxLimit == nil {
+		limit = 20
+	} else {
+		limit = *ctxLimit
+	}
+
+	if offset < 0 {
+		offset = 0
+	}
+
+	if offset > count {
+		offset = count
+	}
+
+	if limit < 0 {
+		limit = 1
+	}
+
+	if limit > count {
+		limit = count
+	}
+
+	return limit, offset
+}
+
+func generatePage(cards []*controllers.CardModel, count int, limit int, offset int, href string) *app.GwentapiPagecard {
+
+	cardResult := make(app.GwentapiCardLinkCollection, len(cards))
+
+	for i, card := range cards {
+		cardResult[i] = createLinkCard(card)
+	}
+
+	prev, next := generatePrevNextPageHref(count, limit, offset, href)
+
+	res := &app.GwentapiPagecard{
+		Count:    count,
+		Next:     next,
+		Previous: prev,
+		Results:  cardResult,
+	}
+
+	return res
 }

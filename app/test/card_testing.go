@@ -494,7 +494,7 @@ func CardFactionCardNotFound(t *testing.T, ctx context.Context, service *goa.Ser
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiPagecard) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -560,99 +560,12 @@ func CardFactionCardOK(t *testing.T, ctx context.Context, service *goa.Service, 
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiCardCollection
+	var mt *app.GwentapiPagecard
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiCardCollection)
+		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardCollection", resp)
-		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
-		}
-	}
-
-	// Return results
-	return rw, mt
-}
-
-// CardFactionCardOKLink runs the method CardFaction of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
-// If ctx is nil then context.Background() is used.
-// If service is nil then a default service is created.
-func CardFactionCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
-	// Setup service
-	var (
-		logBuf bytes.Buffer
-		resp   interface{}
-
-		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
-	)
-	if service == nil {
-		service = goatest.Service(&logBuf, respSetter)
-	} else {
-		logger := log.New(&logBuf, "", log.Ltime)
-		service.WithLogger(goa.NewLogger(logger))
-		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
-		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
-		service.Encoder.Register(newEncoder, "*/*")
-	}
-
-	// Setup request context
-	rw := httptest.NewRecorder()
-	query := url.Values{}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		query["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		query["offset"] = sliceVal
-	}
-	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest("GET", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
-	}
-	prms := url.Values{}
-	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		prms["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		prms["offset"] = sliceVal
-	}
-	if ctx == nil {
-		ctx = context.Background()
-	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
-	}
-
-	// Perform action
-	err = ctrl.CardFaction(cardFactionCtx)
-
-	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
-	}
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-	var mt app.GwentapiCardLinkCollection
-	if resp != nil {
-		var ok bool
-		mt, ok = resp.(app.GwentapiCardLinkCollection)
-		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardLinkCollection", resp)
+			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -816,7 +729,7 @@ func CardLeaderCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiPagecard) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -881,98 +794,12 @@ func CardLeaderCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiCardCollection
+	var mt *app.GwentapiPagecard
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiCardCollection)
+		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardCollection", resp)
-		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
-		}
-	}
-
-	// Return results
-	return rw, mt
-}
-
-// CardLeaderCardOKLink runs the method CardLeader of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
-// If ctx is nil then context.Background() is used.
-// If service is nil then a default service is created.
-func CardLeaderCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
-	// Setup service
-	var (
-		logBuf bytes.Buffer
-		resp   interface{}
-
-		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
-	)
-	if service == nil {
-		service = goatest.Service(&logBuf, respSetter)
-	} else {
-		logger := log.New(&logBuf, "", log.Ltime)
-		service.WithLogger(goa.NewLogger(logger))
-		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
-		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
-		service.Encoder.Register(newEncoder, "*/*")
-	}
-
-	// Setup request context
-	rw := httptest.NewRecorder()
-	query := url.Values{}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		query["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		query["offset"] = sliceVal
-	}
-	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/leaders"),
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest("GET", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
-	}
-	prms := url.Values{}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		prms["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		prms["offset"] = sliceVal
-	}
-	if ctx == nil {
-		ctx = context.Background()
-	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
-	}
-
-	// Perform action
-	err = ctrl.CardLeader(cardLeaderCtx)
-
-	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
-	}
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-	var mt app.GwentapiCardLinkCollection
-	if resp != nil {
-		var ok bool
-		mt, ok = resp.(app.GwentapiCardLinkCollection)
-		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardLinkCollection", resp)
+			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -1138,7 +965,7 @@ func CardRarityCardNotFound(t *testing.T, ctx context.Context, service *goa.Serv
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardCollection) {
+func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiPagecard) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1204,99 +1031,12 @@ func CardRarityCardOK(t *testing.T, ctx context.Context, service *goa.Service, c
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiCardCollection
+	var mt *app.GwentapiPagecard
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiCardCollection)
+		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardCollection", resp)
-		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
-		}
-	}
-
-	// Return results
-	return rw, mt
-}
-
-// CardRarityCardOKLink runs the method CardRarity of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
-// If ctx is nil then context.Background() is used.
-// If service is nil then a default service is created.
-func CardRarityCardOKLink(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.CardController, rarityID string, limit *int, offset *int) (http.ResponseWriter, app.GwentapiCardLinkCollection) {
-	// Setup service
-	var (
-		logBuf bytes.Buffer
-		resp   interface{}
-
-		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
-	)
-	if service == nil {
-		service = goatest.Service(&logBuf, respSetter)
-	} else {
-		logger := log.New(&logBuf, "", log.Ltime)
-		service.WithLogger(goa.NewLogger(logger))
-		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
-		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
-		service.Encoder.Register(newEncoder, "*/*")
-	}
-
-	// Setup request context
-	rw := httptest.NewRecorder()
-	query := url.Values{}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		query["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		query["offset"] = sliceVal
-	}
-	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/rarities/%v", rarityID),
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest("GET", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
-	}
-	prms := url.Values{}
-	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
-	if limit != nil {
-		sliceVal := []string{strconv.Itoa(*limit)}
-		prms["limit"] = sliceVal
-	}
-	if offset != nil {
-		sliceVal := []string{strconv.Itoa(*offset)}
-		prms["offset"] = sliceVal
-	}
-	if ctx == nil {
-		ctx = context.Background()
-	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
-	}
-
-	// Perform action
-	err = ctrl.CardRarity(cardRarityCtx)
-
-	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
-	}
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-	var mt app.GwentapiCardLinkCollection
-	if resp != nil {
-		var ok bool
-		mt, ok = resp.(app.GwentapiCardLinkCollection)
-		if !ok {
-			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiCardLinkCollection", resp)
+			t.Errorf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
