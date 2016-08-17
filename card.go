@@ -21,11 +21,28 @@ func NewCardController(service *goa.Service) *CardController {
 // CardFaction runs the cardFaction action.
 func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	// CardController_CardFaction: start_implement
+	var cards []*controllers.CardModel
+	var err error
 
-	// Put your logic here
+	count, err := controllers.CountCards(controllers.FactionFiltered, ctx.FactionID)
+
+	if err != nil {
+		log.Println(err)
+		return ctx.InternalServerError()
+	}
+
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
+
+	cards, err = controllers.FetchPageCards(limit, offset)
+
+	if err != nil {
+		log.Println(err)
+		return ctx.InternalServerError()
+	}
+
+	res := generatePage(cards, count, limit, offset, controllers.CardURL("/factions/"+ctx.FactionID))
 
 	// CardController_CardFaction: end_implement
-	res := &app.GwentapiPagecard{}
 	return ctx.OK(res)
 }
 
@@ -44,10 +61,8 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	// CardController_CardRarity: start_implement
 
-	//res := make(app.GwentapiCardCollection, len(cards))
-
-	// CardController_CardRarity: end_implement
 	res := &app.GwentapiPagecard{}
+	// CardController_CardRarity: end_implement
 	return ctx.OK(res)
 }
 
@@ -82,7 +97,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	var cards []*controllers.CardModel
 	var err error
 
-	count, err := controllers.CountCards()
+	count, err := controllers.CountCards(controllers.AllCards, "")
 
 	if err != nil {
 		log.Println(err)
@@ -91,7 +106,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 
 	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
 
-	cards, err = controllers.FetchLimitOffsetCards(limit, offset)
+	cards, err = controllers.FetchPageCards(limit, offset)
 
 	if err != nil {
 		log.Println(err)
