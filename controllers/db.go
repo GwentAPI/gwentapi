@@ -356,15 +356,6 @@ func CountCards(pq PageQueryType, param string) (int, error) {
 	return count, err
 }
 
-func fetchCardsCount(query string, args ...interface{}) (int, error) {
-	var count int
-
-	row := DBCon.QueryRow(query)
-	err := row.Scan(&count)
-
-	return count, err
-}
-
 func FetchPageCards(limit int, offset int) ([]*CardModel, error) {
 	var cards []*CardModel
 
