@@ -9,6 +9,15 @@ import (
 
 var DBCon *sql.DB
 
+type PageQueryType int
+
+const (
+	AllCards        PageQueryType = 1 << iota
+	RarityFiltered  PageQueryType = 1 << iota
+	LeaderFiltered  PageQueryType = 1 << iota
+	FactionFiltered PageQueryType = 1 << iota
+)
+
 func NewDBConnection(DSN string) (*sql.DB, error) {
 	var dbError error
 	var db *sql.DB
@@ -325,19 +334,45 @@ func FetchCard(id string) (CardModel, error) {
 	return card, err
 }
 
-func CountCards() (int, error) {
+func CountCards(pq PageQueryType, param string) (int, error) {
 	var count int
+	var err error
+	var row *sql.Row
 
-	row := DBCon.QueryRow("SELECT COUNT(*) FROM Cards")
-	err := row.Scan(&count)
+	switch {
+	case pq == AllCards:
+		row = DBCon.QueryRow("SELECT COUNT(*) FROM Cards")
+	case pq == RarityFiltered:
+		row = DBCon.QueryRow("SELECT COUNT(*) FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity WHERE r.id = ?", param)
+	case pq == LeaderFiltered:
+		row = DBCon.QueryRow("SELECT COUNT(*) FROM Cards AS c INNER JOIN Types AS t ON c.idType = t.idType WHERE t.name = ?", "Leader")
+	case pq == FactionFiltered:
+		row = DBCon.QueryRow("SELECT COUNT(*) FROM Cards AS c INNER JOIN Factions AS f ON c.idFaction = f.idFaction WHERE f.id = ?", param)
+	default:
+		return 0, errors.New("Invalid PageQueryType")
+	}
+	err = row.Scan(&count)
 
 	return count, err
 }
 
-func FetchLimitOffsetCards(limit int, offset int) ([]*CardModel, error) {
+func FetchPageCards(pq PageQueryType, limit int, offset int, id string) ([]*CardModel, error) {
 	var cards []*CardModel
+	var err error
+	var rows *sql.Rows
 
-	rows, err := DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY c.id ASC LIMIT ? OFFSET ?", limit, offset)
+	switch {
+	case pq == AllCards:
+		rows, err = DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType ORDER BY c.id ASC LIMIT ? OFFSET ?", limit, offset)
+	case pq == RarityFiltered:
+		rows, err = DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType WHERE r.id = ? ORDER BY c.id ASC LIMIT ? OFFSET ?", id, limit, offset)
+	case pq == LeaderFiltered:
+		rows, err = DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType WHERE t.name = ? ORDER BY c.id ASC LIMIT ? OFFSET ?", "Leader", limit, offset)
+	case pq == FactionFiltered:
+		rows, err = DBCon.Query("SELECT c.name, c.id, r.id, r.name, f.id, f.name, t.id, t.name, strength, text, flavor FROM Cards AS c INNER JOIN Rarities AS r ON c.idRarity = r.idRarity INNER JOIN Factions AS f ON c.idFaction = f.idFaction INNER JOIN Types AS t ON c.idType = t.idType WHERE f.id = ? ORDER BY c.id ASC LIMIT ? OFFSET ?", id, limit, offset)
+	default:
+		return nil, errors.New("Invalid PageQueryType")
+	}
 
 	if err != nil {
 		return cards, err
