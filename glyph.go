@@ -45,6 +45,9 @@ func (c *GlyphController) List(ctx *app.ListGlyphContext) error {
 func (c *GlyphController) Show(ctx *app.ShowGlyphContext) error {
 	// GlyphController_Show: start_implement
 	glyph, err := controllers.FetchGlyph(ctx.GlyphID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

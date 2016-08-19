@@ -44,6 +44,9 @@ func (c *TypeController) List(ctx *app.ListTypeContext) error {
 func (c *TypeController) Show(ctx *app.ShowTypeContext) error {
 	// TypeController_Show: start_implement
 	cardType, err := controllers.FetchType(ctx.TypeID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

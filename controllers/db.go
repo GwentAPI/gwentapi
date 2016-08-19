@@ -18,6 +18,13 @@ const (
 	FactionFiltered PageQueryType = 1 << iota
 )
 
+func NotFound(err error) bool {
+	if err == sql.ErrNoRows {
+		return true
+	}
+	return false
+}
+
 func NewDBConnection(DSN string) (*sql.DB, error) {
 	var dbError error
 	var db *sql.DB
@@ -517,7 +524,7 @@ func FetchArtwork(id string) (ArtworkMediaModel, error) {
 	}
 
 	if count == 0 {
-		return artworkMedia, errors.New("No rows on Artworks")
+		return artworkMedia, sql.ErrNoRows
 	}
 
 	return artworkMedia, nil
