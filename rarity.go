@@ -44,6 +44,9 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 	// RarityController_Show: start_implement
 
 	rarity, err := controllers.FetchRarity(ctx.RarityID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

@@ -107,7 +107,11 @@ func (c *CardController) CardArtworks(ctx *app.CardArtworksCardContext) error {
 
 	// CardController_CardArtworks: end_implement
 	artwork, err := controllers.FetchArtwork(ctx.CardID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
+		log.Println(err)
 		return ctx.InternalServerError()
 	}
 	// ArtworkController_Show: end_implement
@@ -160,6 +164,9 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 
 	// Put your logic here
 	card, err := controllers.FetchCard(ctx.CardID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

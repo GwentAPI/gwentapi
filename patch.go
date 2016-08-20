@@ -62,6 +62,9 @@ func (c *PatchController) List(ctx *app.ListPatchContext) error {
 func (c *PatchController) Show(ctx *app.ShowPatchContext) error {
 	// PatchController_Show: start_implement
 	patch, err := controllers.FetchPatch(ctx.PatchID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()

@@ -44,6 +44,9 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	// FactionController_Show: start_implement
 	faction, err := controllers.FetchFaction(ctx.FactionID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
 		log.Println(err)
 		return ctx.InternalServerError()
