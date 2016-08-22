@@ -188,7 +188,7 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("factionID", String, "Faction ID")
 		})
-		Response(OK, CollectionOf(CardMedia))
+		Response(OK, PageCard)
 		Response(NotFound)
 	})
 
@@ -199,7 +199,7 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("rarityID", String, "Rarity ID")
 		})
-		Response(OK, CollectionOf(CardMedia))
+		Response(OK, PageCard)
 		Response(NotFound)
 	})
 
@@ -207,7 +207,7 @@ var _ = Resource("card", func() {
 		Description("Return all leader cards.")
 		Routing(GET("/leaders"))
 
-		Response(OK, CollectionOf(CardMedia))
+		Response(OK, PageCard)
 		Response(NotFound)
 	})
 

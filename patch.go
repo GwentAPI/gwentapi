@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 )
 
 // PatchController implements the patch resource.
@@ -21,8 +21,11 @@ func NewPatchController(service *goa.Service) *PatchController {
 func (c *PatchController) Latest(ctx *app.LatestPatchContext) error {
 	// PatchController_Latest: start_implement
 	patch, err := controllers.FetchLatestPatch()
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Patch", "action", "Latest", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -41,7 +44,7 @@ func (c *PatchController) List(ctx *app.ListPatchContext) error {
 	// PatchController_List: start_implement
 	patches, err := controllers.FetchAllPatches()
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Patch", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiPatchCollection, len(patches))
@@ -62,8 +65,11 @@ func (c *PatchController) List(ctx *app.ListPatchContext) error {
 func (c *PatchController) Show(ctx *app.ShowPatchContext) error {
 	// PatchController_Show: start_implement
 	patch, err := controllers.FetchPatch(ctx.PatchID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Patch", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 

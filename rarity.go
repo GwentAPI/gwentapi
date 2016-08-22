@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 )
 
 // RarityController implements the rarity resource.
@@ -22,7 +22,7 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 	// RarityController_List: start_implement
 	rarities, err := controllers.FetchAllRarities()
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Rarity", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiRarityCollection, len(rarities))
@@ -42,10 +42,12 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 // Show runs the show action.
 func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 	// RarityController_Show: start_implement
-
 	rarity, err := controllers.FetchRarity(ctx.RarityID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Rarity", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 

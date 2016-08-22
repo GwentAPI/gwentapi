@@ -1,0 +1,17 @@
+LogInfoFile = "./info.log"
+LogErrorFile = "./error.log"
+debug = false
+verbose = false
+
+[database]
+user = "client"
+passwd = "thereisonlyonekinginthenorth"
+net = "tcp"
+#addr = "127.0.0.1:3306"
+dbname = "gwentapi"
+strict = true
+parseTime = true
+
+[server]
+baseURL= "http://localhost:8080"
+db_timeout = "90s"

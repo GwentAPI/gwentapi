@@ -139,14 +139,8 @@ func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*Card
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *CardFactionCardContext) OK(r GwentapiCardCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
-	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
-}
-
-// OKLink sends a HTTP response with status code 200.
-func (ctx *CardFactionCardContext) OKLink(r GwentapiCardLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
+func (ctx *CardFactionCardContext) OK(r *GwentapiPagecard) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -205,14 +199,8 @@ func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardL
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *CardLeaderCardContext) OK(r GwentapiCardCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
-	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
-}
-
-// OKLink sends a HTTP response with status code 200.
-func (ctx *CardLeaderCardContext) OKLink(r GwentapiCardLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
+func (ctx *CardLeaderCardContext) OK(r *GwentapiPagecard) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -277,14 +265,8 @@ func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardR
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *CardRarityCardContext) OK(r GwentapiCardCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
-	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
-}
-
-// OKLink sends a HTTP response with status code 200.
-func (ctx *CardRarityCardContext) OKLink(r GwentapiCardLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json; type=collection")
+func (ctx *CardRarityCardContext) OK(r *GwentapiPagecard) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 

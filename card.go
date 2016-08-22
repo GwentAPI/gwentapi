@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 	"strconv"
 )
 
@@ -21,33 +21,83 @@ func NewCardController(service *goa.Service) *CardController {
 // CardFaction runs the cardFaction action.
 func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	// CardController_CardFaction: start_implement
+	var cards []*controllers.CardModel
+	var err error
 
-	// Put your logic here
+	count, err := controllers.CountCards(controllers.FactionFiltered, ctx.FactionID)
+
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardFaction", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
+
+	cards, err = controllers.FetchPageCards(controllers.FactionFiltered, limit, offset, ctx.FactionID)
+
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardFaction", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	res := generatePage(cards, count, limit, offset, controllers.CardURL("factions/"+ctx.FactionID))
 
 	// CardController_CardFaction: end_implement
-	res := app.GwentapiCardCollection{}
 	return ctx.OK(res)
 }
 
 // CardLeader runs the cardLeader action.
 func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	// CardController_CardLeader: start_implement
+	var cards []*controllers.CardModel
+	var err error
 
-	// Put your logic here
+	count, err := controllers.CountCards(controllers.LeaderFiltered, "")
+
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardLeader", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
+
+	cards, err = controllers.FetchPageCards(controllers.LeaderFiltered, limit, offset, "")
+
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardLeader", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	res := generatePage(cards, count, limit, offset, controllers.CardURL("leaders"))
 
 	// CardController_CardLeader: end_implement
-	res := app.GwentapiCardCollection{}
 	return ctx.OK(res)
 }
 
 // CardRarity runs the cardRarity action.
 func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	// CardController_CardRarity: start_implement
+	var cards []*controllers.CardModel
+	var err error
 
-	//res := make(app.GwentapiCardCollection, len(cards))
+	count, err := controllers.CountCards(controllers.RarityFiltered, ctx.RarityID)
 
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardRarity", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
+
+	cards, err = controllers.FetchPageCards(controllers.RarityFiltered, limit, offset, ctx.RarityID)
+
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardRarity", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	res := generatePage(cards, count, limit, offset, controllers.CardURL("rarities/"+ctx.RarityID))
 	// CardController_CardRarity: end_implement
-	res := app.GwentapiCardCollection{}
 	return ctx.OK(res)
 }
 
@@ -57,7 +107,11 @@ func (c *CardController) CardArtworks(ctx *app.CardArtworksCardContext) error {
 
 	// CardController_CardArtworks: end_implement
 	artwork, err := controllers.FetchArtwork(ctx.CardID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardArtworks", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// ArtworkController_Show: end_implement
@@ -81,63 +135,24 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: start_implement
 	var cards []*controllers.CardModel
 	var err error
-	var offset, limit int
 
-	if ctx.Offset == nil {
-		offset = 0
-	} else {
-		offset = *ctx.Offset
-	}
-	if ctx.Limit == nil {
-		limit = 20
-	} else {
-		limit = *ctx.Limit
-	}
-
-	count, err := controllers.CountCards()
+	count, err := controllers.CountCards(controllers.AllCards, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
 		return ctx.InternalServerError()
 	}
 
-	if offset < 0 {
-		offset = 0
-	}
+	limit, offset := validateLimitOffset(count, ctx.Limit, ctx.Offset)
 
-	if offset > count {
-		offset = count
-	}
-
-	if limit < 0 {
-		limit = 1
-	}
-
-	if limit > count {
-		limit = count
-	}
-
-	cards, err = controllers.FetchLimitOffsetCards(limit, offset)
+	cards, err = controllers.FetchPageCards(controllers.AllCards, limit, offset, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
-	cardResult := make(app.GwentapiCardLinkCollection, len(cards))
-
-	for i, card := range cards {
-		cardResult[i] = createLinkCard(card)
-	}
-
-	prev, next := generatePrevNextPageHref(count, limit, offset, controllers.CardURL(""))
-
-	res := &app.GwentapiPagecard{
-		Count:    count,
-		Next:     next,
-		Previous: prev,
-		Results:  cardResult,
-	}
+	res := generatePage(cards, count, limit, offset, controllers.CardURL(""))
 
 	// CardController_List: end_implement
 	return ctx.OK(res)
@@ -149,8 +164,11 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 
 	// Put your logic here
 	card, err := controllers.FetchCard(ctx.CardID)
+	if controllers.NotFound(err) {
+		return ctx.NotFound()
+	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// CardController_Show: end_implement
@@ -239,4 +257,57 @@ func generatePrevNextPageHref(count int, limit int, offset int, href string) (*s
 	}
 
 	return prev, next
+}
+
+func validateLimitOffset(count int, ctxLimit *int, ctxOffset *int) (int, int) {
+	var limit, offset int
+
+	if ctxOffset == nil {
+		offset = 0
+	} else {
+		offset = *ctxOffset
+	}
+	if ctxLimit == nil {
+		limit = 20
+	} else {
+		limit = *ctxLimit
+	}
+
+	if offset < 0 {
+		offset = 0
+	}
+
+	if offset > count {
+		offset = count
+	}
+
+	if limit < 0 {
+		limit = 1
+	}
+
+	if limit > count {
+		limit = count
+	}
+
+	return limit, offset
+}
+
+func generatePage(cards []*controllers.CardModel, count int, limit int, offset int, href string) *app.GwentapiPagecard {
+
+	cardResult := make(app.GwentapiCardLinkCollection, len(cards))
+
+	for i, card := range cards {
+		cardResult[i] = createLinkCard(card)
+	}
+
+	prev, next := generatePrevNextPageHref(count, limit, offset, href)
+
+	res := &app.GwentapiPagecard{
+		Count:    count,
+		Next:     next,
+		Previous: prev,
+		Results:  cardResult,
+	}
+
+	return res
 }
