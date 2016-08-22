@@ -1,4 +1,5 @@
-logfile = "./access.log"
+LogInfoFile = "./info.log"
+LogErrorFile = "./error.log"
 debug = false
 verbose = false
 

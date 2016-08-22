@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 )
 
 // GlyphController implements the glyph resource.
@@ -22,7 +22,7 @@ func (c *GlyphController) List(ctx *app.ListGlyphContext) error {
 	// GlyphController_List: start_implement
 	glyphs, err := controllers.FetchAllGlyphs()
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Glyph", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// GlyphController_List: end_implement
@@ -49,7 +49,7 @@ func (c *GlyphController) Show(ctx *app.ShowGlyphContext) error {
 		return ctx.NotFound()
 	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Glyph", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 

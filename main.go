@@ -31,7 +31,9 @@ func main() {
 	logger := log.New("module", "app/server")
 
 	//Logger configuration
-	logger.SetHandler(log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.Conf.LogFile, log.LogfmtFormat())))
+	logger.SetHandler(log.MultiHandler(
+		log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.Conf.LogInfoFile, log.LogfmtFormat())),
+		log.LvlFilterHandler(log.LvlError, log.Must.FileHandler(configuration.Conf.LogErrorFile, log.LogfmtFormat()))))
 
 	//Inject logger
 	service.WithLogger(goalog15.New(logger))

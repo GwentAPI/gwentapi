@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 )
 
 // TypeController implements the type resource.
@@ -22,7 +22,7 @@ func (c *TypeController) List(ctx *app.ListTypeContext) error {
 	// TypeController_List: start_implement
 	cardTypes, err := controllers.FetchAllTypes()
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Type", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -48,7 +48,7 @@ func (c *TypeController) Show(ctx *app.ShowTypeContext) error {
 		return ctx.NotFound()
 	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Type", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 

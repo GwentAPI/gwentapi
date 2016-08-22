@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 	"strconv"
 )
 
@@ -27,7 +27,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	count, err := controllers.CountCards(controllers.FactionFiltered, ctx.FactionID)
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardFaction", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -36,7 +36,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	cards, err = controllers.FetchPageCards(controllers.FactionFiltered, limit, offset, ctx.FactionID)
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardFaction", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -55,7 +55,7 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	count, err := controllers.CountCards(controllers.LeaderFiltered, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardLeader", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -64,7 +64,7 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	cards, err = controllers.FetchPageCards(controllers.LeaderFiltered, limit, offset, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardLeader", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -83,7 +83,7 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	count, err := controllers.CountCards(controllers.RarityFiltered, ctx.RarityID)
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardRarity", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -92,7 +92,7 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	cards, err = controllers.FetchPageCards(controllers.RarityFiltered, limit, offset, ctx.RarityID)
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardRarity", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -111,7 +111,7 @@ func (c *CardController) CardArtworks(ctx *app.CardArtworksCardContext) error {
 		return ctx.NotFound()
 	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardArtworks", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// ArtworkController_Show: end_implement
@@ -139,7 +139,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	count, err := controllers.CountCards(controllers.AllCards, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError (count)", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -148,7 +148,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	cards, err = controllers.FetchPageCards(controllers.AllCards, limit, offset, "")
 
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
@@ -168,7 +168,7 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 		return ctx.NotFound()
 	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// CardController_Show: end_implement

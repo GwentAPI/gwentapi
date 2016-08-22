@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/controllers"
-	"log"
 )
 
 // FactionController implements the faction resource.
@@ -22,7 +22,7 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 	// FactionController_List: start_implement
 	factions, err := controllers.FetchAllFactions()
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Faction", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	res := make(app.GwentapiFactionCollection, len(factions))
@@ -48,7 +48,7 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 		return ctx.NotFound()
 	}
 	if err != nil {
-		log.Println(err)
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Faction", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 	// FactionController_Show: end_implement
