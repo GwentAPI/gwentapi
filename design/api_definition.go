@@ -17,7 +17,7 @@ var _ = API("gwentapi", func() {
 	License(func() {
 		Name("The textual information presented through this API about GWENT: The Witcher Card Game is copyrighted by CD Projekt RED")
 	})
-	BasePath("/v0")
+	BasePath("/")
 	Host("api.gwentapi.com")
 	Scheme("https")
 	Produces("application/json")

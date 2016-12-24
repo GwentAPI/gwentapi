@@ -7,7 +7,7 @@ import (
 
 var _ = Resource("phonebook", func() {
 	DefaultMedia(ResourceMedia)
-	BasePath("/")
+	BasePath("/v0")
 
 	Action("show", func() {
 		Description("Listing of all supported resources endpoint")
@@ -20,7 +20,7 @@ var _ = Resource("phonebook", func() {
 var _ = Resource("faction", func() {
 
 	DefaultMedia(FactionMedia)
-	BasePath("/factions")
+	BasePath("/v0/factions")
 
 	Response(InternalServerError)
 
@@ -46,7 +46,7 @@ var _ = Resource("faction", func() {
 
 var _ = Resource("rarity", func() {
 	DefaultMedia(RarityMedia)
-	BasePath("/rarities")
+	BasePath("/v0/rarities")
 
 	Response(InternalServerError)
 
@@ -71,7 +71,7 @@ var _ = Resource("rarity", func() {
 
 var _ = Resource("glyph", func() {
 	DefaultMedia(GlyphMedia)
-	BasePath("/glyphs")
+	BasePath("/v0/glyphs")
 
 	Response(InternalServerError)
 
@@ -96,7 +96,7 @@ var _ = Resource("glyph", func() {
 
 var _ = Resource("type", func() {
 	DefaultMedia(TypeMedia)
-	BasePath("/types")
+	BasePath("/v0/types")
 
 	Response(InternalServerError)
 
@@ -121,7 +121,7 @@ var _ = Resource("type", func() {
 
 var _ = Resource("patch", func() {
 	DefaultMedia(PatchMedia)
-	BasePath("/patches")
+	BasePath("/v0/patches")
 
 	Response(InternalServerError)
 
@@ -153,7 +153,7 @@ var _ = Resource("patch", func() {
 
 var _ = Resource("card", func() {
 	DefaultMedia(CardMedia)
-	BasePath("/cards")
+	BasePath("/v0/cards")
 
 	Response(InternalServerError)
 
