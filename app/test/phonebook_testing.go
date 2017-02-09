@@ -60,7 +60,7 @@ func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PhonebookTest"), rw, req, prms)
-	showCtx, err := app.NewShowPhonebookContext(goaCtx, service)
+	showCtx, err := app.NewShowPhonebookContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *g
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -116,7 +116,7 @@ func ShowPhonebookOK(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PhonebookTest"), rw, req, prms)
-	showCtx, err := app.NewShowPhonebookContext(goaCtx, service)
+	showCtx, err := app.NewShowPhonebookContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func ShowPhonebookOK(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)

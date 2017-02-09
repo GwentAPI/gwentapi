@@ -5,137 +5,77 @@ consumes:
 - application/gob
 - application/x-gob
 definitions:
-  GwentapiArtwork:
-    description: Artwork for a card (default view)
-    example:
-      alternatives:
-      - artist: Et non ipsum veritatis occaecati.
-        full_size: Quia fugiat culpa.
-        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
-      - artist: Et non ipsum veritatis occaecati.
-        full_size: Quia fugiat culpa.
-        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
-      artwork:
-        artist: Et non ipsum veritatis occaecati.
-        full_size: Quia fugiat culpa.
-        normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
-      href: Consequatur quod repudiandae.
-      id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
-    properties:
-      alternatives:
-        description: Alternatives artwork for the card
-        example:
-        - artist: Et non ipsum veritatis occaecati.
-          full_size: Quia fugiat culpa.
-          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
-        - artist: Et non ipsum veritatis occaecati.
-          full_size: Quia fugiat culpa.
-          normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
-        items:
-          $ref: '#/definitions/artworkType'
-        type: array
-      artwork:
-        $ref: '#/definitions/artworkType'
-      href:
-        description: API href for making requests on the artwork
-        example: Consequatur quod repudiandae.
-        type: string
-      id:
-        description: Unique artwork ID
-        example: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
-        type: string
-    required:
-    - id
-    - href
-    - artwork
-    title: 'Mediatype identifier: application/vnd.gwentapi.artwork+json; view=default'
-    type: object
-  GwentapiArtworkLink:
-    description: Artwork for a card (link view)
-    example:
-      href: Consequatur quod repudiandae.
-    properties:
-      href:
-        description: API href for making requests on the artwork
-        example: Consequatur quod repudiandae.
-        type: string
-    required:
-    - href
-    title: 'Mediatype identifier: application/vnd.gwentapi.artwork+json; view=link'
-    type: object
   GwentapiCard:
     description: A card (default view)
     example:
-      artwork:
-        href: Consequatur quod repudiandae.
       faction:
-        href: Qui ipsam ut dolor.
-        name: Et pariatur et quam facilis facere.
-      flavor: Saepe illum voluptas unde.
-      href: In quo tenetur recusandae.
-      id: Rerum repellendus.
-      name: Eum itaque perspiciatis est quia.
+        href: Et quam facilis facere sapiente enim.
+        name: Necessitatibus expedita explicabo quisquam voluptate doloribus praesentium.
+      flavor: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      href: Consequatur quod repudiandae.
+      id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
+      name: Architecto saepe quod aperiam.
       rarity:
-        href: Enim dolor necessitatibus expedita.
-        name: Quisquam voluptate doloribus praesentium.
+        href: Quis qui aut.
+        name: Error sit.
       rows:
-      - Quibusdam et accusamus.
-      - Quibusdam et accusamus.
-      strength: 6.5000417e+18
+      - Quo tenetur.
+      - Quo tenetur.
+      strength: 8.278536e+18
       subtypes:
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      text: Quia adipisci impedit quidem.
+      - href: Ut debitis qui illo molestiae dolor.
+        name: Cupiditate asperiores ratione sed.
+      text: Quidem in laboriosam nobis excepturi.
       type:
-        href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
+        href: Ut debitis qui illo molestiae dolor.
+        name: Cupiditate asperiores ratione sed.
+      variations:
+      - href: Excepturi quas sed aspernatur itaque incidunt dolores.
     properties:
-      artwork:
-        $ref: '#/definitions/GwentapiArtworkLink'
       faction:
         $ref: '#/definitions/GwentapiFactionLink'
       flavor:
         description: Flavor text of the card
-        example: Saepe illum voluptas unde.
+        example: Consequatur necessitatibus aut rerum expedita impedit architecto.
         type: string
       href:
         description: API href for making requests on the card
-        example: In quo tenetur recusandae.
+        example: Consequatur quod repudiandae.
         type: string
       id:
         description: Unique card ID
-        example: Rerum repellendus.
+        example: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
         type: string
       name:
         description: Name of the card
-        example: Eum itaque perspiciatis est quia.
+        example: Architecto saepe quod aperiam.
         type: string
       rarity:
         $ref: '#/definitions/GwentapiRarityLink'
       rows:
         description: Rows where the card can be played
         example:
-        - Quibusdam et accusamus.
-        - Quibusdam et accusamus.
+        - Quo tenetur.
+        - Quo tenetur.
         items:
-          example: Quibusdam et accusamus.
+          example: Quo tenetur.
           type: string
         type: array
       strength:
         description: Strength of the card
-        example: 6.5000417e+18
+        example: 8.278536e+18
         format: int64
         type: integer
       subtypes:
         $ref: '#/definitions/GwentapiTypeLinkCollection'
       text:
         description: Text of the card detailing its abilities and how it plays
-        example: Quia adipisci impedit quidem.
+        example: Quidem in laboriosam nobis excepturi.
         type: string
       type:
         $ref: '#/definitions/GwentapiTypeLink'
+      variations:
+        $ref: '#/definitions/GwentapiVariationLinkCollection'
     required:
     - id
     - href
@@ -148,16 +88,16 @@ definitions:
   GwentapiCardLink:
     description: A card (link view)
     example:
-      href: In quo tenetur recusandae.
-      name: Eum itaque perspiciatis est quia.
+      href: Consequatur quod repudiandae.
+      name: Architecto saepe quod aperiam.
     properties:
       href:
         description: API href for making requests on the card
-        example: In quo tenetur recusandae.
+        example: Consequatur quod repudiandae.
         type: string
       name:
         description: Name of the card
-        example: Eum itaque perspiciatis est quia.
+        example: Architecto saepe quod aperiam.
         type: string
     required:
     - href
@@ -168,56 +108,29 @@ definitions:
     description: GwentapiCardLinkCollection is the media type for an array of GwentapiCardLink
       (default view)
     example:
-    - artwork:
-        href: Consequatur quod repudiandae.
-      faction:
-        href: Qui ipsam ut dolor.
-        name: Et pariatur et quam facilis facere.
-      flavor: Saepe illum voluptas unde.
-      href: In quo tenetur recusandae.
-      id: Rerum repellendus.
-      name: Eum itaque perspiciatis est quia.
+    - faction:
+        href: Et quam facilis facere sapiente enim.
+        name: Necessitatibus expedita explicabo quisquam voluptate doloribus praesentium.
+      flavor: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      href: Consequatur quod repudiandae.
+      id: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
+      name: Architecto saepe quod aperiam.
       rarity:
-        href: Enim dolor necessitatibus expedita.
-        name: Quisquam voluptate doloribus praesentium.
+        href: Quis qui aut.
+        name: Error sit.
       rows:
-      - Quibusdam et accusamus.
-      - Quibusdam et accusamus.
-      strength: 6.5000417e+18
+      - Quo tenetur.
+      - Quo tenetur.
+      strength: 8.278536e+18
       subtypes:
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      text: Quia adipisci impedit quidem.
+      - href: Ut debitis qui illo molestiae dolor.
+        name: Cupiditate asperiores ratione sed.
+      text: Quidem in laboriosam nobis excepturi.
       type:
-        href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-    - artwork:
-        href: Consequatur quod repudiandae.
-      faction:
-        href: Qui ipsam ut dolor.
-        name: Et pariatur et quam facilis facere.
-      flavor: Saepe illum voluptas unde.
-      href: In quo tenetur recusandae.
-      id: Rerum repellendus.
-      name: Eum itaque perspiciatis est quia.
-      rarity:
-        href: Enim dolor necessitatibus expedita.
-        name: Quisquam voluptate doloribus praesentium.
-      rows:
-      - Quibusdam et accusamus.
-      - Quibusdam et accusamus.
-      strength: 6.5000417e+18
-      subtypes:
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      - href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
-      text: Quia adipisci impedit quidem.
-      type:
-        href: Qui aut omnis error.
-        name: Sed pariatur ut debitis qui.
+        href: Ut debitis qui illo molestiae dolor.
+        name: Cupiditate asperiores ratione sed.
+      variations:
+      - href: Excepturi quas sed aspernatur itaque incidunt dolores.
     items:
       $ref: '#/definitions/GwentapiCardLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.card+json; type=collection;
@@ -226,21 +139,21 @@ definitions:
   GwentapiFaction:
     description: A card faction (default view)
     example:
-      href: Architecto saepe quod aperiam.
-      id: Vitae magnam ducimus molestiae omnis ratione id.
-      name: Aperiam architecto nobis voluptatem.
+      href: Ut et non.
+      id: Veritatis occaecati.
+      name: Quia fugiat culpa.
     properties:
       href:
         description: API href for making requests on the faction
-        example: Architecto saepe quod aperiam.
+        example: Ut et non.
         type: string
       id:
         description: Unique faction ID
-        example: Vitae magnam ducimus molestiae omnis ratione id.
+        example: Veritatis occaecati.
         type: string
       name:
         description: Name of the faction
-        example: Aperiam architecto nobis voluptatem.
+        example: Quia fugiat culpa.
         type: string
     required:
     - id
@@ -252,9 +165,9 @@ definitions:
     description: GwentapiFactionCollection is the media type for an array of GwentapiFaction
       (default view)
     example:
-    - href: Architecto saepe quod aperiam.
-      id: Vitae magnam ducimus molestiae omnis ratione id.
-      name: Aperiam architecto nobis voluptatem.
+    - href: Ut et non.
+      id: Veritatis occaecati.
+      name: Quia fugiat culpa.
     items:
       $ref: '#/definitions/GwentapiFaction'
     title: 'Mediatype identifier: application/vnd.gwentapi.faction+json; type=collection;
@@ -263,16 +176,16 @@ definitions:
   GwentapiFactionLink:
     description: A card faction (link view)
     example:
-      href: Qui ipsam ut dolor.
-      name: Et pariatur et quam facilis facere.
+      href: Et quam facilis facere sapiente enim.
+      name: Necessitatibus expedita explicabo quisquam voluptate doloribus praesentium.
     properties:
       href:
         description: API href for making requests on the faction
-        example: Qui ipsam ut dolor.
+        example: Et quam facilis facere sapiente enim.
         type: string
       name:
         description: Name of the faction
-        example: Et pariatur et quam facilis facere.
+        example: Necessitatibus expedita explicabo quisquam voluptate doloribus praesentium.
         type: string
     required:
     - href
@@ -282,19 +195,19 @@ definitions:
   GwentapiGlyph:
     description: A glyph (default view)
     example:
-      href: Placeat aperiam atque iure.
-      id: Est dicta.
+      href: Adipisci magni pariatur consequatur veniam.
+      id: Earum est eveniet at sit sit.
       isWeatherGlyph: false
-      name: Deserunt eum similique adipisci magni pariatur consequatur.
-      text: Vel earum est.
+      name: Aut et dolorem quam.
+      text: Earum veritatis et.
     properties:
       href:
         description: API href for making requests on the glyph
-        example: Placeat aperiam atque iure.
+        example: Adipisci magni pariatur consequatur veniam.
         type: string
       id:
         description: Unique glyph ID
-        example: Est dicta.
+        example: Earum est eveniet at sit sit.
         type: string
       isWeatherGlyph:
         description: Indicate whether or not the glyph is a weather glyph
@@ -302,11 +215,11 @@ definitions:
         type: boolean
       name:
         description: Name of the glyph
-        example: Deserunt eum similique adipisci magni pariatur consequatur.
+        example: Aut et dolorem quam.
         type: string
       text:
         description: Text of the glyph
-        example: Vel earum est.
+        example: Earum veritatis et.
         type: string
     required:
     - id
@@ -320,11 +233,16 @@ definitions:
     description: GwentapiGlyphCollection is the media type for an array of GwentapiGlyph
       (default view)
     example:
-    - href: Placeat aperiam atque iure.
-      id: Est dicta.
+    - href: Adipisci magni pariatur consequatur veniam.
+      id: Earum est eveniet at sit sit.
       isWeatherGlyph: false
-      name: Deserunt eum similique adipisci magni pariatur consequatur.
-      text: Vel earum est.
+      name: Aut et dolorem quam.
+      text: Earum veritatis et.
+    - href: Adipisci magni pariatur consequatur veniam.
+      id: Earum est eveniet at sit sit.
+      isWeatherGlyph: false
+      name: Aut et dolorem quam.
+      text: Earum veritatis et.
     items:
       $ref: '#/definitions/GwentapiGlyph'
     title: 'Mediatype identifier: application/vnd.gwentapi.glyph+json; type=collection;
@@ -333,29 +251,25 @@ definitions:
   GwentapiPagecard:
     description: Paginated card (default view)
     example:
-      count: 7.687204e+18
-      next: Sit atque ad aut et dolorem.
-      previous: Voluptas earum veritatis et.
+      count: 6.11003e+18
+      next: Fugit voluptatem error iure perferendis aut aut.
+      previous: Explicabo neque repellat aliquid recusandae.
       results:
-      - href: In quo tenetur recusandae.
-        name: Eum itaque perspiciatis est quia.
-      - href: In quo tenetur recusandae.
-        name: Eum itaque perspiciatis est quia.
-      - href: In quo tenetur recusandae.
-        name: Eum itaque perspiciatis est quia.
+      - href: Consequatur quod repudiandae.
+        name: Architecto saepe quod aperiam.
     properties:
       count:
         description: Total number of cards stored in the database
-        example: 7.687204e+18
+        example: 6.11003e+18
         format: int64
         type: integer
       next:
         description: Href to the next page
-        example: Sit atque ad aut et dolorem.
+        example: Fugit voluptatem error iure perferendis aut aut.
         type: string
       previous:
         description: Href to the previous page
-        example: Voluptas earum veritatis et.
+        example: Explicabo neque repellat aliquid recusandae.
         type: string
       results:
         $ref: '#/definitions/GwentapiCardLinkCollection'
@@ -367,27 +281,27 @@ definitions:
   GwentapiPatch:
     description: A game patch (default view)
     example:
-      href: Perspiciatis explicabo neque repellat.
-      id: Recusandae at.
-      releaseDate: 1981-03-05T06:48:07-05:00
-      version: Voluptatum nostrum.
+      href: Possimus minus quo et non nulla.
+      id: Ea quia voluptatibus neque esse.
+      releaseDate: 1973-06-07T22:38:46-04:00
+      version: Minus accusantium error.
     properties:
       href:
         description: API href for making requests on the patch
-        example: Perspiciatis explicabo neque repellat.
+        example: Possimus minus quo et non nulla.
         type: string
       id:
         description: Unique Patch ID
-        example: Recusandae at.
+        example: Ea quia voluptatibus neque esse.
         type: string
       releaseDate:
         description: Release date of the patch
-        example: 1981-03-05T06:48:07-05:00
+        example: 1973-06-07T22:38:46-04:00
         format: date-time
         type: string
       version:
         description: Patch version
-        example: Voluptatum nostrum.
+        example: Minus accusantium error.
         type: string
     required:
     - id
@@ -400,14 +314,10 @@ definitions:
     description: GwentapiPatchCollection is the media type for an array of GwentapiPatch
       (default view)
     example:
-    - href: Perspiciatis explicabo neque repellat.
-      id: Recusandae at.
-      releaseDate: 1981-03-05T06:48:07-05:00
-      version: Voluptatum nostrum.
-    - href: Perspiciatis explicabo neque repellat.
-      id: Recusandae at.
-      releaseDate: 1981-03-05T06:48:07-05:00
-      version: Voluptatum nostrum.
+    - href: Possimus minus quo et non nulla.
+      id: Ea quia voluptatibus neque esse.
+      releaseDate: 1973-06-07T22:38:46-04:00
+      version: Minus accusantium error.
     items:
       $ref: '#/definitions/GwentapiPatch'
     title: 'Mediatype identifier: application/vnd.gwentapi.patch+json; type=collection;
@@ -416,21 +326,21 @@ definitions:
   GwentapiRarity:
     description: A card rarity (default view)
     example:
-      href: Aperiam deleniti qui aperiam.
-      id: Eveniet velit nihil totam quia quidem.
-      name: Laboriosam nobis excepturi dolorum quia.
+      href: Vitae magnam ducimus molestiae omnis ratione id.
+      id: Aperiam architecto nobis voluptatem.
+      name: Saepe illum voluptas unde.
     properties:
       href:
         description: API href for making requests on the rarity
-        example: Aperiam deleniti qui aperiam.
+        example: Vitae magnam ducimus molestiae omnis ratione id.
         type: string
       id:
         description: Unique rarity ID
-        example: Eveniet velit nihil totam quia quidem.
+        example: Aperiam architecto nobis voluptatem.
         type: string
       name:
         description: Name of the rarity
-        example: Laboriosam nobis excepturi dolorum quia.
+        example: Saepe illum voluptas unde.
         type: string
     required:
     - id
@@ -442,15 +352,15 @@ definitions:
     description: GwentapiRarityCollection is the media type for an array of GwentapiRarity
       (default view)
     example:
-    - href: Aperiam deleniti qui aperiam.
-      id: Eveniet velit nihil totam quia quidem.
-      name: Laboriosam nobis excepturi dolorum quia.
-    - href: Aperiam deleniti qui aperiam.
-      id: Eveniet velit nihil totam quia quidem.
-      name: Laboriosam nobis excepturi dolorum quia.
-    - href: Aperiam deleniti qui aperiam.
-      id: Eveniet velit nihil totam quia quidem.
-      name: Laboriosam nobis excepturi dolorum quia.
+    - href: Vitae magnam ducimus molestiae omnis ratione id.
+      id: Aperiam architecto nobis voluptatem.
+      name: Saepe illum voluptas unde.
+    - href: Vitae magnam ducimus molestiae omnis ratione id.
+      id: Aperiam architecto nobis voluptatem.
+      name: Saepe illum voluptas unde.
+    - href: Vitae magnam ducimus molestiae omnis ratione id.
+      id: Aperiam architecto nobis voluptatem.
+      name: Saepe illum voluptas unde.
     items:
       $ref: '#/definitions/GwentapiRarity'
     title: 'Mediatype identifier: application/vnd.gwentapi.rarity+json; type=collection;
@@ -459,16 +369,16 @@ definitions:
   GwentapiRarityLink:
     description: A card rarity (link view)
     example:
-      href: Enim dolor necessitatibus expedita.
-      name: Quisquam voluptate doloribus praesentium.
+      href: Quis qui aut.
+      name: Error sit.
     properties:
       href:
         description: API href for making requests on the rarity
-        example: Enim dolor necessitatibus expedita.
+        example: Quis qui aut.
         type: string
       name:
         description: Name of the rarity
-        example: Quisquam voluptate doloribus praesentium.
+        example: Error sit.
         type: string
     required:
     - href
@@ -478,64 +388,58 @@ definitions:
   GwentapiResource:
     description: Listing of all available resource endpoint (default view)
     example:
-      cards: Debitis veritatis doloribus est asperiores sequi.
-      factions: Rerum dolores totam dignissimos modi praesentium deleniti.
-      glyphs: Voluptate est voluptas illo eum rerum et.
-      patches: Dolor possimus ut et veniam.
-      rarities: Sed sed eveniet est quisquam.
-      types: Qui eius aut amet dolorem at.
+      cards: Voluptas illo.
+      categories: Rerum et minima dolor possimus ut et.
+      factions: Qui sed sed.
+      groups: Est quisquam unde.
+      rarities: Eius aut amet.
     properties:
       cards:
         description: API href for making requests on cards
-        example: Debitis veritatis doloribus est asperiores sequi.
+        example: Voluptas illo.
+        type: string
+      categories:
+        description: API href for making requests on categories
+        example: Rerum et minima dolor possimus ut et.
         type: string
       factions:
         description: API href for making requests on factions
-        example: Rerum dolores totam dignissimos modi praesentium deleniti.
+        example: Qui sed sed.
         type: string
-      glyphs:
-        description: API href for making requests on glyphs
-        example: Voluptate est voluptas illo eum rerum et.
-        type: string
-      patches:
-        description: API href for making requests on patches
-        example: Dolor possimus ut et veniam.
+      groups:
+        description: API href for making requests on groups
+        example: Est quisquam unde.
         type: string
       rarities:
         description: API href for making requests on rarities
-        example: Sed sed eveniet est quisquam.
-        type: string
-      types:
-        description: API href for making requests on types
-        example: Qui eius aut amet dolorem at.
+        example: Eius aut amet.
         type: string
     required:
     - cards
     - factions
-    - glyphs
     - rarities
-    - types
-    - patches
+    - categories
+    - groups
     title: 'Mediatype identifier: application/vnd.gwentapi.resource+json; view=default'
     type: object
   GwentapiType:
     description: A card type (default view)
     example:
-      href: Dignissimos nemo nemo autem voluptatem.
-      id: Laudantium eum sequi.
-      name: Voluptatum rerum natus rerum est earum sit.
+      href: Repellendus qui eum itaque perspiciatis.
+      id: Quia quam aperiam deleniti.
+      name: Aperiam unde eveniet velit nihil totam.
     properties:
       href:
         description: API href for making requests on the type
-        example: Dignissimos nemo nemo autem voluptatem.
+        example: Repellendus qui eum itaque perspiciatis.
         type: string
       id:
         description: Unique type ID
-        example: Laudantium eum sequi.
+        example: Quia quam aperiam deleniti.
         type: string
       name:
         description: Name of the type
-        example: Voluptatum rerum natus rerum est earum sit.
+        example: Aperiam unde eveniet velit nihil totam.
         type: string
     required:
     - id
@@ -547,9 +451,15 @@ definitions:
     description: GwentapiTypeCollection is the media type for an array of GwentapiType
       (default view)
     example:
-    - href: Dignissimos nemo nemo autem voluptatem.
-      id: Laudantium eum sequi.
-      name: Voluptatum rerum natus rerum est earum sit.
+    - href: Repellendus qui eum itaque perspiciatis.
+      id: Quia quam aperiam deleniti.
+      name: Aperiam unde eveniet velit nihil totam.
+    - href: Repellendus qui eum itaque perspiciatis.
+      id: Quia quam aperiam deleniti.
+      name: Aperiam unde eveniet velit nihil totam.
+    - href: Repellendus qui eum itaque perspiciatis.
+      id: Quia quam aperiam deleniti.
+      name: Aperiam unde eveniet velit nihil totam.
     items:
       $ref: '#/definitions/GwentapiType'
     title: 'Mediatype identifier: application/vnd.gwentapi.type+json; type=collection;
@@ -558,16 +468,16 @@ definitions:
   GwentapiTypeLink:
     description: A card type (link view)
     example:
-      href: Qui aut omnis error.
-      name: Sed pariatur ut debitis qui.
+      href: Ut debitis qui illo molestiae dolor.
+      name: Cupiditate asperiores ratione sed.
     properties:
       href:
         description: API href for making requests on the type
-        example: Qui aut omnis error.
+        example: Ut debitis qui illo molestiae dolor.
         type: string
       name:
         description: Name of the type
-        example: Sed pariatur ut debitis qui.
+        example: Cupiditate asperiores ratione sed.
         type: string
     required:
     - href
@@ -578,39 +488,134 @@ definitions:
     description: GwentapiTypeLinkCollection is the media type for an array of GwentapiTypeLink
       (default view)
     example:
-    - href: Qui aut omnis error.
-      name: Sed pariatur ut debitis qui.
-    - href: Qui aut omnis error.
-      name: Sed pariatur ut debitis qui.
-    - href: Qui aut omnis error.
-      name: Sed pariatur ut debitis qui.
+    - href: Ut debitis qui illo molestiae dolor.
+      name: Cupiditate asperiores ratione sed.
+    - href: Ut debitis qui illo molestiae dolor.
+      name: Cupiditate asperiores ratione sed.
     items:
       $ref: '#/definitions/GwentapiTypeLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.type+json; type=collection;
       view=default'
     type: array
-  artworkType:
-    description: Type of card artwork
+  GwentapiVariation:
+    description: Variation of a card containing artworks, crafting/milling cost, set
+      availability, and rarity. (default view)
     example:
-      artist: Et non ipsum veritatis occaecati.
-      full_size: Quia fugiat culpa.
-      normal_size: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      art:
+        artist: Vel modi.
+        fullsizeImage: Et accusamus qui qui architecto.
+        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
+      availability: Eum voluptatum rerum natus.
+      craft:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      href: Sit assumenda quia adipisci impedit.
+      mill:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      rarity:
+        href: Vitae magnam ducimus molestiae omnis ratione id.
+        id: Aperiam architecto nobis voluptatem.
+        name: Saepe illum voluptas unde.
+      uuid: Nihil minus qui ipsam ut dolor consequatur.
+    properties:
+      art:
+        $ref: '#/definitions/artType'
+      availability:
+        description: Describe from which set the variation comes from and its general
+          availability
+        example: Eum voluptatum rerum natus.
+        type: string
+      craft:
+        $ref: '#/definitions/costType'
+      href:
+        description: API href for making requests on the artwork
+        example: Sit assumenda quia adipisci impedit.
+        type: string
+      mill:
+        $ref: '#/definitions/costType'
+      rarity:
+        $ref: '#/definitions/GwentapiRarity'
+      uuid:
+        description: Unique artwork UUID
+        example: Nihil minus qui ipsam ut dolor consequatur.
+        type: string
+    required:
+    - uuid
+    - href
+    - mill
+    - craft
+    - availability
+    - rarity
+    title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; view=default'
+    type: object
+  GwentapiVariationLink:
+    description: Variation of a card containing artworks, crafting/milling cost, set
+      availability, and rarity. (link view)
+    example:
+      href: Excepturi quas sed aspernatur itaque incidunt dolores.
+    properties:
+      href:
+        description: API href for making requests on the artwork
+        example: Excepturi quas sed aspernatur itaque incidunt dolores.
+        type: string
+    required:
+    - href
+    title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; view=link'
+    type: object
+  GwentapiVariationLinkCollection:
+    description: GwentapiVariationLinkCollection is the media type for an array of
+      GwentapiVariationLink (default view)
+    example:
+    - href: Excepturi quas sed aspernatur itaque incidunt dolores.
+    - href: Excepturi quas sed aspernatur itaque incidunt dolores.
+    - href: Excepturi quas sed aspernatur itaque incidunt dolores.
+    items:
+      $ref: '#/definitions/GwentapiVariationLink'
+    title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
+      view=default'
+    type: array
+  artType:
+    description: Type of card art
+    example:
+      artist: Vel modi.
+      fullsizeImage: Et accusamus qui qui architecto.
+      thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
     properties:
       artist:
         description: Name of the artist
-        example: Et non ipsum veritatis occaecati.
+        example: Vel modi.
         type: string
-      full_size:
+      fullsizeImage:
         description: Href to full size artwork
-        example: Quia fugiat culpa.
+        example: Et accusamus qui qui architecto.
         type: string
-      normal_size:
-        description: Href to normal size artwork
-        example: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      thumbnailImage:
+        description: Href to thumbnail size artwork
+        example: Nemo nemo autem voluptatem dolorem laudantium eum.
         type: string
+    title: artType
+    type: object
+  costType:
+    description: Type used to define the associated crafting/milling cost cost
+    example:
+      normal: 1.4303367e+18
+      premium: 8.4053964e+18
+    properties:
+      normal:
+        description: Normal cost
+        example: 1.4303367e+18
+        format: int64
+        type: integer
+      premium:
+        description: Premium cost
+        example: 8.4053964e+18
+        format: int64
+        type: integer
     required:
-    - normal_size
-    title: artworkType
+    - premium
+    - normal
+    title: costType
     type: object
 host: api.gwentapi.com
 info:
@@ -623,7 +628,7 @@ info:
     name: 'The textual information presented through this API about GWENT: The Witcher
       Card Game is copyrighted by CD Projekt RED'
   title: Gwent API
-  version: "0.1"
+  version: "0.9"
 paths:
   /v0:
     get:
@@ -728,7 +733,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/GwentapiArtwork'
+            $ref: '#/definitions/GwentapiVariation'
         "404":
           description: Not Found
         "500":

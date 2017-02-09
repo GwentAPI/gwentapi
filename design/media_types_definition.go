@@ -10,21 +10,19 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 	Attributes(func() {
 		Attribute("cards", String, "API href for making requests on cards")
 		Attribute("factions", String, "API href for making requests on factions")
-		Attribute("glyphs", String, "API href for making requests on glyphs")
 		Attribute("rarities", String, "API href for making requests on rarities")
-		Attribute("types", String, "API href for making requests on types")
-		Attribute("patches", String, "API href for making requests on patches")
+		Attribute("categories", String, "API href for making requests on categories")
+		Attribute("groups", String, "API href for making requests on groups")
 
-		Required("cards", "factions", "glyphs", "rarities", "types", "patches")
+		Required("cards", "factions", "rarities", "categories", "groups")
 	})
 
 	View("default", func() {
 		Attribute("cards")
 		Attribute("factions")
-		Attribute("glyphs")
 		Attribute("rarities")
-		Attribute("types")
-		Attribute("patches")
+		Attribute("categories")
+		Attribute("groups")
 	})
 })
 
@@ -53,16 +51,19 @@ var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 	})
 })
 
-var ArtworkMedia = MediaType("application/vnd.gwentapi.artwork+json", func() {
-	Description("Artwork for a card")
+var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func() {
+	Description("Variation of a card containing artworks, crafting/milling cost, set availability, and rarity.")
 	Attributes(func() {
-		Attribute("id", String, "Unique artwork ID")
+		Attribute("uuid", String, "Unique artwork UUID")
 		Attribute("href", String, "API href for making requests on the artwork")
-		Attribute("artwork", ArtworkType, "Primary artwork of the card")
 		//Attribute("card", CardMedia, "Card referred to by the artwork")
-		Attribute("alternatives", ArrayOf(ArtworkType), "Alternatives artwork for the card")
+		Attribute("art", ArtType, "Artworks of the card variation.")
+		Attribute("mill", CostType, "Milling cost of the card variation.")
+		Attribute("craft", CostType, "Crafting cost of the card variation.")
+		Attribute("availability", String, "Describe from which set the variation comes from and its general availability")
+		Attribute("rarity", RarityMedia, "Rarity of the card")
 
-		Required("id", "href", "artwork")
+		Required("uuid", "href", "mill", "craft", "availability", "rarity")
 	})
 
 	//Links(func() {
@@ -70,13 +71,13 @@ var ArtworkMedia = MediaType("application/vnd.gwentapi.artwork+json", func() {
 	//})
 
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
-		Attribute("artwork")
-		Attribute("alternatives")
-		//Attribute("card", func() {
-		//	View("link")
-		//})
+		Attribute("art")
+		Attribute("mill")
+		Attribute("craft")
+		Attribute("availability")
+		Attribute("rarity")
 	})
 
 	View("link", func() {
@@ -100,7 +101,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("strength", Integer, "Strength of the card")
 		Attribute("text", String, "Text of the card detailing its abilities and how it plays")
 		Attribute("flavor", String, "Flavor text of the card")
-		Attribute("artwork", ArtworkMedia, "Artworks of the card")
+		Attribute("variations", CollectionOf(VariationMedia), "Variations of the card")
 
 		Required("id", "href", "name", "type", "faction", "rarity")
 	})
@@ -110,7 +111,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Link("faction")
 		Link("subtypes")
 		Link("rarity")
-		Link("artwork")
+		Link("variations")
 	})
 
 	View("default", func() {
@@ -133,7 +134,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 		Attribute("strength")
 		Attribute("text")
 		Attribute("flavor")
-		Attribute("artwork", func() {
+		Attribute("variations", func() {
 			View("link")
 		})
 	})

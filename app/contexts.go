@@ -13,6 +13,7 @@ package app
 import (
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
+	"net/http"
 	"strconv"
 )
 
@@ -28,11 +29,12 @@ type CardArtworksCardContext struct {
 
 // NewCardArtworksCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller cardArtworks action.
-func NewCardArtworksCardContext(ctx context.Context, service *goa.Service) (*CardArtworksCardContext, error) {
+func NewCardArtworksCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*CardArtworksCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CardArtworksCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
@@ -65,14 +67,14 @@ func NewCardArtworksCardContext(ctx context.Context, service *goa.Service) (*Car
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *CardArtworksCardContext) OK(r *GwentapiArtwork) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.artwork+json")
+func (ctx *CardArtworksCardContext) OK(r *GwentapiVariation) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.variation+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
-func (ctx *CardArtworksCardContext) OKLink(r *GwentapiArtworkLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.artwork+json")
+func (ctx *CardArtworksCardContext) OKLink(r *GwentapiVariationLink) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.variation+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -100,11 +102,12 @@ type CardFactionCardContext struct {
 
 // NewCardFactionCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller cardFaction action.
-func NewCardFactionCardContext(ctx context.Context, service *goa.Service) (*CardFactionCardContext, error) {
+func NewCardFactionCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*CardFactionCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CardFactionCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramFactionID := req.Params["factionID"]
 	if len(paramFactionID) > 0 {
@@ -165,11 +168,12 @@ type CardLeaderCardContext struct {
 
 // NewCardLeaderCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller cardLeader action.
-func NewCardLeaderCardContext(ctx context.Context, service *goa.Service) (*CardLeaderCardContext, error) {
+func NewCardLeaderCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*CardLeaderCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CardLeaderCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) > 0 {
@@ -226,11 +230,12 @@ type CardRarityCardContext struct {
 
 // NewCardRarityCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller cardRarity action.
-func NewCardRarityCardContext(ctx context.Context, service *goa.Service) (*CardRarityCardContext, error) {
+func NewCardRarityCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*CardRarityCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CardRarityCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) > 0 {
@@ -291,11 +296,12 @@ type ListCardContext struct {
 
 // NewListCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller list action.
-func NewListCardContext(ctx context.Context, service *goa.Service) (*ListCardContext, error) {
+func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) > 0 {
@@ -352,11 +358,12 @@ type ShowCardContext struct {
 
 // NewShowCardContext parses the incoming request URL and body, performs validations and creates the
 // context used by the card controller show action.
-func NewShowCardContext(ctx context.Context, service *goa.Service) (*ShowCardContext, error) {
+func NewShowCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowCardContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowCardContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
@@ -421,11 +428,12 @@ type ListFactionContext struct {
 
 // NewListFactionContext parses the incoming request URL and body, performs validations and creates the
 // context used by the faction controller list action.
-func NewListFactionContext(ctx context.Context, service *goa.Service) (*ListFactionContext, error) {
+func NewListFactionContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListFactionContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListFactionContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -470,11 +478,12 @@ type ShowFactionContext struct {
 
 // NewShowFactionContext parses the incoming request URL and body, performs validations and creates the
 // context used by the faction controller show action.
-func NewShowFactionContext(ctx context.Context, service *goa.Service) (*ShowFactionContext, error) {
+func NewShowFactionContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowFactionContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowFactionContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramFactionID := req.Params["factionID"]
 	if len(paramFactionID) > 0 {
@@ -517,11 +526,12 @@ type ListGlyphContext struct {
 
 // NewListGlyphContext parses the incoming request URL and body, performs validations and creates the
 // context used by the glyph controller list action.
-func NewListGlyphContext(ctx context.Context, service *goa.Service) (*ListGlyphContext, error) {
+func NewListGlyphContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListGlyphContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListGlyphContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -566,11 +576,12 @@ type ShowGlyphContext struct {
 
 // NewShowGlyphContext parses the incoming request URL and body, performs validations and creates the
 // context used by the glyph controller show action.
-func NewShowGlyphContext(ctx context.Context, service *goa.Service) (*ShowGlyphContext, error) {
+func NewShowGlyphContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowGlyphContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowGlyphContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramGlyphID := req.Params["glyphID"]
 	if len(paramGlyphID) > 0 {
@@ -613,11 +624,12 @@ type LatestPatchContext struct {
 
 // NewLatestPatchContext parses the incoming request URL and body, performs validations and creates the
 // context used by the patch controller latest action.
-func NewLatestPatchContext(ctx context.Context, service *goa.Service) (*LatestPatchContext, error) {
+func NewLatestPatchContext(ctx context.Context, r *http.Request, service *goa.Service) (*LatestPatchContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := LatestPatchContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -661,11 +673,12 @@ type ListPatchContext struct {
 
 // NewListPatchContext parses the incoming request URL and body, performs validations and creates the
 // context used by the patch controller list action.
-func NewListPatchContext(ctx context.Context, service *goa.Service) (*ListPatchContext, error) {
+func NewListPatchContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListPatchContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListPatchContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -719,11 +732,12 @@ type ShowPatchContext struct {
 
 // NewShowPatchContext parses the incoming request URL and body, performs validations and creates the
 // context used by the patch controller show action.
-func NewShowPatchContext(ctx context.Context, service *goa.Service) (*ShowPatchContext, error) {
+func NewShowPatchContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowPatchContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowPatchContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramPatchID := req.Params["patchID"]
 	if len(paramPatchID) > 0 {
@@ -772,11 +786,12 @@ type ShowPhonebookContext struct {
 
 // NewShowPhonebookContext parses the incoming request URL and body, performs validations and creates the
 // context used by the phonebook controller show action.
-func NewShowPhonebookContext(ctx context.Context, service *goa.Service) (*ShowPhonebookContext, error) {
+func NewShowPhonebookContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowPhonebookContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowPhonebookContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -802,11 +817,12 @@ type ListRarityContext struct {
 
 // NewListRarityContext parses the incoming request URL and body, performs validations and creates the
 // context used by the rarity controller list action.
-func NewListRarityContext(ctx context.Context, service *goa.Service) (*ListRarityContext, error) {
+func NewListRarityContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListRarityContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListRarityContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -851,11 +867,12 @@ type ShowRarityContext struct {
 
 // NewShowRarityContext parses the incoming request URL and body, performs validations and creates the
 // context used by the rarity controller show action.
-func NewShowRarityContext(ctx context.Context, service *goa.Service) (*ShowRarityContext, error) {
+func NewShowRarityContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowRarityContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowRarityContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramRarityID := req.Params["rarityID"]
 	if len(paramRarityID) > 0 {
@@ -898,11 +915,12 @@ type ListTypeContext struct {
 
 // NewListTypeContext parses the incoming request URL and body, performs validations and creates the
 // context used by the type controller list action.
-func NewListTypeContext(ctx context.Context, service *goa.Service) (*ListTypeContext, error) {
+func NewListTypeContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListTypeContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListTypeContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -947,11 +965,12 @@ type ShowTypeContext struct {
 
 // NewShowTypeContext parses the incoming request URL and body, performs validations and creates the
 // context used by the type controller show action.
-func NewShowTypeContext(ctx context.Context, service *goa.Service) (*ShowTypeContext, error) {
+func NewShowTypeContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowTypeContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowTypeContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramTypeID := req.Params["typeID"]
 	if len(paramTypeID) > 0 {

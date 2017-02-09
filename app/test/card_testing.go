@@ -80,7 +80,7 @@ func CardArtworksCardInternalServerError(t goatest.TInterface, ctx context.Conte
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, service)
+	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -90,7 +90,7 @@ func CardArtworksCardInternalServerError(t goatest.TInterface, ctx context.Conte
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -155,7 +155,7 @@ func CardArtworksCardNotFound(t goatest.TInterface, ctx context.Context, service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, service)
+	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -165,7 +165,7 @@ func CardArtworksCardNotFound(t goatest.TInterface, ctx context.Context, service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -179,7 +179,7 @@ func CardArtworksCardNotFound(t goatest.TInterface, ctx context.Context, service
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardArtworksCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiArtwork) {
+func CardArtworksCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiVariation) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -230,7 +230,7 @@ func CardArtworksCardOK(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, service)
+	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -240,17 +240,17 @@ func CardArtworksCardOK(t goatest.TInterface, ctx context.Context, service *goa.
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiArtwork
+	var mt *app.GwentapiVariation
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiArtwork)
+		mt, ok = resp.(*app.GwentapiVariation)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiArtwork", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariation", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -266,7 +266,7 @@ func CardArtworksCardOK(t goatest.TInterface, ctx context.Context, service *goa.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardArtworksCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiArtworkLink) {
+func CardArtworksCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit *int, offset *int) (http.ResponseWriter, *app.GwentapiVariationLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -317,7 +317,7 @@ func CardArtworksCardOKLink(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, service)
+	cardArtworksCtx, err := app.NewCardArtworksCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -327,17 +327,17 @@ func CardArtworksCardOKLink(t goatest.TInterface, ctx context.Context, service *
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiArtworkLink
+	var mt *app.GwentapiVariationLink
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiArtworkLink)
+		mt, ok = resp.(*app.GwentapiVariationLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiArtworkLink", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariationLink", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -404,7 +404,7 @@ func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Contex
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, service)
+	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -414,7 +414,7 @@ func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Contex
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -479,7 +479,7 @@ func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, service)
+	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -489,7 +489,7 @@ func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service 
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -554,7 +554,7 @@ func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, service)
+	cardFactionCtx, err := app.NewCardFactionCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -564,7 +564,7 @@ func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -640,7 +640,7 @@ func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, service)
+	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -650,7 +650,7 @@ func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -714,7 +714,7 @@ func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, service)
+	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -724,7 +724,7 @@ func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -788,7 +788,7 @@ func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, service)
+	cardLeaderCtx, err := app.NewCardLeaderCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -798,7 +798,7 @@ func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -875,7 +875,7 @@ func CardRarityCardInternalServerError(t goatest.TInterface, ctx context.Context
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, service)
+	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -885,7 +885,7 @@ func CardRarityCardInternalServerError(t goatest.TInterface, ctx context.Context
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -950,7 +950,7 @@ func CardRarityCardNotFound(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, service)
+	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -960,7 +960,7 @@ func CardRarityCardNotFound(t goatest.TInterface, ctx context.Context, service *
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -1025,7 +1025,7 @@ func CardRarityCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, service)
+	cardRarityCtx, err := app.NewCardRarityCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1035,7 +1035,7 @@ func CardRarityCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1111,7 +1111,7 @@ func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	listCtx, err := app.NewListCardContext(goaCtx, service)
+	listCtx, err := app.NewListCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1121,7 +1121,7 @@ func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -1185,7 +1185,7 @@ func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	listCtx, err := app.NewListCardContext(goaCtx, service)
+	listCtx, err := app.NewListCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1195,7 +1195,7 @@ func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -1259,7 +1259,7 @@ func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	listCtx, err := app.NewListCardContext(goaCtx, service)
+	listCtx, err := app.NewListCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1269,7 +1269,7 @@ func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1346,7 +1346,7 @@ func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	showCtx, err := app.NewShowCardContext(goaCtx, service)
+	showCtx, err := app.NewShowCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1356,7 +1356,7 @@ func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -1421,7 +1421,7 @@ func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	showCtx, err := app.NewShowCardContext(goaCtx, service)
+	showCtx, err := app.NewShowCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1431,7 +1431,7 @@ func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -1496,7 +1496,7 @@ func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	showCtx, err := app.NewShowCardContext(goaCtx, service)
+	showCtx, err := app.NewShowCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1506,7 +1506,7 @@ func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1583,7 +1583,7 @@ func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
-	showCtx, err := app.NewShowCardContext(goaCtx, service)
+	showCtx, err := app.NewShowCardContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -1593,7 +1593,7 @@ func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)

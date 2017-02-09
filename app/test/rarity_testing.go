@@ -60,7 +60,7 @@ func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	listCtx, err := app.NewListRarityContext(goaCtx, service)
+	listCtx, err := app.NewListRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -116,7 +116,7 @@ func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	listCtx, err := app.NewListRarityContext(goaCtx, service)
+	listCtx, err := app.NewListRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -172,7 +172,7 @@ func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	listCtx, err := app.NewListRarityContext(goaCtx, service)
+	listCtx, err := app.NewListRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -182,7 +182,7 @@ func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -240,7 +240,7 @@ func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	listCtx, err := app.NewListRarityContext(goaCtx, service)
+	listCtx, err := app.NewListRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -250,7 +250,7 @@ func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -309,7 +309,7 @@ func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	showCtx, err := app.NewShowRarityContext(goaCtx, service)
+	showCtx, err := app.NewShowRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -319,7 +319,7 @@ func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -366,7 +366,7 @@ func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	showCtx, err := app.NewShowRarityContext(goaCtx, service)
+	showCtx, err := app.NewShowRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -376,7 +376,7 @@ func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -423,7 +423,7 @@ func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	showCtx, err := app.NewShowRarityContext(goaCtx, service)
+	showCtx, err := app.NewShowRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -433,7 +433,7 @@ func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -492,7 +492,7 @@ func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
-	showCtx, err := app.NewShowRarityContext(goaCtx, service)
+	showCtx, err := app.NewShowRarityContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -502,7 +502,7 @@ func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)

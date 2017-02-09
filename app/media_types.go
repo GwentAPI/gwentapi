@@ -15,68 +15,10 @@ import (
 	"time"
 )
 
-// Artwork for a card (default view)
-//
-// Identifier: application/vnd.gwentapi.artwork+json; view=default
-type GwentapiArtwork struct {
-	// Alternatives artwork for the card
-	Alternatives []*ArtworkType `form:"alternatives,omitempty" json:"alternatives,omitempty" xml:"alternatives,omitempty"`
-	// Primary artwork of the card
-	Artwork *ArtworkType `form:"artwork" json:"artwork" xml:"artwork"`
-	// API href for making requests on the artwork
-	Href string `form:"href" json:"href" xml:"href"`
-	// Unique artwork ID
-	ID string `form:"id" json:"id" xml:"id"`
-}
-
-// Validate validates the GwentapiArtwork media type instance.
-func (mt *GwentapiArtwork) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
-	}
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Artwork == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "artwork"))
-	}
-	for _, e := range mt.Alternatives {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
-	}
-	if mt.Artwork != nil {
-		if err2 := mt.Artwork.Validate(); err2 != nil {
-			err = goa.MergeErrors(err, err2)
-		}
-	}
-	return
-}
-
-// Artwork for a card (link view)
-//
-// Identifier: application/vnd.gwentapi.artwork+json; view=link
-type GwentapiArtworkLink struct {
-	// API href for making requests on the artwork
-	Href string `form:"href" json:"href" xml:"href"`
-}
-
-// Validate validates the GwentapiArtworkLink media type instance.
-func (mt *GwentapiArtworkLink) Validate() (err error) {
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	return
-}
-
 // A card (default view)
 //
 // Identifier: application/vnd.gwentapi.card+json; view=default
 type GwentapiCard struct {
-	// Artworks of the card
-	Artwork *GwentapiArtworkLink `form:"artwork,omitempty" json:"artwork,omitempty" xml:"artwork,omitempty"`
 	// Faction of the card
 	Faction *GwentapiFactionLink `form:"faction" json:"faction" xml:"faction"`
 	// Flavor text of the card
@@ -99,6 +41,8 @@ type GwentapiCard struct {
 	Text *string `form:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
 	// Type of the card
 	Type *GwentapiTypeLink `form:"type" json:"type" xml:"type"`
+	// Variations of the card
+	Variations GwentapiVariationLinkCollection `form:"variations,omitempty" json:"variations,omitempty" xml:"variations,omitempty"`
 }
 
 // Validate validates the GwentapiCard media type instance.
@@ -121,11 +65,6 @@ func (mt *GwentapiCard) Validate() (err error) {
 	if mt.Rarity == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
 	}
-	if mt.Artwork != nil {
-		if err2 := mt.Artwork.Validate(); err2 != nil {
-			err = goa.MergeErrors(err, err2)
-		}
-	}
 	if mt.Faction != nil {
 		if err2 := mt.Faction.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
@@ -143,6 +82,9 @@ func (mt *GwentapiCard) Validate() (err error) {
 		if err2 := mt.Type.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
 		}
+	}
+	if err2 := mt.Variations.Validate(); err2 != nil {
+		err = goa.MergeErrors(err, err2)
 	}
 	return
 }
@@ -617,16 +559,14 @@ func (mt GwentapiRarityLinkCollection) Validate() (err error) {
 type GwentapiResource struct {
 	// API href for making requests on cards
 	Cards string `form:"cards" json:"cards" xml:"cards"`
+	// API href for making requests on categories
+	Categories string `form:"categories" json:"categories" xml:"categories"`
 	// API href for making requests on factions
 	Factions string `form:"factions" json:"factions" xml:"factions"`
-	// API href for making requests on glyphs
-	Glyphs string `form:"glyphs" json:"glyphs" xml:"glyphs"`
-	// API href for making requests on patches
-	Patches string `form:"patches" json:"patches" xml:"patches"`
+	// API href for making requests on groups
+	Groups string `form:"groups" json:"groups" xml:"groups"`
 	// API href for making requests on rarities
 	Rarities string `form:"rarities" json:"rarities" xml:"rarities"`
-	// API href for making requests on types
-	Types string `form:"types" json:"types" xml:"types"`
 }
 
 // Validate validates the GwentapiResource media type instance.
@@ -637,17 +577,14 @@ func (mt *GwentapiResource) Validate() (err error) {
 	if mt.Factions == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "factions"))
 	}
-	if mt.Glyphs == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "glyphs"))
-	}
 	if mt.Rarities == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarities"))
 	}
-	if mt.Types == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "types"))
+	if mt.Categories == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "categories"))
 	}
-	if mt.Patches == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "patches"))
+	if mt.Groups == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "groups"))
 	}
 	return
 }
@@ -723,6 +660,104 @@ type GwentapiTypeLinkCollection []*GwentapiTypeLink
 
 // Validate validates the GwentapiTypeLinkCollection media type instance.
 func (mt GwentapiTypeLinkCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e != nil {
+			if err2 := e.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// Variation of a card containing artworks, crafting/milling cost, set availability, and rarity. (default view)
+//
+// Identifier: application/vnd.gwentapi.variation+json; view=default
+type GwentapiVariation struct {
+	// Artworks of the card variation.
+	Art *ArtType `form:"art,omitempty" json:"art,omitempty" xml:"art,omitempty"`
+	// Describe from which set the variation comes from and its general availability
+	Availability string `form:"availability" json:"availability" xml:"availability"`
+	// Crafting cost of the card variation.
+	Craft *CostType `form:"craft" json:"craft" xml:"craft"`
+	// API href for making requests on the artwork
+	Href string `form:"href" json:"href" xml:"href"`
+	// Milling cost of the card variation.
+	Mill *CostType `form:"mill" json:"mill" xml:"mill"`
+	// Rarity of the card
+	Rarity *GwentapiRarity `form:"rarity" json:"rarity" xml:"rarity"`
+	// Unique artwork UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
+}
+
+// Validate validates the GwentapiVariation media type instance.
+func (mt *GwentapiVariation) Validate() (err error) {
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
+	}
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Mill == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "mill"))
+	}
+	if mt.Craft == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "craft"))
+	}
+	if mt.Availability == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "availability"))
+	}
+	if mt.Rarity == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
+	}
+	if mt.Rarity != nil {
+		if err2 := mt.Rarity.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
+	}
+	return
+}
+
+// Variation of a card containing artworks, crafting/milling cost, set availability, and rarity. (link view)
+//
+// Identifier: application/vnd.gwentapi.variation+json; view=link
+type GwentapiVariationLink struct {
+	// API href for making requests on the artwork
+	Href string `form:"href" json:"href" xml:"href"`
+}
+
+// Validate validates the GwentapiVariationLink media type instance.
+func (mt *GwentapiVariationLink) Validate() (err error) {
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	return
+}
+
+// GwentapiVariationCollection is the media type for an array of GwentapiVariation (default view)
+//
+// Identifier: application/vnd.gwentapi.variation+json; type=collection; view=default
+type GwentapiVariationCollection []*GwentapiVariation
+
+// Validate validates the GwentapiVariationCollection media type instance.
+func (mt GwentapiVariationCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e != nil {
+			if err2 := e.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// GwentapiVariationCollection is the media type for an array of GwentapiVariation (link view)
+//
+// Identifier: application/vnd.gwentapi.variation+json; type=collection; view=link
+type GwentapiVariationLinkCollection []*GwentapiVariationLink
+
+// Validate validates the GwentapiVariationLinkCollection media type instance.
+func (mt GwentapiVariationLinkCollection) Validate() (err error) {
 	for _, e := range mt {
 		if e != nil {
 			if err2 := e.Validate(); err2 != nil {

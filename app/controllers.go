@@ -51,7 +51,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCardArtworksCardContext(ctx, service)
+		rctx, err := NewCardArtworksCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -66,7 +66,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCardFactionCardContext(ctx, service)
+		rctx, err := NewCardFactionCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -81,7 +81,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCardLeaderCardContext(ctx, service)
+		rctx, err := NewCardLeaderCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -96,7 +96,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCardRarityCardContext(ctx, service)
+		rctx, err := NewCardRarityCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -111,7 +111,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListCardContext(ctx, service)
+		rctx, err := NewListCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -126,7 +126,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowCardContext(ctx, service)
+		rctx, err := NewShowCardContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -154,7 +154,7 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListFactionContext(ctx, service)
+		rctx, err := NewListFactionContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -169,7 +169,7 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowFactionContext(ctx, service)
+		rctx, err := NewShowFactionContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -197,7 +197,7 @@ func MountGlyphController(service *goa.Service, ctrl GlyphController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListGlyphContext(ctx, service)
+		rctx, err := NewListGlyphContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -212,7 +212,7 @@ func MountGlyphController(service *goa.Service, ctrl GlyphController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowGlyphContext(ctx, service)
+		rctx, err := NewShowGlyphContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -241,7 +241,7 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewLatestPatchContext(ctx, service)
+		rctx, err := NewLatestPatchContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -256,7 +256,7 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListPatchContext(ctx, service)
+		rctx, err := NewListPatchContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -271,7 +271,7 @@ func MountPatchController(service *goa.Service, ctrl PatchController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowPatchContext(ctx, service)
+		rctx, err := NewShowPatchContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -298,7 +298,7 @@ func MountPhonebookController(service *goa.Service, ctrl PhonebookController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowPhonebookContext(ctx, service)
+		rctx, err := NewShowPhonebookContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -326,7 +326,7 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListRarityContext(ctx, service)
+		rctx, err := NewListRarityContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -341,7 +341,7 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowRarityContext(ctx, service)
+		rctx, err := NewShowRarityContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -369,7 +369,7 @@ func MountTypeController(service *goa.Service, ctrl TypeController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListTypeContext(ctx, service)
+		rctx, err := NewListTypeContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -384,7 +384,7 @@ func MountTypeController(service *goa.Service, ctrl TypeController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowTypeContext(ctx, service)
+		rctx, err := NewShowTypeContext(ctx, req, service)
 		if err != nil {
 			return err
 		}

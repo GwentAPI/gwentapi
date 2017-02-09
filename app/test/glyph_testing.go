@@ -60,7 +60,7 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	listCtx, err := app.NewListGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -116,7 +116,7 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	listCtx, err := app.NewListGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -172,7 +172,7 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	listCtx, err := app.NewListGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -182,7 +182,7 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -240,7 +240,7 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	listCtx, err := app.NewListGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -250,7 +250,7 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -309,7 +309,7 @@ func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	showCtx, err := app.NewShowGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -319,7 +319,7 @@ func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -366,7 +366,7 @@ func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	showCtx, err := app.NewShowGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -376,7 +376,7 @@ func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -423,7 +423,7 @@ func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	showCtx, err := app.NewShowGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -433,7 +433,7 @@ func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -492,7 +492,7 @@ func ShowGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	showCtx, err := app.NewShowGlyphContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -502,7 +502,7 @@ func ShowGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)

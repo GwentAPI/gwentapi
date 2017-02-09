@@ -218,7 +218,7 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("cardID", String, "Card ID")
 		})
-		Response(OK, ArtworkMedia)
+		Response(OK, VariationMedia)
 		Response(NotFound)
 	})
 })

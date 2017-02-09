@@ -60,7 +60,7 @@ func LatestPatchInternalServerError(t goatest.TInterface, ctx context.Context, s
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	latestCtx, err := app.NewLatestPatchContext(goaCtx, service)
+	latestCtx, err := app.NewLatestPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func LatestPatchInternalServerError(t goatest.TInterface, ctx context.Context, s
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -116,7 +116,7 @@ func LatestPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	latestCtx, err := app.NewLatestPatchContext(goaCtx, service)
+	latestCtx, err := app.NewLatestPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func LatestPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -172,7 +172,7 @@ func LatestPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	latestCtx, err := app.NewLatestPatchContext(goaCtx, service)
+	latestCtx, err := app.NewLatestPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -182,7 +182,7 @@ func LatestPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -240,7 +240,7 @@ func LatestPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	latestCtx, err := app.NewLatestPatchContext(goaCtx, service)
+	latestCtx, err := app.NewLatestPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -250,7 +250,7 @@ func LatestPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -308,7 +308,7 @@ func LatestPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	latestCtx, err := app.NewLatestPatchContext(goaCtx, service)
+	latestCtx, err := app.NewLatestPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -318,7 +318,7 @@ func LatestPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -376,7 +376,7 @@ func ListPatchInternalServerError(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	listCtx, err := app.NewListPatchContext(goaCtx, service)
+	listCtx, err := app.NewListPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -386,7 +386,7 @@ func ListPatchInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -432,7 +432,7 @@ func ListPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	listCtx, err := app.NewListPatchContext(goaCtx, service)
+	listCtx, err := app.NewListPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -442,7 +442,7 @@ func ListPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -488,7 +488,7 @@ func ListPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	listCtx, err := app.NewListPatchContext(goaCtx, service)
+	listCtx, err := app.NewListPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -498,7 +498,7 @@ func ListPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -556,7 +556,7 @@ func ListPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	listCtx, err := app.NewListPatchContext(goaCtx, service)
+	listCtx, err := app.NewListPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -566,7 +566,7 @@ func ListPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -624,7 +624,7 @@ func ListPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	listCtx, err := app.NewListPatchContext(goaCtx, service)
+	listCtx, err := app.NewListPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -634,7 +634,7 @@ func ListPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -693,7 +693,7 @@ func ShowPatchInternalServerError(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	showCtx, err := app.NewShowPatchContext(goaCtx, service)
+	showCtx, err := app.NewShowPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -703,7 +703,7 @@ func ShowPatchInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -750,7 +750,7 @@ func ShowPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	showCtx, err := app.NewShowPatchContext(goaCtx, service)
+	showCtx, err := app.NewShowPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -760,7 +760,7 @@ func ShowPatchNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -807,7 +807,7 @@ func ShowPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	showCtx, err := app.NewShowPatchContext(goaCtx, service)
+	showCtx, err := app.NewShowPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -817,7 +817,7 @@ func ShowPatchOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -876,7 +876,7 @@ func ShowPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	showCtx, err := app.NewShowPatchContext(goaCtx, service)
+	showCtx, err := app.NewShowPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -886,7 +886,7 @@ func ShowPatchOKFull(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -945,7 +945,7 @@ func ShowPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PatchTest"), rw, req, prms)
-	showCtx, err := app.NewShowPatchContext(goaCtx, service)
+	showCtx, err := app.NewShowPatchContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -955,7 +955,7 @@ func ShowPatchOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
