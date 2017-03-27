@@ -24,9 +24,11 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 		Name: v.Rarity,
 	}
 
+	//fullSizeUrl := helpers.MediaURL(v.Art.FullsizeImage)
+	thumbnailSizeUrl := helpers.MediaURL(v.Art.ThumbnailImage)
 	art := &app.ArtType{
-		FullsizeImage:  v.Art.FullsizeImage,
-		ThumbnailImage: v.Art.ThumbnailImage,
+		//FullsizeImage:  &fullSizeUrl,
+		ThumbnailImage: thumbnailSizeUrl,
 	}
 	result := &app.GwentapiVariation{
 		Availability: v.Availability,

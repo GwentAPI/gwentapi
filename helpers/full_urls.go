@@ -34,7 +34,7 @@ func GroupURL(groupID interface{}) string {
 	return configuration.Conf.Server.BaseURL + app.GroupHref(groupID)
 }
 func SwaggerURL() string {
-	return configuration.Conf.Server.BaseURL + "/swagger/index.html"
+	return "https://gwentapi.com/swagger/"
 }
 
 // RarityHref returns the resource href.
@@ -43,6 +43,6 @@ func RarityURL(rarityID interface{}) string {
 }
 
 // TypeHref returns the resource href.
-func MediaURL(filename string) string {
-	return configuration.Conf.Server.BaseURL + "/media/" + filename
+func MediaURL(filename interface{}) string {
+	return fmt.Sprintf("%v/v0/media/%v", configuration.Conf.Server.BaseURL, filename)
 }
