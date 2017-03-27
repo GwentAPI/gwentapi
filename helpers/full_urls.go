@@ -44,5 +44,5 @@ func RarityURL(rarityID interface{}) string {
 
 // TypeHref returns the resource href.
 func MediaURL(filename interface{}) string {
-	return fmt.Sprintf("%v/v0/media/%v", configuration.Conf.Server.BaseURL, filename)
+	return fmt.Sprintf("%v/media/%v", configuration.Conf.Server.BaseURL, filename)
 }
