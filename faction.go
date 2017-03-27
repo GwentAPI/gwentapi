@@ -4,7 +4,9 @@ import (
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
 	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/controllers"
+	"github.com/tri125/gwentapi/dataLayer/dal"
+	"github.com/tri125/gwentapi/dataLayer/factory"
+	"github.com/tri125/gwentapi/helpers"
 )
 
 // FactionController implements the faction resource.
@@ -20,42 +22,51 @@ func NewFactionController(service *goa.Service) *FactionController {
 // List runs the list action.
 func (c *FactionController) List(ctx *app.ListFactionContext) error {
 	// FactionController_List: start_implement
-	factions, err := controllers.FetchAllFactions()
+	dataStore := &dal.DataStore{}
+	dataStore.GetSession()
+	// Close the session
+	defer dataStore.Close()
+	dc := dal.NewDalFaction(dataStore)
+
+	factions, err := dc.FetchAll()
+
 	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Faction", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
-	res := make(app.GwentapiFactionCollection, len(factions))
 
-	for i, faction := range factions {
-		f := &app.GwentapiFaction{
-			ID:   faction.ID,
-			Href: controllers.FactionURL(faction.ID),
-			Name: faction.Name,
-		}
+	res := make(app.GwentapiFactionCollection, len(*factions))
+
+	for i, faction := range *factions {
+		f, _ := factory.CreateFaction(&faction)
 		res[i] = f
 	}
-	// FactionController_List: end_implement
-	//res := app.GwentapiFactionCollection{}
 	return ctx.OK(res)
 }
 
 // Show runs the show action.
 func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	// FactionController_Show: start_implement
-	faction, err := controllers.FetchFaction(ctx.FactionID)
-	if controllers.NotFound(err) {
+
+	dataStore := &dal.DataStore{}
+	dataStore.GetSession()
+	// Close the session
+	defer dataStore.Close()
+	dc := dal.NewDalFaction(dataStore)
+	uuid, err := helpers.Base64ToUUID(ctx.FactionID)
+
+	if err != nil {
 		return ctx.NotFound()
 	}
+
+	faction, err := dc.Fetch(uuid)
+
 	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Faction", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
+
 	// FactionController_Show: end_implement
-	res := &app.GwentapiFaction{
-		ID:   faction.ID,
-		Name: faction.Name,
-		Href: controllers.FactionURL(faction.ID),
-	}
+	res, _ := factory.CreateFaction(faction)
 	return ctx.OK(res)
 }

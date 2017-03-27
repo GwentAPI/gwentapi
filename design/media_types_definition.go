@@ -6,15 +6,16 @@ import (
 )
 
 var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
-	Description("Listing of all available resource endpoint")
+	Description("Listing of all available resource endpoint and a link to the api definition")
 	Attributes(func() {
 		Attribute("cards", String, "API href for making requests on cards")
 		Attribute("factions", String, "API href for making requests on factions")
 		Attribute("rarities", String, "API href for making requests on rarities")
 		Attribute("categories", String, "API href for making requests on categories")
 		Attribute("groups", String, "API href for making requests on groups")
+		Attribute("swagger", String, "Href linking to the swagger definition")
 
-		Required("cards", "factions", "rarities", "categories", "groups")
+		Required("cards", "factions", "rarities", "categories", "groups", "swagger")
 	})
 
 	View("default", func() {
@@ -23,6 +24,7 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 		Attribute("rarities")
 		Attribute("categories")
 		Attribute("groups")
+		Attribute("swagger")
 	})
 })
 
@@ -63,7 +65,7 @@ var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func()
 		Attribute("availability", String, "Describe from which set the variation comes from and its general availability")
 		Attribute("rarity", RarityMedia, "Rarity of the card")
 
-		Required("uuid", "href", "mill", "craft", "availability", "rarity")
+		Required("uuid", "href", "availability", "rarity")
 	})
 
 	//Links(func() {
@@ -77,62 +79,63 @@ var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func()
 		Attribute("mill")
 		Attribute("craft")
 		Attribute("availability")
-		Attribute("rarity")
+		Attribute("rarity", func() {
+			View("link")
+		})
 	})
 
 	View("link", func() {
 		Attribute("href")
+		Attribute("availability")
+		Attribute("rarity", func() {
+			View("link")
+		})
 	})
 })
 
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
 	Attributes(func() {
-		Attribute("id", String, "Unique card ID")
+		Attribute("uuid", String, "Unique card UUID")
 		Attribute("href", String, "API href for making requests on the card")
 		Attribute("name", String, "Name of the card")
-		Attribute("type", TypeMedia, "Type of the card")
+		Attribute("group", GroupMedia, "Group of the card")
 		Attribute("faction", FactionMedia, "Faction of the card")
 
-		Attribute("subtypes", CollectionOf(TypeMedia), "Subtypes of the card")
-		Attribute("rows", ArrayOf(String), "Rows where the card can be played")
+		Attribute("categories", CollectionOf(CategoryMedia), "Categories of the card")
+		Attribute("positions", ArrayOf(String), "Positions where the card can be played")
 
-		Attribute("rarity", RarityMedia, "Rarity of the card")
 		Attribute("strength", Integer, "Strength of the card")
-		Attribute("text", String, "Text of the card detailing its abilities and how it plays")
+		Attribute("info", String, "Text of the card detailing its abilities and how it plays")
 		Attribute("flavor", String, "Flavor text of the card")
 		Attribute("variations", CollectionOf(VariationMedia), "Variations of the card")
 
-		Required("id", "href", "name", "type", "faction", "rarity")
+		Required("uuid", "href", "name", "group", "faction", "variations")
 	})
 
 	Links(func() {
-		Link("type")
+		Link("group")
 		Link("faction")
-		Link("subtypes")
-		Link("rarity")
+		Link("categories")
 		Link("variations")
 	})
 
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
 		Attribute("name")
-		Attribute("rows")
-		Attribute("type", func() {
+		Attribute("group", func() {
 			View("link")
 		})
 		Attribute("faction", func() {
 			View("link")
 		})
-		Attribute("subtypes", func() {
+		Attribute("categories", func() {
 			View("link")
 		})
-		Attribute("rarity", func() {
-			View("link")
-		})
+		Attribute("positions")
 		Attribute("strength")
-		Attribute("text")
+		Attribute("info")
 		Attribute("flavor")
 		Attribute("variations", func() {
 			View("link")
@@ -149,41 +152,16 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 	Description("A card faction")
 	Attributes(func() {
-		Attribute("id", String, "Unique faction ID")
+		Attribute("uuid", String, "Unique faction UUID")
 		Attribute("href", String, "API href for making requests on the faction")
 		Attribute("name", String, "Name of the faction")
 
-		Required("id", "href", "name")
+		Required("uuid", "href", "name")
 	})
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
 		Attribute("name")
-	})
-
-	View("link", func() {
-		Attribute("name")
-		Attribute("href")
-	})
-})
-
-var GlyphMedia = MediaType("application/vnd.gwentapi.glyph+json", func() {
-	Description("A glyph")
-	Attributes(func() {
-		Attribute("id", String, "Unique glyph ID")
-		Attribute("href", String, "API href for making requests on the glyph")
-		Attribute("name", String, "Name of the glyph")
-		Attribute("isWeatherGlyph", Boolean, "Indicate whether or not the glyph is a weather glyph")
-		Attribute("text", String, "Text of the glyph")
-
-		Required("id", "href", "name", "isWeatherGlyph", "text")
-	})
-	View("default", func() {
-		Attribute("id")
-		Attribute("href")
-		Attribute("name")
-		Attribute("isWeatherGlyph")
-		Attribute("text")
 	})
 
 	View("link", func() {
@@ -195,15 +173,15 @@ var GlyphMedia = MediaType("application/vnd.gwentapi.glyph+json", func() {
 var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 	Description("A card rarity")
 	Attributes(func() {
-		Attribute("id", String, "Unique rarity ID")
+		Attribute("uuid", String, "Unique rarity UUID")
 		Attribute("href", String, "API href for making requests on the rarity")
 		Attribute("name", String, "Name of the rarity")
 
-		Required("id", "href", "name")
+		Required("uuid", "href", "name")
 	})
 
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
 		Attribute("name")
 	})
@@ -214,18 +192,18 @@ var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 	})
 })
 
-var TypeMedia = MediaType("application/vnd.gwentapi.type+json", func() {
-	Description("A card type")
+var GroupMedia = MediaType("application/vnd.gwentapi.group+json", func() {
+	Description("A card group")
 	Attributes(func() {
-		Attribute("id", String, "Unique type ID")
-		Attribute("href", String, "API href for making requests on the type")
-		Attribute("name", String, "Name of the type")
+		Attribute("uuid", String, "Unique group UUID")
+		Attribute("href", String, "API href for making requests on the group")
+		Attribute("name", String, "Name of the group")
 
-		Required("id", "href", "name")
+		Required("uuid", "href", "name")
 	})
 
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
 		Attribute("name")
 	})
@@ -236,35 +214,24 @@ var TypeMedia = MediaType("application/vnd.gwentapi.type+json", func() {
 	})
 })
 
-var PatchMedia = MediaType("application/vnd.gwentapi.patch+json", func() {
-	Description("A game patch")
+var CategoryMedia = MediaType("application/vnd.gwentapi.category+json", func() {
+	Description("A card category")
 	Attributes(func() {
-		Attribute("id", String, "Unique Patch ID")
-		Attribute("href", String, "API href for making requests on the patch")
-		Attribute("version", String, "Patch version")
-		Attribute("releaseDate", DateTime, "Release date of the patch")
-		Attribute("changelog", String, "Patch changelog")
+		Attribute("uuid", String, "Unique category UUID")
+		Attribute("href", String, "API href for making requests on the category")
+		Attribute("name", String, "Name of the category")
 
-		Required("id", "href", "version", "releaseDate")
+		Required("uuid", "href", "name")
 	})
 
 	View("default", func() {
-		Attribute("id")
+		Attribute("uuid")
 		Attribute("href")
-		Attribute("version")
-		Attribute("releaseDate")
+		Attribute("name")
 	})
 
 	View("link", func() {
-		Attribute("version")
+		Attribute("name")
 		Attribute("href")
-	})
-
-	View("full", func() {
-		Attribute("id")
-		Attribute("href")
-		Attribute("version")
-		Attribute("releaseDate")
-		Attribute("changelog")
 	})
 })

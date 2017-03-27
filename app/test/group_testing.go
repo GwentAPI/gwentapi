@@ -4,7 +4,7 @@
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
 // --version=v1.1.0-dirty
 //
-// API "gwentapi": type TestHelpers
+// API "gwentapi": group TestHelpers
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 
@@ -24,11 +24,11 @@ import (
 	"net/url"
 )
 
-// ListTypeInternalServerError runs the method List of the given controller with the given parameters.
+// ListGroupInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListTypeInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController) http.ResponseWriter {
+func ListGroupInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -49,7 +49,7 @@ func ListTypeInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -59,8 +59,8 @@ func ListTypeInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	listCtx, err := app.NewListTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -80,11 +80,11 @@ func ListTypeInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	return rw
 }
 
-// ListTypeNotFound runs the method List of the given controller with the given parameters.
+// ListGroupNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController) http.ResponseWriter {
+func ListGroupNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -105,7 +105,7 @@ func ListTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -115,8 +115,8 @@ func ListTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	listCtx, err := app.NewListTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -136,11 +136,11 @@ func ListTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	return rw
 }
 
-// ListTypeOK runs the method List of the given controller with the given parameters.
+// ListGroupOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController) (http.ResponseWriter, app.GwentapiTypeCollection) {
+func ListGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) (http.ResponseWriter, app.GwentapiGroupCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -161,7 +161,7 @@ func ListTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -171,8 +171,8 @@ func ListTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	listCtx, err := app.NewListTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -187,12 +187,12 @@ func ListTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiTypeCollection
+	var mt app.GwentapiGroupCollection
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiTypeCollection)
+		mt, ok = resp.(app.GwentapiGroupCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiTypeCollection", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupCollection", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -204,11 +204,11 @@ func ListTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	return rw, mt
 }
 
-// ListTypeOKLink runs the method List of the given controller with the given parameters.
+// ListGroupOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController) (http.ResponseWriter, app.GwentapiTypeLinkCollection) {
+func ListGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) (http.ResponseWriter, app.GwentapiGroupLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -229,7 +229,7 @@ func ListTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -239,8 +239,8 @@ func ListTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	listCtx, err := app.NewListTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -255,12 +255,12 @@ func ListTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiTypeLinkCollection
+	var mt app.GwentapiGroupLinkCollection
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiTypeLinkCollection)
+		mt, ok = resp.(app.GwentapiGroupLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiTypeLinkCollection", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLinkCollection", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -272,11 +272,11 @@ func ListTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	return rw, mt
 }
 
-// ShowTypeInternalServerError runs the method Show of the given controller with the given parameters.
+// ShowGroupInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowTypeInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController, typeID string) http.ResponseWriter {
+func ShowGroupInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -297,19 +297,19 @@ func ShowTypeInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types/%v", typeID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["typeID"] = []string{fmt.Sprintf("%v", typeID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	showCtx, err := app.NewShowTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -329,11 +329,11 @@ func ShowTypeInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	return rw
 }
 
-// ShowTypeNotFound runs the method Show of the given controller with the given parameters.
+// ShowGroupNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController, typeID string) http.ResponseWriter {
+func ShowGroupNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -354,19 +354,19 @@ func ShowTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types/%v", typeID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["typeID"] = []string{fmt.Sprintf("%v", typeID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	showCtx, err := app.NewShowTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -386,11 +386,11 @@ func ShowTypeNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	return rw
 }
 
-// ShowTypeOK runs the method Show of the given controller with the given parameters.
+// ShowGroupOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController, typeID string) (http.ResponseWriter, *app.GwentapiType) {
+func ShowGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) (http.ResponseWriter, *app.GwentapiGroup) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -411,19 +411,19 @@ func ShowTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types/%v", typeID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["typeID"] = []string{fmt.Sprintf("%v", typeID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	showCtx, err := app.NewShowTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -438,12 +438,12 @@ func ShowTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiType
+	var mt *app.GwentapiGroup
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiType)
+		mt, ok = resp.(*app.GwentapiGroup)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiType", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroup", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -455,11 +455,11 @@ func ShowTypeOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	return rw, mt
 }
 
-// ShowTypeOKLink runs the method Show of the given controller with the given parameters.
+// ShowGroupOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.TypeController, typeID string) (http.ResponseWriter, *app.GwentapiTypeLink) {
+func ShowGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) (http.ResponseWriter, *app.GwentapiGroupLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -480,19 +480,19 @@ func ShowTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/types/%v", typeID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["typeID"] = []string{fmt.Sprintf("%v", typeID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "TypeTest"), rw, req, prms)
-	showCtx, err := app.NewShowTypeContext(goaCtx, req, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -507,12 +507,12 @@ func ShowTypeOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiTypeLink
+	var mt *app.GwentapiGroupLink
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiTypeLink)
+		mt, ok = resp.(*app.GwentapiGroupLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiTypeLink", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLink", resp)
 		}
 		err = mt.Validate()
 		if err != nil {

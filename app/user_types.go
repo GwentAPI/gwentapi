@@ -22,6 +22,14 @@ type artType struct {
 	ThumbnailImage *string `form:"thumbnailImage,omitempty" json:"thumbnailImage,omitempty" xml:"thumbnailImage,omitempty"`
 }
 
+// Validate validates the artType type instance.
+func (ut *artType) Validate() (err error) {
+	if ut.ThumbnailImage == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
+	}
+	return
+}
+
 // Publicize creates ArtType from artType
 func (ut *artType) Publicize() *ArtType {
 	var pub ArtType
@@ -32,7 +40,7 @@ func (ut *artType) Publicize() *ArtType {
 		pub.FullsizeImage = ut.FullsizeImage
 	}
 	if ut.ThumbnailImage != nil {
-		pub.ThumbnailImage = ut.ThumbnailImage
+		pub.ThumbnailImage = *ut.ThumbnailImage
 	}
 	return &pub
 }
@@ -44,7 +52,15 @@ type ArtType struct {
 	// Href to full size artwork
 	FullsizeImage *string `form:"fullsizeImage,omitempty" json:"fullsizeImage,omitempty" xml:"fullsizeImage,omitempty"`
 	// Href to thumbnail size artwork
-	ThumbnailImage *string `form:"thumbnailImage,omitempty" json:"thumbnailImage,omitempty" xml:"thumbnailImage,omitempty"`
+	ThumbnailImage string `form:"thumbnailImage" json:"thumbnailImage" xml:"thumbnailImage"`
+}
+
+// Validate validates the ArtType type instance.
+func (ut *ArtType) Validate() (err error) {
+	if ut.ThumbnailImage == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
+	}
+	return
 }
 
 // Type used to define the associated crafting/milling cost cost

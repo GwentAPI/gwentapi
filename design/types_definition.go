@@ -11,7 +11,7 @@ var ArtType = Type("artType", func() {
 	Attribute("artist", String, "Name of the artist")
 	Attribute("thumbnailImage", String, "Href to thumbnail size artwork")
 
-	//Required("thumbnailImage")
+	Required("thumbnailImage")
 })
 
 var CostType = Type("costType", func() {

@@ -10,45 +10,40 @@
 
 package app
 
-import (
-	"github.com/goadesign/goa"
-	"time"
-)
+import "github.com/goadesign/goa"
 
 // A card (default view)
 //
 // Identifier: application/vnd.gwentapi.card+json; view=default
 type GwentapiCard struct {
+	// Categories of the card
+	Categories GwentapiCategoryLinkCollection `form:"categories,omitempty" json:"categories,omitempty" xml:"categories,omitempty"`
 	// Faction of the card
 	Faction *GwentapiFactionLink `form:"faction" json:"faction" xml:"faction"`
 	// Flavor text of the card
 	Flavor *string `form:"flavor,omitempty" json:"flavor,omitempty" xml:"flavor,omitempty"`
+	// Group of the card
+	Group *GwentapiGroupLink `form:"group" json:"group" xml:"group"`
 	// API href for making requests on the card
 	Href string `form:"href" json:"href" xml:"href"`
-	// Unique card ID
-	ID string `form:"id" json:"id" xml:"id"`
+	// Text of the card detailing its abilities and how it plays
+	Info *string `form:"info,omitempty" json:"info,omitempty" xml:"info,omitempty"`
 	// Name of the card
 	Name string `form:"name" json:"name" xml:"name"`
-	// Rarity of the card
-	Rarity *GwentapiRarityLink `form:"rarity" json:"rarity" xml:"rarity"`
-	// Rows where the card can be played
-	Rows []string `form:"rows,omitempty" json:"rows,omitempty" xml:"rows,omitempty"`
+	// Positions where the card can be played
+	Positions []string `form:"positions,omitempty" json:"positions,omitempty" xml:"positions,omitempty"`
 	// Strength of the card
 	Strength *int `form:"strength,omitempty" json:"strength,omitempty" xml:"strength,omitempty"`
-	// Subtypes of the card
-	Subtypes GwentapiTypeLinkCollection `form:"subtypes,omitempty" json:"subtypes,omitempty" xml:"subtypes,omitempty"`
-	// Text of the card detailing its abilities and how it plays
-	Text *string `form:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
-	// Type of the card
-	Type *GwentapiTypeLink `form:"type" json:"type" xml:"type"`
+	// Unique card UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
 	// Variations of the card
-	Variations GwentapiVariationLinkCollection `form:"variations,omitempty" json:"variations,omitempty" xml:"variations,omitempty"`
+	Variations GwentapiVariationLinkCollection `form:"variations" json:"variations" xml:"variations"`
 }
 
 // Validate validates the GwentapiCard media type instance.
 func (mt *GwentapiCard) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
 	}
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
@@ -56,30 +51,25 @@ func (mt *GwentapiCard) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
-	if mt.Type == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "type"))
+	if mt.Group == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "group"))
 	}
 	if mt.Faction == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "faction"))
 	}
-	if mt.Rarity == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
+	if mt.Variations == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "variations"))
+	}
+	if err2 := mt.Categories.Validate(); err2 != nil {
+		err = goa.MergeErrors(err, err2)
 	}
 	if mt.Faction != nil {
 		if err2 := mt.Faction.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
-	if mt.Rarity != nil {
-		if err2 := mt.Rarity.Validate(); err2 != nil {
-			err = goa.MergeErrors(err, err2)
-		}
-	}
-	if err2 := mt.Subtypes.Validate(); err2 != nil {
-		err = goa.MergeErrors(err, err2)
-	}
-	if mt.Type != nil {
-		if err2 := mt.Type.Validate(); err2 != nil {
+	if mt.Group != nil {
+		if err2 := mt.Group.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
@@ -144,22 +134,103 @@ func (mt GwentapiCardLinkCollection) Validate() (err error) {
 	return
 }
 
+// A card category (default view)
+//
+// Identifier: application/vnd.gwentapi.category+json; view=default
+type GwentapiCategory struct {
+	// API href for making requests on the category
+	Href string `form:"href" json:"href" xml:"href"`
+	// Name of the category
+	Name string `form:"name" json:"name" xml:"name"`
+	// Unique category UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
+}
+
+// Validate validates the GwentapiCategory media type instance.
+func (mt *GwentapiCategory) Validate() (err error) {
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
+	}
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Name == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	return
+}
+
+// A card category (link view)
+//
+// Identifier: application/vnd.gwentapi.category+json; view=link
+type GwentapiCategoryLink struct {
+	// API href for making requests on the category
+	Href string `form:"href" json:"href" xml:"href"`
+	// Name of the category
+	Name string `form:"name" json:"name" xml:"name"`
+}
+
+// Validate validates the GwentapiCategoryLink media type instance.
+func (mt *GwentapiCategoryLink) Validate() (err error) {
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Name == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	return
+}
+
+// GwentapiCategoryCollection is the media type for an array of GwentapiCategory (default view)
+//
+// Identifier: application/vnd.gwentapi.category+json; type=collection; view=default
+type GwentapiCategoryCollection []*GwentapiCategory
+
+// Validate validates the GwentapiCategoryCollection media type instance.
+func (mt GwentapiCategoryCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e != nil {
+			if err2 := e.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
+// GwentapiCategoryCollection is the media type for an array of GwentapiCategory (link view)
+//
+// Identifier: application/vnd.gwentapi.category+json; type=collection; view=link
+type GwentapiCategoryLinkCollection []*GwentapiCategoryLink
+
+// Validate validates the GwentapiCategoryLinkCollection media type instance.
+func (mt GwentapiCategoryLinkCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e != nil {
+			if err2 := e.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
+			}
+		}
+	}
+	return
+}
+
 // A card faction (default view)
 //
 // Identifier: application/vnd.gwentapi.faction+json; view=default
 type GwentapiFaction struct {
 	// API href for making requests on the faction
 	Href string `form:"href" json:"href" xml:"href"`
-	// Unique faction ID
-	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the faction
 	Name string `form:"name" json:"name" xml:"name"`
+	// Unique faction UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
 }
 
 // Validate validates the GwentapiFaction media type instance.
 func (mt *GwentapiFaction) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
 	}
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
@@ -225,52 +296,23 @@ func (mt GwentapiFactionLinkCollection) Validate() (err error) {
 	return
 }
 
-// A glyph (default view)
+// A card group (default view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json; view=default
-type GwentapiGlyph struct {
-	// API href for making requests on the glyph
+// Identifier: application/vnd.gwentapi.group+json; view=default
+type GwentapiGroup struct {
+	// API href for making requests on the group
 	Href string `form:"href" json:"href" xml:"href"`
-	// Unique glyph ID
-	ID string `form:"id" json:"id" xml:"id"`
-	// Indicate whether or not the glyph is a weather glyph
-	IsWeatherGlyph bool `form:"isWeatherGlyph" json:"isWeatherGlyph" xml:"isWeatherGlyph"`
-	// Name of the glyph
+	// Name of the group
 	Name string `form:"name" json:"name" xml:"name"`
-	// Text of the glyph
-	Text string `form:"text" json:"text" xml:"text"`
+	// Unique group UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
 }
 
-// Validate validates the GwentapiGlyph media type instance.
-func (mt *GwentapiGlyph) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+// Validate validates the GwentapiGroup media type instance.
+func (mt *GwentapiGroup) Validate() (err error) {
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
 	}
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Name == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
-	}
-
-	if mt.Text == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "text"))
-	}
-	return
-}
-
-// A glyph (link view)
-//
-// Identifier: application/vnd.gwentapi.glyph+json; view=link
-type GwentapiGlyphLink struct {
-	// API href for making requests on the glyph
-	Href string `form:"href" json:"href" xml:"href"`
-	// Name of the glyph
-	Name string `form:"name" json:"name" xml:"name"`
-}
-
-// Validate validates the GwentapiGlyphLink media type instance.
-func (mt *GwentapiGlyphLink) Validate() (err error) {
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -280,13 +322,34 @@ func (mt *GwentapiGlyphLink) Validate() (err error) {
 	return
 }
 
-// GwentapiGlyphCollection is the media type for an array of GwentapiGlyph (default view)
+// A card group (link view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json; type=collection; view=default
-type GwentapiGlyphCollection []*GwentapiGlyph
+// Identifier: application/vnd.gwentapi.group+json; view=link
+type GwentapiGroupLink struct {
+	// API href for making requests on the group
+	Href string `form:"href" json:"href" xml:"href"`
+	// Name of the group
+	Name string `form:"name" json:"name" xml:"name"`
+}
 
-// Validate validates the GwentapiGlyphCollection media type instance.
-func (mt GwentapiGlyphCollection) Validate() (err error) {
+// Validate validates the GwentapiGroupLink media type instance.
+func (mt *GwentapiGroupLink) Validate() (err error) {
+	if mt.Href == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Name == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	return
+}
+
+// GwentapiGroupCollection is the media type for an array of GwentapiGroup (default view)
+//
+// Identifier: application/vnd.gwentapi.group+json; type=collection; view=default
+type GwentapiGroupCollection []*GwentapiGroup
+
+// Validate validates the GwentapiGroupCollection media type instance.
+func (mt GwentapiGroupCollection) Validate() (err error) {
 	for _, e := range mt {
 		if e != nil {
 			if err2 := e.Validate(); err2 != nil {
@@ -297,13 +360,13 @@ func (mt GwentapiGlyphCollection) Validate() (err error) {
 	return
 }
 
-// GwentapiGlyphCollection is the media type for an array of GwentapiGlyph (link view)
+// GwentapiGroupCollection is the media type for an array of GwentapiGroup (link view)
 //
-// Identifier: application/vnd.gwentapi.glyph+json; type=collection; view=link
-type GwentapiGlyphLinkCollection []*GwentapiGlyphLink
+// Identifier: application/vnd.gwentapi.group+json; type=collection; view=link
+type GwentapiGroupLinkCollection []*GwentapiGroupLink
 
-// Validate validates the GwentapiGlyphLinkCollection media type instance.
-func (mt GwentapiGlyphLinkCollection) Validate() (err error) {
+// Validate validates the GwentapiGroupLinkCollection media type instance.
+func (mt GwentapiGroupLinkCollection) Validate() (err error) {
 	for _, e := range mt {
 		if e != nil {
 			if err2 := e.Validate(); err2 != nil {
@@ -340,154 +403,22 @@ func (mt *GwentapiPagecard) Validate() (err error) {
 	return
 }
 
-// A game patch (default view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; view=default
-type GwentapiPatch struct {
-	// API href for making requests on the patch
-	Href string `form:"href" json:"href" xml:"href"`
-	// Unique Patch ID
-	ID string `form:"id" json:"id" xml:"id"`
-	// Release date of the patch
-	ReleaseDate time.Time `form:"releaseDate" json:"releaseDate" xml:"releaseDate"`
-	// Patch version
-	Version string `form:"version" json:"version" xml:"version"`
-}
-
-// Validate validates the GwentapiPatch media type instance.
-func (mt *GwentapiPatch) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
-	}
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Version == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "version"))
-	}
-
-	return
-}
-
-// A game patch (full view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; view=full
-type GwentapiPatchFull struct {
-	// Patch changelog
-	Changelog *string `form:"changelog,omitempty" json:"changelog,omitempty" xml:"changelog,omitempty"`
-	// API href for making requests on the patch
-	Href string `form:"href" json:"href" xml:"href"`
-	// Unique Patch ID
-	ID string `form:"id" json:"id" xml:"id"`
-	// Release date of the patch
-	ReleaseDate time.Time `form:"releaseDate" json:"releaseDate" xml:"releaseDate"`
-	// Patch version
-	Version string `form:"version" json:"version" xml:"version"`
-}
-
-// Validate validates the GwentapiPatchFull media type instance.
-func (mt *GwentapiPatchFull) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
-	}
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Version == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "version"))
-	}
-
-	return
-}
-
-// A game patch (link view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; view=link
-type GwentapiPatchLink struct {
-	// API href for making requests on the patch
-	Href string `form:"href" json:"href" xml:"href"`
-	// Patch version
-	Version string `form:"version" json:"version" xml:"version"`
-}
-
-// Validate validates the GwentapiPatchLink media type instance.
-func (mt *GwentapiPatchLink) Validate() (err error) {
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Version == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "version"))
-	}
-	return
-}
-
-// GwentapiPatchCollection is the media type for an array of GwentapiPatch (default view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=default
-type GwentapiPatchCollection []*GwentapiPatch
-
-// Validate validates the GwentapiPatchCollection media type instance.
-func (mt GwentapiPatchCollection) Validate() (err error) {
-	for _, e := range mt {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
-	}
-	return
-}
-
-// GwentapiPatchCollection is the media type for an array of GwentapiPatch (full view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=full
-type GwentapiPatchFullCollection []*GwentapiPatchFull
-
-// Validate validates the GwentapiPatchFullCollection media type instance.
-func (mt GwentapiPatchFullCollection) Validate() (err error) {
-	for _, e := range mt {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
-	}
-	return
-}
-
-// GwentapiPatchCollection is the media type for an array of GwentapiPatch (link view)
-//
-// Identifier: application/vnd.gwentapi.patch+json; type=collection; view=link
-type GwentapiPatchLinkCollection []*GwentapiPatchLink
-
-// Validate validates the GwentapiPatchLinkCollection media type instance.
-func (mt GwentapiPatchLinkCollection) Validate() (err error) {
-	for _, e := range mt {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
-	}
-	return
-}
-
 // A card rarity (default view)
 //
 // Identifier: application/vnd.gwentapi.rarity+json; view=default
 type GwentapiRarity struct {
 	// API href for making requests on the rarity
 	Href string `form:"href" json:"href" xml:"href"`
-	// Unique rarity ID
-	ID string `form:"id" json:"id" xml:"id"`
 	// Name of the rarity
 	Name string `form:"name" json:"name" xml:"name"`
+	// Unique rarity UUID
+	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
 }
 
 // Validate validates the GwentapiRarity media type instance.
 func (mt *GwentapiRarity) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
+	if mt.UUID == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "uuid"))
 	}
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
@@ -553,7 +484,7 @@ func (mt GwentapiRarityLinkCollection) Validate() (err error) {
 	return
 }
 
-// Listing of all available resource endpoint (default view)
+// Listing of all available resource endpoint and a link to the api definition (default view)
 //
 // Identifier: application/vnd.gwentapi.resource+json; view=default
 type GwentapiResource struct {
@@ -567,6 +498,8 @@ type GwentapiResource struct {
 	Groups string `form:"groups" json:"groups" xml:"groups"`
 	// API href for making requests on rarities
 	Rarities string `form:"rarities" json:"rarities" xml:"rarities"`
+	// Href linking to the swagger definition
+	Swagger string `form:"swagger" json:"swagger" xml:"swagger"`
 }
 
 // Validate validates the GwentapiResource media type instance.
@@ -586,86 +519,8 @@ func (mt *GwentapiResource) Validate() (err error) {
 	if mt.Groups == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "groups"))
 	}
-	return
-}
-
-// A card type (default view)
-//
-// Identifier: application/vnd.gwentapi.type+json; view=default
-type GwentapiType struct {
-	// API href for making requests on the type
-	Href string `form:"href" json:"href" xml:"href"`
-	// Unique type ID
-	ID string `form:"id" json:"id" xml:"id"`
-	// Name of the type
-	Name string `form:"name" json:"name" xml:"name"`
-}
-
-// Validate validates the GwentapiType media type instance.
-func (mt *GwentapiType) Validate() (err error) {
-	if mt.ID == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "id"))
-	}
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Name == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
-	}
-	return
-}
-
-// A card type (link view)
-//
-// Identifier: application/vnd.gwentapi.type+json; view=link
-type GwentapiTypeLink struct {
-	// API href for making requests on the type
-	Href string `form:"href" json:"href" xml:"href"`
-	// Name of the type
-	Name string `form:"name" json:"name" xml:"name"`
-}
-
-// Validate validates the GwentapiTypeLink media type instance.
-func (mt *GwentapiTypeLink) Validate() (err error) {
-	if mt.Href == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
-	}
-	if mt.Name == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
-	}
-	return
-}
-
-// GwentapiTypeCollection is the media type for an array of GwentapiType (default view)
-//
-// Identifier: application/vnd.gwentapi.type+json; type=collection; view=default
-type GwentapiTypeCollection []*GwentapiType
-
-// Validate validates the GwentapiTypeCollection media type instance.
-func (mt GwentapiTypeCollection) Validate() (err error) {
-	for _, e := range mt {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
-	}
-	return
-}
-
-// GwentapiTypeCollection is the media type for an array of GwentapiType (link view)
-//
-// Identifier: application/vnd.gwentapi.type+json; type=collection; view=link
-type GwentapiTypeLinkCollection []*GwentapiTypeLink
-
-// Validate validates the GwentapiTypeLinkCollection media type instance.
-func (mt GwentapiTypeLinkCollection) Validate() (err error) {
-	for _, e := range mt {
-		if e != nil {
-			if err2 := e.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
-		}
+	if mt.Swagger == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "swagger"))
 	}
 	return
 }
@@ -679,13 +534,13 @@ type GwentapiVariation struct {
 	// Describe from which set the variation comes from and its general availability
 	Availability string `form:"availability" json:"availability" xml:"availability"`
 	// Crafting cost of the card variation.
-	Craft *CostType `form:"craft" json:"craft" xml:"craft"`
+	Craft *CostType `form:"craft,omitempty" json:"craft,omitempty" xml:"craft,omitempty"`
 	// API href for making requests on the artwork
 	Href string `form:"href" json:"href" xml:"href"`
 	// Milling cost of the card variation.
-	Mill *CostType `form:"mill" json:"mill" xml:"mill"`
+	Mill *CostType `form:"mill,omitempty" json:"mill,omitempty" xml:"mill,omitempty"`
 	// Rarity of the card
-	Rarity *GwentapiRarity `form:"rarity" json:"rarity" xml:"rarity"`
+	Rarity *GwentapiRarityLink `form:"rarity" json:"rarity" xml:"rarity"`
 	// Unique artwork UUID
 	UUID string `form:"uuid" json:"uuid" xml:"uuid"`
 }
@@ -698,17 +553,16 @@ func (mt *GwentapiVariation) Validate() (err error) {
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
-	if mt.Mill == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "mill"))
-	}
-	if mt.Craft == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "craft"))
-	}
 	if mt.Availability == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "availability"))
 	}
 	if mt.Rarity == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
+	}
+	if mt.Art != nil {
+		if err2 := mt.Art.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
 	}
 	if mt.Rarity != nil {
 		if err2 := mt.Rarity.Validate(); err2 != nil {
@@ -722,14 +576,29 @@ func (mt *GwentapiVariation) Validate() (err error) {
 //
 // Identifier: application/vnd.gwentapi.variation+json; view=link
 type GwentapiVariationLink struct {
+	// Describe from which set the variation comes from and its general availability
+	Availability string `form:"availability" json:"availability" xml:"availability"`
 	// API href for making requests on the artwork
 	Href string `form:"href" json:"href" xml:"href"`
+	// Rarity of the card
+	Rarity *GwentapiRarityLink `form:"rarity" json:"rarity" xml:"rarity"`
 }
 
 // Validate validates the GwentapiVariationLink media type instance.
 func (mt *GwentapiVariationLink) Validate() (err error) {
 	if mt.Href == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
+	}
+	if mt.Availability == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "availability"))
+	}
+	if mt.Rarity == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
+	}
+	if mt.Rarity != nil {
+		if err2 := mt.Rarity.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
+		}
 	}
 	return
 }

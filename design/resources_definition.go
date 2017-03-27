@@ -5,7 +5,7 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-var _ = Resource("phonebook", func() {
+var _ = Resource("index", func() {
 	DefaultMedia(ResourceMedia)
 	BasePath("/v0")
 
@@ -69,83 +69,51 @@ var _ = Resource("rarity", func() {
 	})
 })
 
-var _ = Resource("glyph", func() {
-	DefaultMedia(GlyphMedia)
-	BasePath("/v0/glyphs")
+var _ = Resource("group", func() {
+	DefaultMedia(GroupMedia)
+	BasePath("/v0/groups")
 
 	Response(InternalServerError)
 
 	Action("list", func() {
 		Routing(GET(""))
-		Description("Return all glyphs.")
+		Description("Return all card groups.")
 
-		Response(OK, CollectionOf(GlyphMedia))
+		Response(OK, CollectionOf(GroupMedia))
 		Response(NotFound)
 	})
 
 	Action("show", func() {
-		Description("Return glyph with given id.")
-		Routing(GET("/:glyphID"))
+		Description("Return card group with given id.")
+		Routing(GET("/:groupID"))
 		Params(func() {
-			Param("glyphID", String, "Glyph ID")
+			Param("groupID", String, "Card group ID")
 		})
 		Response(OK)
 		Response(NotFound)
 	})
 })
 
-var _ = Resource("type", func() {
-	DefaultMedia(TypeMedia)
-	BasePath("/v0/types")
+var _ = Resource("category", func() {
+	DefaultMedia(CategoryMedia)
+	BasePath("/v0/categories")
 
 	Response(InternalServerError)
 
 	Action("list", func() {
 		Routing(GET(""))
-		Description("Return all card types.")
+		Description("Return all card categories.")
 
-		Response(OK, CollectionOf(TypeMedia))
+		Response(OK, CollectionOf(CategoryMedia))
 		Response(NotFound)
 	})
 
 	Action("show", func() {
-		Description("Return card type with given id.")
-		Routing(GET("/:typeID"))
+		Description("Return card category with given id.")
+		Routing(GET("/:categoryID"))
 		Params(func() {
-			Param("typeID", String, "Card type ID")
+			Param("categoryID", String, "Card category ID")
 		})
-		Response(OK)
-		Response(NotFound)
-	})
-})
-
-var _ = Resource("patch", func() {
-	DefaultMedia(PatchMedia)
-	BasePath("/v0/patches")
-
-	Response(InternalServerError)
-
-	Action("list", func() {
-		Routing(GET(""))
-		Description("Return all patches.")
-
-		Response(OK, CollectionOf(PatchMedia))
-		Response(NotFound)
-	})
-
-	Action("show", func() {
-		Description("Return patch with given id.")
-		Routing(GET("/:patchID"))
-		Params(func() {
-			Param("patchID", String, "Patch ID")
-		})
-		Response(OK)
-		Response(NotFound)
-	})
-
-	Action("latest", func() {
-		Description("Return latest patch.")
-		Routing(GET("/latest"))
 		Response(OK)
 		Response(NotFound)
 	})
@@ -158,8 +126,15 @@ var _ = Resource("card", func() {
 	Response(InternalServerError)
 
 	Params(func() {
-		Param("limit", Integer, "Number of cards to receive")
-		Param("offset", Integer, "Offset of the starting count")
+		Param("limit", Integer, func() {
+			Description("Number of cards to receive")
+			Minimum(1)
+			Default(20)
+		})
+		Param("offset", Integer, func() {
+			Description("Offset of the starting count")
+			Default(0)
+		})
 	})
 
 	Action("list", func() {
@@ -192,7 +167,7 @@ var _ = Resource("card", func() {
 		Response(NotFound)
 	})
 
-	Action("cardRarity", func() {
+	/*Action("cardRarity", func() {
 		Description("Return all cards with given rarity id.")
 		Routing(GET("/rarities/:rarityID"))
 
@@ -201,7 +176,7 @@ var _ = Resource("card", func() {
 		})
 		Response(OK, PageCard)
 		Response(NotFound)
-	})
+	})*/
 
 	Action("cardLeader", func() {
 		Description("Return all leader cards.")
@@ -211,14 +186,27 @@ var _ = Resource("card", func() {
 		Response(NotFound)
 	})
 
-	Action("cardArtworks", func() {
-		Description("Return artwork with given id.")
-		Routing(GET("/:cardID/artworks/"))
+	Action("cardVariations", func() {
+		Description("Return the variations of a card with the given id.")
+		Routing(GET("/:cardID/variations/"))
 
 		Params(func() {
 			Param("cardID", String, "Card ID")
 		})
+		Response(OK, CollectionOf(VariationMedia))
+		Response(NotFound)
+	})
+
+	Action("cardVariation", func() {
+		Description("Return the variation of a given id of a card with the given id.")
+		Routing(GET("/:cardID/variations/:variationID"))
+
+		Params(func() {
+			Param("cardID", String, "Card ID")
+			Param("variationID", String, "Variation ID")
+		})
 		Response(OK, VariationMedia)
 		Response(NotFound)
 	})
+
 })
