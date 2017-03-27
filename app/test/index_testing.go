@@ -4,7 +4,7 @@
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
 // --version=v1.1.0-dirty
 //
-// API "gwentapi": phonebook TestHelpers
+// API "gwentapi": index TestHelpers
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 
@@ -24,11 +24,11 @@ import (
 	"net/url"
 )
 
-// ShowPhonebookNotFound runs the method Show of the given controller with the given parameters.
+// ShowIndexNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PhonebookController) http.ResponseWriter {
+func ShowIndexNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.IndexController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -59,8 +59,8 @@ func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *g
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "PhonebookTest"), rw, req, prms)
-	showCtx, err := app.NewShowPhonebookContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "IndexTest"), rw, req, prms)
+	showCtx, err := app.NewShowIndexContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *g
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -80,11 +80,11 @@ func ShowPhonebookNotFound(t goatest.TInterface, ctx context.Context, service *g
 	return rw
 }
 
-// ShowPhonebookOK runs the method Show of the given controller with the given parameters.
+// ShowIndexOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowPhonebookOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PhonebookController) (http.ResponseWriter, *app.GwentapiResource) {
+func ShowIndexOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.IndexController) (http.ResponseWriter, *app.GwentapiResource) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -115,8 +115,8 @@ func ShowPhonebookOK(t goatest.TInterface, ctx context.Context, service *goa.Ser
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "PhonebookTest"), rw, req, prms)
-	showCtx, err := app.NewShowPhonebookContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "IndexTest"), rw, req, prms)
+	showCtx, err := app.NewShowIndexContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func ShowPhonebookOK(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)

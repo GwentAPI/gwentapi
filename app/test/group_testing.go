@@ -4,7 +4,7 @@
 // --out=$(GOPATH)\src\github.com\tri125\gwentapi
 // --version=v1.1.0-dirty
 //
-// API "gwentapi": glyph TestHelpers
+// API "gwentapi": group TestHelpers
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 
@@ -24,11 +24,11 @@ import (
 	"net/url"
 )
 
-// ListGlyphInternalServerError runs the method List of the given controller with the given parameters.
+// ListGroupInternalServerError runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController) http.ResponseWriter {
+func ListGroupInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -49,7 +49,7 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -59,8 +59,8 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -70,7 +70,7 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -80,11 +80,11 @@ func ListGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 	return rw
 }
 
-// ListGlyphNotFound runs the method List of the given controller with the given parameters.
+// ListGroupNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController) http.ResponseWriter {
+func ListGroupNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -105,7 +105,7 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -115,8 +115,8 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -126,7 +126,7 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -136,11 +136,11 @@ func ListGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 	return rw
 }
 
-// ListGlyphOK runs the method List of the given controller with the given parameters.
+// ListGroupOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController) (http.ResponseWriter, app.GwentapiGlyphCollection) {
+func ListGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) (http.ResponseWriter, app.GwentapiGroupCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -161,7 +161,7 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -171,8 +171,8 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -182,17 +182,17 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiGlyphCollection
+	var mt app.GwentapiGroupCollection
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiGlyphCollection)
+		mt, ok = resp.(app.GwentapiGroupCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGlyphCollection", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupCollection", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -204,11 +204,11 @@ func ListGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 	return rw, mt
 }
 
-// ListGlyphOKLink runs the method List of the given controller with the given parameters.
+// ListGroupOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController) (http.ResponseWriter, app.GwentapiGlyphLinkCollection) {
+func ListGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController) (http.ResponseWriter, app.GwentapiGroupLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -229,7 +229,7 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs"),
+		Path: fmt.Sprintf("/v0/groups"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -239,8 +239,8 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	listCtx, err := app.NewListGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	listCtx, err := app.NewListGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -250,17 +250,17 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt app.GwentapiGlyphLinkCollection
+	var mt app.GwentapiGroupLinkCollection
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(app.GwentapiGlyphLinkCollection)
+		mt, ok = resp.(app.GwentapiGroupLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGlyphLinkCollection", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLinkCollection", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -272,11 +272,11 @@ func ListGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 	return rw, mt
 }
 
-// ShowGlyphInternalServerError runs the method Show of the given controller with the given parameters.
+// ShowGroupInternalServerError runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController, glyphID string) http.ResponseWriter {
+func ShowGroupInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -297,19 +297,19 @@ func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs/%v", glyphID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["glyphID"] = []string{fmt.Sprintf("%v", glyphID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -319,7 +319,7 @@ func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 500 {
 		t.Errorf("invalid response status code: got %+v, expected 500", rw.Code)
@@ -329,11 +329,11 @@ func ShowGlyphInternalServerError(t goatest.TInterface, ctx context.Context, ser
 	return rw
 }
 
-// ShowGlyphNotFound runs the method Show of the given controller with the given parameters.
+// ShowGroupNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController, glyphID string) http.ResponseWriter {
+func ShowGroupNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -354,19 +354,19 @@ func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs/%v", glyphID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["glyphID"] = []string{fmt.Sprintf("%v", glyphID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -376,7 +376,7 @@ func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -386,11 +386,11 @@ func ShowGlyphNotFound(t goatest.TInterface, ctx context.Context, service *goa.S
 	return rw
 }
 
-// ShowGlyphOK runs the method Show of the given controller with the given parameters.
+// ShowGroupOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController, glyphID string) (http.ResponseWriter, *app.GwentapiGlyph) {
+func ShowGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) (http.ResponseWriter, *app.GwentapiGroup) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -411,19 +411,19 @@ func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs/%v", glyphID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["glyphID"] = []string{fmt.Sprintf("%v", glyphID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -433,17 +433,17 @@ func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiGlyph
+	var mt *app.GwentapiGroup
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiGlyph)
+		mt, ok = resp.(*app.GwentapiGroup)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGlyph", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroup", resp)
 		}
 		err = mt.Validate()
 		if err != nil {
@@ -455,11 +455,11 @@ func ShowGlyphOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 	return rw, mt
 }
 
-// ShowGlyphOKLink runs the method Show of the given controller with the given parameters.
+// ShowGroupOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GlyphController, glyphID string) (http.ResponseWriter, *app.GwentapiGlyphLink) {
+func ShowGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GroupController, groupID string) (http.ResponseWriter, *app.GwentapiGroupLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -480,19 +480,19 @@ func ShowGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/v0/glyphs/%v", glyphID),
+		Path: fmt.Sprintf("/v0/groups/%v", groupID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
 	prms := url.Values{}
-	prms["glyphID"] = []string{fmt.Sprintf("%v", glyphID)}
+	prms["groupID"] = []string{fmt.Sprintf("%v", groupID)}
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "GlyphTest"), rw, req, prms)
-	showCtx, err := app.NewShowGlyphContext(goaCtx, service)
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "GroupTest"), rw, req, prms)
+	showCtx, err := app.NewShowGroupContext(goaCtx, req, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
@@ -502,17 +502,17 @@ func ShowGlyphOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 
 	// Validate response
 	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+		t.Fatalf("controller returned %+v, logs:\n%s", err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
 	}
-	var mt *app.GwentapiGlyphLink
+	var mt *app.GwentapiGroupLink
 	if resp != nil {
 		var ok bool
-		mt, ok = resp.(*app.GwentapiGlyphLink)
+		mt, ok = resp.(*app.GwentapiGroupLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGlyphLink", resp)
+			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLink", resp)
 		}
 		err = mt.Validate()
 		if err != nil {

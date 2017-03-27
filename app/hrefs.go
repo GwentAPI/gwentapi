@@ -21,26 +21,26 @@ func CardHref(cardID interface{}) string {
 	return fmt.Sprintf("/v0/cards/%v", paramcardID)
 }
 
+// CategoryHref returns the resource href.
+func CategoryHref(categoryID interface{}) string {
+	paramcategoryID := strings.TrimLeftFunc(fmt.Sprintf("%v", categoryID), func(r rune) bool { return r == '/' })
+	return fmt.Sprintf("/v0/categories/%v", paramcategoryID)
+}
+
 // FactionHref returns the resource href.
 func FactionHref(factionID interface{}) string {
 	paramfactionID := strings.TrimLeftFunc(fmt.Sprintf("%v", factionID), func(r rune) bool { return r == '/' })
 	return fmt.Sprintf("/v0/factions/%v", paramfactionID)
 }
 
-// GlyphHref returns the resource href.
-func GlyphHref(glyphID interface{}) string {
-	paramglyphID := strings.TrimLeftFunc(fmt.Sprintf("%v", glyphID), func(r rune) bool { return r == '/' })
-	return fmt.Sprintf("/v0/glyphs/%v", paramglyphID)
+// GroupHref returns the resource href.
+func GroupHref(groupID interface{}) string {
+	paramgroupID := strings.TrimLeftFunc(fmt.Sprintf("%v", groupID), func(r rune) bool { return r == '/' })
+	return fmt.Sprintf("/v0/groups/%v", paramgroupID)
 }
 
-// PatchHref returns the resource href.
-func PatchHref(patchID interface{}) string {
-	parampatchID := strings.TrimLeftFunc(fmt.Sprintf("%v", patchID), func(r rune) bool { return r == '/' })
-	return fmt.Sprintf("/v0/patches/%v", parampatchID)
-}
-
-// PhonebookHref returns the resource href.
-func PhonebookHref() string {
+// IndexHref returns the resource href.
+func IndexHref() string {
 	return "/v0"
 }
 
@@ -48,10 +48,4 @@ func PhonebookHref() string {
 func RarityHref(rarityID interface{}) string {
 	paramrarityID := strings.TrimLeftFunc(fmt.Sprintf("%v", rarityID), func(r rune) bool { return r == '/' })
 	return fmt.Sprintf("/v0/rarities/%v", paramrarityID)
-}
-
-// TypeHref returns the resource href.
-func TypeHref(typeID interface{}) string {
-	paramtypeID := strings.TrimLeftFunc(fmt.Sprintf("%v", typeID), func(r rune) bool { return r == '/' })
-	return fmt.Sprintf("/v0/types/%v", paramtypeID)
 }

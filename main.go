@@ -10,7 +10,7 @@ import (
 	log "github.com/inconshreveable/log15"
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/configuration"
-	"github.com/tri125/gwentapi/controllers"
+	"github.com/tri125/gwentapi/dataLayer/dal"
 )
 
 var enableGzip bool = true
@@ -52,29 +52,24 @@ func main() {
 	// Mount "faction" controller
 	c2 := NewFactionController(service)
 	app.MountFactionController(service, c2)
-	// Mount "glyph" controller
-	c3 := NewGlyphController(service)
-	app.MountGlyphController(service, c3)
-	// Mount "patch" controller
-	c4 := NewPatchController(service)
-	app.MountPatchController(service, c4)
-	// Mount "phonebook" controller
-	c5 := NewPhonebookController(service)
-	app.MountPhonebookController(service, c5)
+	// Mount "index" controller
+	c3 := NewIndexController(service)
+	app.MountIndexController(service, c3)
+	// Mount "category" controller
+	c4 := NewCategoryController(service)
+	app.MountCategoryController(service, c4)
 	// Mount "rarity" controller
 	c6 := NewRarityController(service)
 	app.MountRarityController(service, c6)
-	// Mount "type" controller
-	c8 := NewTypeController(service)
-	app.MountTypeController(service, c8)
+	// Mount "group" controller
+	c8 := NewGroupController(service)
+	app.MountGroupController(service, c8)
 
 	//database
-	var err error
-	controllers.DBCon, err = controllers.NewDBConnection(configuration.Conf.FormatDSN())
-	if err != nil {
-		panic(err.Error())
-	}
-	defer controllers.DBCon.Close()
+	dataStore := &dal.DataStore{}
+	dataStore.GetSession()
+	// Close the main session
+	defer dataStore.Close()
 
 	// Start service
 	if err := service.ListenAndServe(":8080"); err != nil {

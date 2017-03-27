@@ -1,4 +1,4 @@
-package controllers
+package helpers
 
 import (
 	"fmt"
@@ -21,29 +21,25 @@ func FactionURL(factionID interface{}) string {
 	return configuration.Conf.Server.BaseURL + app.FactionHref(factionID)
 }
 
-// GlyphHref returns the resource href.
-func GlyphURL(glyphID interface{}) string {
-	return configuration.Conf.Server.BaseURL + app.GlyphHref(glyphID)
+func VariationURL(cardID interface{}, variationID interface{}) string {
+	return fmt.Sprintf("%v/v0/cards/%v/variations/%v", configuration.Conf.Server.BaseURL, cardID, variationID)
 }
 
-// PatchHref returns the resource href.
-func PatchURL(patchID interface{}) string {
-	return configuration.Conf.Server.BaseURL + app.PatchHref(patchID)
+func CategoryURL(categoryUUID interface{}) string {
+	return configuration.Conf.Server.BaseURL + app.CategoryHref(categoryUUID)
 }
 
-// PhonebookHref returns the resource href.
-func PhonebookURL() string {
-	return configuration.Conf.Server.BaseURL
+// GroupHref returns the resource href.
+func GroupURL(groupID interface{}) string {
+	return configuration.Conf.Server.BaseURL + app.GroupHref(groupID)
+}
+func SwaggerURL() string {
+	return configuration.Conf.Server.BaseURL + "/swagger/index.html"
 }
 
 // RarityHref returns the resource href.
 func RarityURL(rarityID interface{}) string {
 	return configuration.Conf.Server.BaseURL + app.RarityHref(rarityID)
-}
-
-// TypeHref returns the resource href.
-func TypeURL(typeID interface{}) string {
-	return configuration.Conf.Server.BaseURL + app.TypeHref(typeID)
 }
 
 // TypeHref returns the resource href.
