@@ -4,7 +4,7 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-var dataStore *DataStore
+var mainDataStore *DataStore
 
 const database string = "gwentapi"
 
@@ -27,18 +27,31 @@ func InitDBWithInfo(info *mgo.DialInfo) {
 }
 
 func (ds *DataStore) GetSession() *mgo.Session {
-	if ds.session == nil {
+	if mainDataStore == nil {
+
+		mainDataStore = &DataStore{}
 		var err error
-		ds.session, err = mgo.Dial("localhost")
-		ds.session.SetMode(mgo.Monotonic, true)
+		mainDataStore.session, err = mgo.Dial("localhost")
 		if err != nil {
 			panic(err)
 		}
+		mainDataStore.session.SetMode(mgo.Monotonic, true)
 	}
-
+	if ds.session == nil {
+		ds.session = mainDataStore.session.Copy()
+	} /* else {
+		ds.session.Copy()
+	}*/
+	// Useless
 	return ds.session.Copy()
 }
 
 func (ds *DataStore) Close() {
 	ds.session.Close()
+}
+
+func ShutDown() {
+	if mainDataStore != nil && mainDataStore.session != nil {
+		mainDataStore.session.Close()
+	}
 }

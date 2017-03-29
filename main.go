@@ -65,11 +65,8 @@ func main() {
 	c8 := NewGroupController(service)
 	app.MountGroupController(service, c8)
 
-	//database
-	dataStore := &dal.DataStore{}
-	dataStore.GetSession()
 	// Close the main session
-	defer dataStore.Close()
+	defer dal.ShutDown()
 
 	// Start service
 	if err := service.ListenAndServe(":8080"); err != nil {

@@ -36,7 +36,7 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 		Craft:        craft,
 		Mill:         mill,
 		Art:          art,
-		Href:         helpers.VariationURL(variationUuid, cardUUID),
+		Href:         helpers.VariationURL(cardUUID, variationUuid),
 		UUID:         variationUuid,
 	}
 
