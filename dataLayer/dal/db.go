@@ -27,16 +27,6 @@ func InitDBWithInfo(info *mgo.DialInfo) {
 }
 
 func (ds *DataStore) GetSession() *mgo.Session {
-	if mainDataStore == nil {
-
-		mainDataStore = &DataStore{}
-		var err error
-		mainDataStore.session, err = mgo.Dial("localhost")
-		if err != nil {
-			panic(err)
-		}
-		mainDataStore.session.SetMode(mgo.Monotonic, true)
-	}
 	if ds.session == nil {
 		ds.session = mainDataStore.session.Copy()
 	} /* else {
@@ -54,4 +44,14 @@ func ShutDown() {
 	if mainDataStore != nil && mainDataStore.session != nil {
 		mainDataStore.session.Close()
 	}
+}
+
+func init() {
+	mainDataStore = &DataStore{}
+	var err error
+	mainDataStore.session, err = mgo.Dial("localhost")
+	if err != nil {
+		panic(err)
+	}
+	mainDataStore.session.SetMode(mgo.Monotonic, true)
 }
