@@ -4,11 +4,16 @@ import (
 	"github.com/tri125/gwentapi/dataLayer/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"regexp"
 )
 
 type (
 	DalCard struct {
 		collection *mgo.Collection
+	}
+
+	CardQuery struct {
+		Name string
 	}
 )
 
@@ -28,10 +33,25 @@ func (dc DalCard) FetchAll() (*[]models.Card, error) {
 	return &results, err
 }
 
-func (dc DalCard) FetchAllPaging(limit int, offset int) (*[]models.Card, error) {
+func (dc DalCard) FetchAllPaging(limit int, offset int) (*[]models.Card, int, error) {
 	results := []models.Card{}
-	err := dc.collection.Find(nil).Limit(limit).Sort("name").Skip(offset).All(&results)
-	return &results, err
+	query := dc.collection.Find(nil).Limit(limit).Sort("name").Skip(offset)
+	err := query.All(&results)
+	count, _ := dc.collection.Find(nil).Count()
+	// db driver is bugged
+	//count, _ := query.Count()
+	return &results, count, err
+}
+
+func (dc DalCard) FetchQueryPaging(limit int, offset int, cardQuery CardQuery) (*[]models.Card, int, error) {
+	results := []models.Card{}
+	pattern := `^` + regexp.QuoteMeta(cardQuery.Name)
+	query := dc.collection.Find(bson.M{"name": bson.RegEx{pattern, ""}}).Limit(limit).Sort("name").Skip(offset)
+	err := query.All(&results)
+	count, _ := dc.collection.Find(bson.M{"name": bson.RegEx{pattern, ""}}).Count()
+	// db driver is bugged
+	//count, _ := query.Count()
+	return &results, count, err
 }
 
 func (dc DalCard) FetchLeaderPaging(groupID bson.ObjectId, limit int, offset int) (*[]models.Card, error) {

@@ -1,5 +1,5 @@
-hash: 6fa80b6c25238a8bae133570daf476716e3b2375d14527da84dbab7d4e677801
-updated: 2017-03-30T23:39:11.3914915-04:00
+hash: 3b8fe49ebbf1c17e2053e63d2b93b6186908ae1838c5c14ec203d89a5e12b108
+updated: 2017-04-02T22:39:27.8580277-04:00
 imports:
 - name: github.com/armon/go-metrics
   version: 93f237eba9b0602f3e73710416558854a81d9337
@@ -10,9 +10,11 @@ imports:
 - name: github.com/dimfeld/httptreemux
   version: 86f7c217d9043ebc6adfd8e2ed04a0bb1e1db651
 - name: github.com/go-sql-driver/mysql
-  version: a0583e0143b1624142adab07e0e97fe106d99561
+  version: 9dee4ca50b83acdf57a35fb9e6fb4be640afa2f3
+- name: github.com/go-stack/stack
+  version: 100eb0c0a9c5b306ca2fb4f165df21d80ada4b82
 - name: github.com/goadesign/goa
-  version: 8f0fdca409904318050f9e03579c3878f8928826
+  version: e4ce857d53544c2f9c3a81c5fcf4b7c7dc4bb6ce
   subpackages:
   - client
   - design
@@ -24,7 +26,9 @@ imports:
   - middleware/gzip
   - uuid
 - name: github.com/inconshreveable/log15
-  version: b105bd37f74e5d9dc7b6ad7806715c7a2b83fd3f
+  version: 39bacc234bf1afd0b68573e95b45871f67ba2cd4
+  subpackages:
+  - term
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/manveru/faker
@@ -33,12 +37,10 @@ imports:
   version: ded68f7a9561c023e790de24279db7ebf473ea80
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
-- name: github.com/pkg/errors
-  version: ff09b135c25aae272398c51a07235b90a75aa4f0
 - name: github.com/satori/go.uuid
   version: 5bf94b69c6b68ee1b541973bb8e1144db23a194b
 - name: github.com/spf13/cobra
-  version: 7be4beda01ec05d0b93d80b3facd2b6f44080d94
+  version: 7aeaa2cce6ae7e18d2a6ee597b60ee137e999bd9
 - name: github.com/spf13/pflag
   version: d16db1e50e33dff1b6cdf37596cef36742128670
 - name: github.com/zach-klippenstein/goregen
@@ -52,11 +54,6 @@ imports:
   version: 9a7256cb28ed514b4e1e5f68959914c4c28a92e0
   subpackages:
   - unix
-- name: gopkg.in/inconshreveable/log15.v2
-  version: b105bd37f74e5d9dc7b6ad7806715c7a2b83fd3f
-  subpackages:
-  - stack
-  - term
 - name: gopkg.in/mgo.v2
   version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
   subpackages:

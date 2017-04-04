@@ -6,6 +6,7 @@ import (
 	"github.com/tri125/gwentapi/app"
 	"github.com/tri125/gwentapi/dataLayer/dal"
 	"github.com/tri125/gwentapi/dataLayer/factory"
+	"github.com/tri125/gwentapi/dataLayer/models"
 	"github.com/tri125/gwentapi/helpers"
 )
 
@@ -48,7 +49,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardFaction: end_implement
-	res, _ := factory.CreatePageCard(cards, collectionCount, limit, offset)
+	res, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
 	return ctx.OK(res)
 }
 
@@ -76,7 +77,7 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardLeader: end_implement
-	res, _ := factory.CreatePageCard(cards, collectionCount, limit, offset)
+	res, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset)
 	return ctx.OK(res)
 }
 
@@ -142,19 +143,24 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
-	collectionCount, err := dc.Count()
 
-	if err != nil {
-		return ctx.NotFound()
+	var cards *[]models.Card
+	var serviceError error
+	var resultCount int
+
+	if ctx.Name != nil && len(*ctx.Name) >= 3 {
+		query := dal.CardQuery{Name: *ctx.Name}
+		cards, resultCount, serviceError = dc.FetchQueryPaging(ctx.Limit, ctx.Offset, query)
+	} else {
+		cards, resultCount, serviceError = dc.FetchAllPaging(ctx.Limit, ctx.Offset)
 	}
-	limit, offset := helpers.ValidateLimitOffset(collectionCount, ctx.Limit, ctx.Offset)
-	cards, err := dc.FetchAllPaging(limit, offset)
-	if err != nil {
-		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+
+	if serviceError != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "List", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", serviceError.Error())
 		return ctx.InternalServerError()
 	}
 	// CardController_List: end_implement
-	res, _ := factory.CreatePageCard(cards, collectionCount, limit, offset)
+	res, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset)
 	return ctx.OK(res)
 }
 

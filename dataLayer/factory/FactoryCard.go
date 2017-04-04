@@ -61,7 +61,7 @@ func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error
 	return result, nil
 }
 
-func CreatePageCard(c *[]models.Card, collectionCount int, limit int, offset int) (*app.GwentapiPagecard, error) {
+func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, error) {
 	results := make(app.GwentapiCardLinkCollection, len(*c))
 	for i, result := range *c {
 		uuid := helpers.UUIDToURLBase64(result.UUID)
@@ -72,10 +72,10 @@ func CreatePageCard(c *[]models.Card, collectionCount int, limit int, offset int
 		results[i] = cl
 	}
 
-	prev, next := helpers.GeneratePrevNextPageHref(collectionCount, limit, offset, helpers.CardURL(""))
+	prev, next := helpers.GeneratePrevNextPageHref(resultCount, limit, offset, helpers.CardURL(url))
 
 	page := &app.GwentapiPagecard{
-		Count:    collectionCount,
+		Count:    resultCount,
 		Next:     next,
 		Previous: prev,
 		Results:  results,

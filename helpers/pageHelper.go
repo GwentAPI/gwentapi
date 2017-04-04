@@ -28,6 +28,10 @@ func GeneratePrevNextPageHref(count int, limit int, offset int, href string) (*s
 	var nextHref, prevHref string
 	var next, prev *string
 
+	if count <= limit {
+		return nil, nil
+	}
+
 	nextHref = href + "?limit=" + strconv.Itoa(limit) + "&offset="
 	prevHref = nextHref
 

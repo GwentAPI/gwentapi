@@ -685,6 +685,8 @@ paths:
     get:
       description: Listing of all supported resources endpoint
       operationId: index#show
+      produces:
+      - application/vnd.gwentapi.resource+json
       responses:
         "200":
           description: OK
@@ -709,12 +711,22 @@ paths:
         name: limit
         required: false
         type: integer
+      - description: Query to search for cards with the name starting by the entered
+          value
+        in: query
+        minLength: 3
+        name: name
+        required: false
+        type: string
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
+      produces:
+      - application/vnd.gwentapi.pagecard+json
       responses:
         "200":
           description: OK
@@ -749,9 +761,12 @@ paths:
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
+      produces:
+      - application/vnd.gwentapi.card+json
       responses:
         "200":
           description: OK
@@ -786,9 +801,12 @@ paths:
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
+      produces:
+      - application/vnd.gwentapi.variation+json; type=collection
       responses:
         "200":
           description: OK
@@ -823,6 +841,7 @@ paths:
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
@@ -831,6 +850,8 @@ paths:
         name: variationID
         required: true
         type: string
+      produces:
+      - application/vnd.gwentapi.variation+json
       responses:
         "200":
           description: OK
@@ -865,9 +886,12 @@ paths:
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
+      produces:
+      - application/vnd.gwentapi.pagecard+json
       responses:
         "200":
           description: OK
@@ -897,9 +921,12 @@ paths:
       - default: 0
         description: Offset of the starting count
         in: query
+        minimum: 0
         name: offset
         required: false
         type: integer
+      produces:
+      - application/vnd.gwentapi.pagecard+json
       responses:
         "200":
           description: OK
@@ -918,6 +945,8 @@ paths:
     get:
       description: Return all card categories.
       operationId: category#list
+      produces:
+      - application/vnd.gwentapi.category+json; type=collection
       responses:
         "200":
           description: OK
@@ -942,6 +971,8 @@ paths:
         name: categoryID
         required: true
         type: string
+      produces:
+      - application/vnd.gwentapi.category+json
       responses:
         "200":
           description: OK
@@ -960,6 +991,8 @@ paths:
     get:
       description: Return all factions.
       operationId: faction#list
+      produces:
+      - application/vnd.gwentapi.faction+json; type=collection
       responses:
         "200":
           description: OK
@@ -984,6 +1017,8 @@ paths:
         name: factionID
         required: true
         type: string
+      produces:
+      - application/vnd.gwentapi.faction+json
       responses:
         "200":
           description: OK
@@ -1002,6 +1037,8 @@ paths:
     get:
       description: Return all card groups.
       operationId: group#list
+      produces:
+      - application/vnd.gwentapi.group+json; type=collection
       responses:
         "200":
           description: OK
@@ -1026,6 +1063,8 @@ paths:
         name: groupID
         required: true
         type: string
+      produces:
+      - application/vnd.gwentapi.group+json
       responses:
         "200":
           description: OK
@@ -1044,6 +1083,8 @@ paths:
     get:
       description: Return all rarities.
       operationId: rarity#list
+      produces:
+      - application/vnd.gwentapi.rarity+json; type=collection
       responses:
         "200":
           description: OK
@@ -1068,6 +1109,8 @@ paths:
         name: rarityID
         required: true
         type: string
+      produces:
+      - application/vnd.gwentapi.rarity+json
       responses:
         "200":
           description: OK

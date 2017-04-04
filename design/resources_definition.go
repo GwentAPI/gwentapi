@@ -134,13 +134,20 @@ var _ = Resource("card", func() {
 		Param("offset", Integer, func() {
 			Description("Offset of the starting count")
 			Default(0)
+			Minimum(0)
 		})
 	})
 
 	Action("list", func() {
 		Routing(GET(""))
 		Description("Return a page of cards.")
+		Params(func() {
+			Param("name", String, func() {
+				Description("Query to search for cards with the name starting by the entered value")
+				MinLength(3)
+			})
 
+		})
 		Response(OK, PageCard)
 		Response(NotFound)
 	})
