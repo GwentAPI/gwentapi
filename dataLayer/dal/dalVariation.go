@@ -16,7 +16,7 @@ func NewDalVariation(ds *DataStore) *DalVariation {
 	return &DalVariation{ds.Collection("variations")}
 }
 
-func (dc DalVariation) Fetch(uuid string) (*models.Variation, error) {
+func (dc DalVariation) Fetch(uuid []byte) (*models.Variation, error) {
 	result := models.Variation{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
 	return &result, err

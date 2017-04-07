@@ -8,7 +8,7 @@ type Variation struct {
 	ID           bson.ObjectId "_id,omitempty"
 	Card_id      bson.ObjectId "card_id,omitempty"
 	Rarity_id    bson.ObjectId "rarity_id,omitempty"
-	UUID         string
+	UUID         []byte
 	Availability string
 	Rarity       string
 	Craft        Cost "craft,omitempty"

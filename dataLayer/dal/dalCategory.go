@@ -25,7 +25,7 @@ func NewDalCategory(ds *DataStore) *DalCategory {
 	return &DalCategory{ds.Collection("categories")}
 }
 
-func (dc DalCategory) Fetch(uuid string) (*models.Category, error) {
+func (dc DalCategory) Fetch(uuid []byte) (*models.Category, error) {
 	result := models.Category{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
 	return &result, err

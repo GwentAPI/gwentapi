@@ -21,7 +21,7 @@ func NewDalCard(ds *DataStore) *DalCard {
 	return &DalCard{ds.Collection("cards")}
 }
 
-func (dc DalCard) Fetch(uuid string) (*models.Card, error) {
+func (dc DalCard) Fetch(uuid []byte) (*models.Card, error) {
 	result := models.Card{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
 	return &result, err

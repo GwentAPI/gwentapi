@@ -6,7 +6,7 @@ import (
 	"github.com/tri125/gwentapi/helpers"
 )
 
-func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation, error) {
+func CreateVariation(v *models.Variation, cardID []byte) (*app.GwentapiVariation, error) {
 	variationUuid := helpers.UUIDToURLBase64(v.UUID)
 	cardUUID := helpers.UUIDToURLBase64(cardID)
 
@@ -43,7 +43,7 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 	return result, nil
 }
 
-func CreateLinkVariation(v *models.Variation, cardID string) (*app.GwentapiVariationLink, error) {
+func CreateLinkVariation(v *models.Variation, cardID []byte) (*app.GwentapiVariationLink, error) {
 	variationUuid := helpers.UUIDToURLBase64(v.UUID)
 	cardUUID := helpers.UUIDToURLBase64(cardID)
 
@@ -60,7 +60,7 @@ func CreateLinkVariation(v *models.Variation, cardID string) (*app.GwentapiVaria
 	return result, nil
 }
 
-func CreateLinkVariationCollection(v *[]models.Variation, cardID string) (app.GwentapiVariationCollection, error) {
+func CreateLinkVariationCollection(v *[]models.Variation, cardID []byte) (app.GwentapiVariationCollection, error) {
 	variations := make(app.GwentapiVariationCollection, len(*v))
 	for i, variation := range *v {
 		v, _ := CreateVariation(&variation, cardID)

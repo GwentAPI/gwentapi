@@ -16,7 +16,7 @@ func NewDalGroup(ds *DataStore) *DalGroup {
 	return &DalGroup{ds.Collection("groups")}
 }
 
-func (dc DalGroup) Fetch(uuid string) (*models.Group, error) {
+func (dc DalGroup) Fetch(uuid []byte) (*models.Group, error) {
 	result := models.Group{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
 	return &result, err
