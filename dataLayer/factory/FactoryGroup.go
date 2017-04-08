@@ -7,7 +7,7 @@ import (
 )
 
 func CreateGroup(g *models.Group) (*app.GwentapiGroup, error) {
-	uuid := helpers.UUIDToURLBase64(g.UUID)
+	uuid := helpers.EncodeUUID(g.UUID)
 
 	result := &app.GwentapiGroup{
 		Name: g.Name,

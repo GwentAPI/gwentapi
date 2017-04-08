@@ -7,7 +7,7 @@ import (
 )
 
 func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error) {
-	uuid := helpers.UUIDToURLBase64(c.UUID)
+	uuid := helpers.EncodeUUID(c.UUID)
 	categories := make(app.GwentapiCategoryLinkCollection, len(c.Categories))
 	variations := make(app.GwentapiVariationLinkCollection, len(*v))
 
@@ -20,7 +20,7 @@ func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error
 	}
 
 	for i, variation := range *v {
-		variationUUID := helpers.UUIDToURLBase64(variation.UUID)
+		variationUUID := helpers.EncodeUUID(variation.UUID)
 		r := &app.GwentapiRarityLink{
 			Name: variation.Rarity,
 			Href: "",
@@ -64,7 +64,7 @@ func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error
 func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, error) {
 	results := make(app.GwentapiCardLinkCollection, len(*c))
 	for i, result := range *c {
-		uuid := helpers.UUIDToURLBase64(result.UUID)
+		uuid := helpers.EncodeUUID(result.UUID)
 		cl := &app.GwentapiCardLink{
 			Href: helpers.CardURL(uuid),
 			Name: result.Name,

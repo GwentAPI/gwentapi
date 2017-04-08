@@ -7,7 +7,7 @@ import (
 )
 
 func CreateRarity(r *models.Rarity) (*app.GwentapiRarity, error) {
-	uuid := helpers.UUIDToURLBase64(r.UUID)
+	uuid := helpers.EncodeUUID(r.UUID)
 
 	result := &app.GwentapiRarity{
 		Name: r.Name,

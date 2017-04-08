@@ -29,7 +29,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
 	df := dal.NewDalFaction(dataStore)
-	factionUUID, errFactionUUID := helpers.Base64ToUUID(ctx.FactionID)
+	factionUUID, errFactionUUID := helpers.DecodeUUID(ctx.FactionID)
 
 	if errFactionUUID != nil {
 		return ctx.NotFound()
@@ -89,8 +89,8 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
-	variationUUID, errVariation := helpers.Base64ToUUID(ctx.VariationID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
+	variationUUID, errVariation := helpers.DecodeUUID(ctx.VariationID)
 
 	if err != nil || errVariation != nil {
 		return ctx.NotFound()
@@ -117,7 +117,7 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
 	dv := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
 
 	if err != nil {
 		return ctx.NotFound()
@@ -173,7 +173,7 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
 	dv := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
 
 	if err != nil {
 		return ctx.NotFound()

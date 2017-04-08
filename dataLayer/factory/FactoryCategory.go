@@ -7,7 +7,7 @@ import (
 )
 
 func CreateCategory(c *models.Category) (*app.GwentapiCategory, error) {
-	uuid := helpers.UUIDToURLBase64(c.UUID)
+	uuid := helpers.EncodeUUID(c.UUID)
 
 	result := &app.GwentapiCategory{
 		Name: c.Name,

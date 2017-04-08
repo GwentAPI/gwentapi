@@ -7,7 +7,7 @@ import (
 )
 
 func CreateFaction(f *models.Faction) (*app.GwentapiFaction, error) {
-	uuid := helpers.UUIDToURLBase64(f.UUID)
+	uuid := helpers.EncodeUUID(f.UUID)
 
 	result := &app.GwentapiFaction{
 		Name: f.Name,

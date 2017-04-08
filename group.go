@@ -56,7 +56,7 @@ func (c *GroupController) Show(ctx *app.ShowGroupContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalGroup(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.GroupID)
+	uuid, err := helpers.DecodeUUID(ctx.GroupID)
 
 	if err != nil {
 		return ctx.NotFound()

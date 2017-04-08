@@ -7,8 +7,8 @@ import (
 )
 
 func CreateVariation(v *models.Variation, cardID []byte) (*app.GwentapiVariation, error) {
-	variationUuid := helpers.UUIDToURLBase64(v.UUID)
-	cardUUID := helpers.UUIDToURLBase64(cardID)
+	variationUuid := helpers.EncodeUUID(v.UUID)
+	cardUUID := helpers.EncodeUUID(cardID)
 
 	craft := &app.CostType{
 		Normal:  v.Craft.Normal,
@@ -44,8 +44,8 @@ func CreateVariation(v *models.Variation, cardID []byte) (*app.GwentapiVariation
 }
 
 func CreateLinkVariation(v *models.Variation, cardID []byte) (*app.GwentapiVariationLink, error) {
-	variationUuid := helpers.UUIDToURLBase64(v.UUID)
-	cardUUID := helpers.UUIDToURLBase64(cardID)
+	variationUuid := helpers.EncodeUUID(v.UUID)
+	cardUUID := helpers.EncodeUUID(cardID)
 
 	rarity := &app.GwentapiRarityLink{
 		Href: "",

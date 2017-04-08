@@ -4,12 +4,12 @@ import (
 	b64 "encoding/base64"
 )
 
-func UUIDToURLBase64(uuid []byte) string {
-	uEnc := b64.URLEncoding.EncodeToString(uuid)
+func EncodeUUID(uuid []byte) string {
+	uEnc := b64.RawURLEncoding.EncodeToString(uuid)
 	return uEnc
 }
 
-func Base64ToUUID(uuid string) ([]byte, error) {
-	uDec, err := b64.URLEncoding.DecodeString(uuid)
+func DecodeUUID(uuid string) ([]byte, error) {
+	uDec, err := b64.RawURLEncoding.DecodeString(uuid)
 	return uDec, err
 }

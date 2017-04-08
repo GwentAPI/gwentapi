@@ -54,7 +54,7 @@ func (c *CategoryController) Show(ctx *app.ShowCategoryContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalCategory(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CategoryID)
+	uuid, err := helpers.DecodeUUID(ctx.CategoryID)
 
 	if err != nil {
 		return ctx.NotFound()
