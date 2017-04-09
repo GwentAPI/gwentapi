@@ -7,7 +7,7 @@ import (
 )
 
 func CreateCategory(c *models.Category) (*app.GwentapiCategory, error) {
-	uuid := helpers.UUIDToURLBase64(c.UUID)
+	uuid := helpers.EncodeUUID(c.UUID)
 
 	result := &app.GwentapiCategory{
 		Name: c.Name,
@@ -16,4 +16,13 @@ func CreateCategory(c *models.Category) (*app.GwentapiCategory, error) {
 	}
 
 	return result, nil
+}
+
+func CreateCategoryLink(c *models.Category) (*app.GwentapiCategoryLink, error) {
+	uuid := helpers.EncodeUUID(c.UUID)
+	categoryLink := &app.GwentapiCategoryLink{
+		Href: helpers.CategoryURL(uuid),
+		Name: c.Name,
+	}
+	return categoryLink, nil
 }

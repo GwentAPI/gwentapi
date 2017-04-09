@@ -2,58 +2,60 @@ package factory
 
 import (
 	"github.com/tri125/gwentapi/app"
+	"github.com/tri125/gwentapi/dataLayer/dal"
 	"github.com/tri125/gwentapi/dataLayer/models"
 	"github.com/tri125/gwentapi/helpers"
 )
 
-func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error) {
-	uuid := helpers.UUIDToURLBase64(c.UUID)
-	categories := make(app.GwentapiCategoryLinkCollection, len(c.Categories))
-	variations := make(app.GwentapiVariationLinkCollection, len(*v))
+func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
+	uuid := helpers.EncodeUUID(c.UUID)
+	dalCat := dal.NewDalCategory(ds)
+	dalV := dal.NewDalVariation(ds)
+	dalG := dal.NewDalGroup(ds)
+	dalF := dal.NewDalFaction(ds)
 
-	for i, category := range c.Categories {
-		cl := &app.GwentapiCategoryLink{
-			Name: category,
-			Href: "",
-		}
-		categories[i] = cl
+	group, errG := dalG.FetchWithName(c.Group)
+	if errG != nil {
+		return nil, errG
+	}
+	groupMedia, _ := CreateGroupLink(group)
+
+	faction, errF := dalF.FetchWithName(c.Faction)
+	if errF != nil {
+		return nil, errF
+	}
+	factionMedia, _ := CreateFactionLink(faction)
+
+	categories, errC := dalCat.FetchFromArrayID(c.Categories_id)
+	if errC != nil {
+		return nil, errC
+	}
+	categoriesLinkMedia := make(app.GwentapiCategoryLinkCollection, len(*categories))
+	for i, category := range *categories {
+		cl, _ := CreateCategoryLink(&category)
+		categoriesLinkMedia[i] = cl
 	}
 
-	for i, variation := range *v {
-		variationUUID := helpers.UUIDToURLBase64(variation.UUID)
-		r := &app.GwentapiRarityLink{
-			Name: variation.Rarity,
-			Href: "",
-		}
-
-		cv := &app.GwentapiVariationLink{
-			Availability: variation.Availability,
-			Href:         helpers.VariationURL(uuid, variationUUID),
-			Rarity:       r,
-		}
-		variations[i] = cv
+	variations, errV := dalV.FetchFromCardID(c.ID)
+	if errV != nil {
+		return nil, errV
 	}
-
-	faction := &app.GwentapiFactionLink{
-		Href: "",
-		Name: c.Faction,
-	}
-
-	group := &app.GwentapiGroupLink{
-		Href: "",
-		Name: c.Group,
+	variationsLinkMedia := make(app.GwentapiVariationLinkCollection, len(*variations))
+	for i, variation := range *variations {
+		cv, _ := CreateVariationLink(&variation, c.UUID, ds)
+		variationsLinkMedia[i] = cv
 	}
 
 	result := &app.GwentapiCard{
 		Name:       c.Name,
-		Categories: categories,
+		Categories: categoriesLinkMedia,
 		Flavor:     c.Flavor,
 		Info:       c.Info,
 		Strength:   c.Strength,
 		Positions:  c.Positions,
-		Faction:    faction,
-		Group:      group,
-		Variations: variations,
+		Faction:    factionMedia,
+		Group:      groupMedia,
+		Variations: variationsLinkMedia,
 		Href:       helpers.CardURL(uuid),
 		UUID:       uuid,
 	}
@@ -64,7 +66,7 @@ func CreateCard(c *models.Card, v *[]models.Variation) (*app.GwentapiCard, error
 func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, error) {
 	results := make(app.GwentapiCardLinkCollection, len(*c))
 	for i, result := range *c {
-		uuid := helpers.UUIDToURLBase64(result.UUID)
+		uuid := helpers.EncodeUUID(result.UUID)
 		cl := &app.GwentapiCardLink{
 			Href: helpers.CardURL(uuid),
 			Name: result.Name,

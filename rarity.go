@@ -55,7 +55,7 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalRarity(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.RarityID)
+	uuid, err := helpers.DecodeUUID(ctx.RarityID)
 
 	if err != nil {
 		return ctx.NotFound()

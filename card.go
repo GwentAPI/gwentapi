@@ -29,7 +29,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
 	df := dal.NewDalFaction(dataStore)
-	factionUUID, errFactionUUID := helpers.Base64ToUUID(ctx.FactionID)
+	factionUUID, errFactionUUID := helpers.DecodeUUID(ctx.FactionID)
 
 	if errFactionUUID != nil {
 		return ctx.NotFound()
@@ -89,8 +89,8 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
-	variationUUID, errVariation := helpers.Base64ToUUID(ctx.VariationID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
+	variationUUID, errVariation := helpers.DecodeUUID(ctx.VariationID)
 
 	if err != nil || errVariation != nil {
 		return ctx.NotFound()
@@ -104,7 +104,11 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 	}
 
 	// CardController_CardVariation: end_implement
-	res, _ := factory.CreateVariation(variation, uuid)
+	res, err := factory.CreateVariation(variation, uuid, dataStore)
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariation", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }
 
@@ -117,7 +121,7 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
 	dv := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
 
 	if err != nil {
 		return ctx.NotFound()
@@ -125,13 +129,17 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 
 	card, err := dc.Fetch(uuid)
 	variations, errVariation := dv.FetchFromCardID(card.ID)
-	if err != nil || errVariation != nil {
+	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
 	// CardController_CardVariations: end_implement
-	res, _ := factory.CreateLinkVariationCollection(variations, card.UUID)
+	res, errVariation := factory.CreateVariationCollection(variations, card.UUID, dataStore)
+	if errVariation != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errVariation.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }
 
@@ -172,21 +180,24 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
-	dv := dal.NewDalVariation(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.CardID)
+	uuid, err := helpers.DecodeUUID(ctx.CardID)
 
 	if err != nil {
 		return ctx.NotFound()
 	}
 
 	card, err := dc.Fetch(uuid)
-	variations, errVariation := dv.FetchFromCardID(card.ID)
-	if err != nil || errVariation != nil {
+
+	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
 	// CardController_Show: end_implement
-	res, _ := factory.CreateCard(card, variations)
+	res, errFactory := factory.CreateCard(card, dataStore)
+	if errFactory != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errFactory.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }

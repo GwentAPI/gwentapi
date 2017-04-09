@@ -16,9 +16,15 @@ func NewDalFaction(ds *DataStore) *DalFaction {
 	return &DalFaction{ds.Collection("factions")}
 }
 
-func (dc DalFaction) Fetch(uuid string) (*models.Faction, error) {
+func (dc DalFaction) Fetch(uuid []byte) (*models.Faction, error) {
 	result := models.Faction{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
+	return &result, err
+}
+
+func (dc DalFaction) FetchWithName(name string) (*models.Faction, error) {
+	result := models.Faction{}
+	err := dc.collection.Find(bson.M{"name": name}).One(&result)
 	return &result, err
 }
 

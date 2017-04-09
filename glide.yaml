@@ -1,7 +1,6 @@
 package: github.com/tri125/gwentapi
 import:
 - package: github.com/BurntSushi/toml
-- package: github.com/go-sql-driver/mysql
 - package: github.com/goadesign/goa
   subpackages:
   - client

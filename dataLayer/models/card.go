@@ -17,5 +17,5 @@ type Card struct {
 	Group         string          "group"
 	Group_id      bson.ObjectId   "group_id,omitempty"
 	Categories_id []bson.ObjectId "categories_id,omitempty"
-	UUID          string          "uuid"
+	UUID          []byte          "uuid"
 }

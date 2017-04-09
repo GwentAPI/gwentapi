@@ -53,7 +53,7 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalFaction(dataStore)
-	uuid, err := helpers.Base64ToUUID(ctx.FactionID)
+	uuid, err := helpers.DecodeUUID(ctx.FactionID)
 
 	if err != nil {
 		return ctx.NotFound()

@@ -7,7 +7,7 @@ import (
 )
 
 func CreateFaction(f *models.Faction) (*app.GwentapiFaction, error) {
-	uuid := helpers.UUIDToURLBase64(f.UUID)
+	uuid := helpers.EncodeUUID(f.UUID)
 
 	result := &app.GwentapiFaction{
 		Name: f.Name,
@@ -16,4 +16,13 @@ func CreateFaction(f *models.Faction) (*app.GwentapiFaction, error) {
 	}
 
 	return result, nil
+}
+
+func CreateFactionLink(f *models.Faction) (*app.GwentapiFactionLink, error) {
+	uuid := helpers.EncodeUUID(f.UUID)
+	factionLink := &app.GwentapiFactionLink{
+		Href: helpers.FactionURL(uuid),
+		Name: f.Name,
+	}
+	return factionLink, nil
 }

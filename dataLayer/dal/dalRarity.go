@@ -16,9 +16,15 @@ func NewDalRarity(ds *DataStore) *DalRarity {
 	return &DalRarity{ds.Collection("rarities")}
 }
 
-func (dc DalRarity) Fetch(uuid string) (*models.Rarity, error) {
+func (dc DalRarity) Fetch(uuid []byte) (*models.Rarity, error) {
 	result := models.Rarity{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
+	return &result, err
+}
+
+func (dc DalRarity) FetchWithName(name string) (*models.Rarity, error) {
+	result := models.Rarity{}
+	err := dc.collection.Find(bson.M{"name": name}).One(&result)
 	return &result, err
 }
 

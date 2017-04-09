@@ -2,13 +2,21 @@ package factory
 
 import (
 	"github.com/tri125/gwentapi/app"
+	"github.com/tri125/gwentapi/dataLayer/dal"
 	"github.com/tri125/gwentapi/dataLayer/models"
 	"github.com/tri125/gwentapi/helpers"
 )
 
-func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation, error) {
-	variationUuid := helpers.UUIDToURLBase64(v.UUID)
-	cardUUID := helpers.UUIDToURLBase64(cardID)
+func CreateVariation(v *models.Variation, cardID []byte, ds *dal.DataStore) (*app.GwentapiVariation, error) {
+	variationUuid := helpers.EncodeUUID(v.UUID)
+	cardUUID := helpers.EncodeUUID(cardID)
+	dalR := dal.NewDalRarity(ds)
+
+	rarity, err := dalR.FetchWithName(v.Rarity)
+	if err != nil {
+		return nil, err
+	}
+	rarityMedia, _ := CreateRarityLink(rarity)
 
 	craft := &app.CostType{
 		Normal:  v.Craft.Normal,
@@ -19,10 +27,6 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 		Normal:  v.Mill.Normal,
 		Premium: v.Mill.Premium,
 	}
-	rarity := &app.GwentapiRarityLink{
-		Href: "",
-		Name: v.Rarity,
-	}
 
 	//fullSizeUrl := helpers.MediaURL(v.Art.FullsizeImage)
 	thumbnailSizeUrl := helpers.MediaURL(v.Art.ThumbnailImage)
@@ -32,7 +36,7 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 	}
 	result := &app.GwentapiVariation{
 		Availability: v.Availability,
-		Rarity:       rarity,
+		Rarity:       rarityMedia,
 		Craft:        craft,
 		Mill:         mill,
 		Art:          art,
@@ -43,27 +47,33 @@ func CreateVariation(v *models.Variation, cardID string) (*app.GwentapiVariation
 	return result, nil
 }
 
-func CreateLinkVariation(v *models.Variation, cardID string) (*app.GwentapiVariationLink, error) {
-	variationUuid := helpers.UUIDToURLBase64(v.UUID)
-	cardUUID := helpers.UUIDToURLBase64(cardID)
+func CreateVariationLink(v *models.Variation, cardID []byte, ds *dal.DataStore) (*app.GwentapiVariationLink, error) {
+	variationUuid := helpers.EncodeUUID(v.UUID)
+	cardUUID := helpers.EncodeUUID(cardID)
+	dalR := dal.NewDalRarity(ds)
 
-	rarity := &app.GwentapiRarityLink{
-		Href: "",
-		Name: v.Rarity,
+	rarity, err := dalR.FetchWithName(v.Rarity)
+	if err != nil {
+		return nil, err
 	}
+	rarityMedia, _ := CreateRarityLink(rarity)
+
 	result := &app.GwentapiVariationLink{
 		Availability: v.Availability,
-		Rarity:       rarity,
+		Rarity:       rarityMedia,
 		Href:         helpers.VariationURL(variationUuid, cardUUID),
 	}
 
 	return result, nil
 }
 
-func CreateLinkVariationCollection(v *[]models.Variation, cardID string) (app.GwentapiVariationCollection, error) {
+func CreateVariationCollection(v *[]models.Variation, cardID []byte, ds *dal.DataStore) (app.GwentapiVariationCollection, error) {
 	variations := make(app.GwentapiVariationCollection, len(*v))
 	for i, variation := range *v {
-		v, _ := CreateVariation(&variation, cardID)
+		v, err := CreateVariation(&variation, cardID, ds)
+		if err != nil {
+			return nil, err
+		}
 		variations[i] = v
 	}
 

@@ -25,10 +25,16 @@ func NewDalCategory(ds *DataStore) *DalCategory {
 	return &DalCategory{ds.Collection("categories")}
 }
 
-func (dc DalCategory) Fetch(uuid string) (*models.Category, error) {
+func (dc DalCategory) Fetch(uuid []byte) (*models.Category, error) {
 	result := models.Category{}
 	err := dc.collection.Find(bson.M{"uuid": uuid}).One(&result)
 	return &result, err
+}
+
+func (dc DalCategory) FetchFromArrayID(categoriesID []bson.ObjectId) (*[]models.Category, error) {
+	results := []models.Category{}
+	err := dc.collection.Find(bson.M{"_id": bson.M{"$in": categoriesID}}).All(&results)
+	return &results, err
 }
 
 func (dc DalCategory) FetchAll() (*[]models.Category, error) {
