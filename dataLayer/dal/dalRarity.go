@@ -22,6 +22,12 @@ func (dc DalRarity) Fetch(uuid []byte) (*models.Rarity, error) {
 	return &result, err
 }
 
+func (dc DalRarity) FetchWithName(name string) (*models.Rarity, error) {
+	result := models.Rarity{}
+	err := dc.collection.Find(bson.M{"name": name}).One(&result)
+	return &result, err
+}
+
 func (dc DalRarity) FetchAll() (*[]models.Rarity, error) {
 	results := []models.Rarity{}
 	err := dc.collection.Find(nil).Sort("name").All(&results)

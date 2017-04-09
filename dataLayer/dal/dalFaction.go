@@ -22,6 +22,12 @@ func (dc DalFaction) Fetch(uuid []byte) (*models.Faction, error) {
 	return &result, err
 }
 
+func (dc DalFaction) FetchWithName(name string) (*models.Faction, error) {
+	result := models.Faction{}
+	err := dc.collection.Find(bson.M{"name": name}).One(&result)
+	return &result, err
+}
+
 func (dc DalFaction) FetchAll() (*[]models.Faction, error) {
 	results := []models.Faction{}
 	err := dc.collection.Find(nil).Sort("name").All(&results)

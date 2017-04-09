@@ -172,7 +172,6 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	// Close the session
 	defer dataStore.Close()
 	dc := dal.NewDalCard(dataStore)
-	dv := dal.NewDalVariation(dataStore)
 	uuid, err := helpers.DecodeUUID(ctx.CardID)
 
 	if err != nil {
@@ -180,13 +179,17 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	}
 
 	card, err := dc.Fetch(uuid)
-	variations, errVariation := dv.FetchFromCardID(card.ID)
-	if err != nil || errVariation != nil {
+
+	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
 	// CardController_Show: end_implement
-	res, _ := factory.CreateCard(card, variations)
+	res, errFactory := factory.CreateCard(card, dataStore)
+	if errFactory != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errFactory.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }

@@ -17,3 +17,12 @@ func CreateRarity(r *models.Rarity) (*app.GwentapiRarity, error) {
 
 	return result, nil
 }
+
+func CreateRarityLink(r *models.Rarity) (*app.GwentapiRarityLink, error) {
+	uuid := helpers.EncodeUUID(r.UUID)
+	rarityLink := &app.GwentapiRarityLink{
+		Href: helpers.RarityURL(uuid),
+		Name: r.Name,
+	}
+	return rarityLink, nil
+}

@@ -2,7 +2,6 @@ package configuration
 
 import (
 	"github.com/BurntSushi/toml"
-	"github.com/go-sql-driver/mysql"
 	"log"
 	"time"
 )
@@ -15,8 +14,7 @@ type GwentConfig struct {
 	Verbose      bool
 	LogInfoFile  string
 	LogErrorFile string
-	Server       server       `toml:"server"`
-	DB           mysql.Config `toml:"database"`
+	Server       server `toml:"server"`
 }
 
 type server struct {
@@ -48,11 +46,7 @@ func ReadConfig() error {
 	}
 	//Workaround to set the database connection timeout in the mysql.Config type because the TOML parser doesn't implicitly parse Duration.
 	//We use a wrapper and then set the value back.
-	Conf.DB.Timeout = Conf.Server.DB_timeout.Duration
+	//Conf.DB.Timeout = Conf.Server.DB_timeout.Duration
 	isLoaded = true
 	return nil
-}
-
-func (g GwentConfig) FormatDSN() string {
-	return g.DB.FormatDSN()
 }

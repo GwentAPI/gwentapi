@@ -6,11 +6,6 @@ import (
 	"github.com/tri125/gwentapi/configuration"
 )
 
-// ArtworkHref returns the resource href.
-func ArtworkURL(cardID interface{}) string {
-	return fmt.Sprintf("%v/v0/cards/%v/artworks", configuration.Conf.Server.BaseURL, cardID)
-}
-
 // CardHref returns the resource href.
 func CardURL(cardID interface{}) string {
 	return configuration.Conf.Server.BaseURL + app.CardHref(cardID)

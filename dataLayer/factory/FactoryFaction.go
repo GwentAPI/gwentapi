@@ -17,3 +17,12 @@ func CreateFaction(f *models.Faction) (*app.GwentapiFaction, error) {
 
 	return result, nil
 }
+
+func CreateFactionLink(f *models.Faction) (*app.GwentapiFactionLink, error) {
+	uuid := helpers.EncodeUUID(f.UUID)
+	factionLink := &app.GwentapiFactionLink{
+		Href: helpers.FactionURL(uuid),
+		Name: f.Name,
+	}
+	return factionLink, nil
+}
