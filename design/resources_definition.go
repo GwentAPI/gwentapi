@@ -145,6 +145,7 @@ var _ = Resource("card", func() {
 			Param("name", String, func() {
 				Description("Query to search for cards with the name starting by the entered value")
 				MinLength(3)
+				MaxLength(10)
 			})
 
 		})

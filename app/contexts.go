@@ -370,6 +370,11 @@ func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 				err = goa.MergeErrors(err, goa.InvalidLengthError(`name`, *rctx.Name, utf8.RuneCountInString(*rctx.Name), 3, true))
 			}
 		}
+		if rctx.Name != nil {
+			if utf8.RuneCountInString(*rctx.Name) > 10 {
+				err = goa.MergeErrors(err, goa.InvalidLengthError(`name`, *rctx.Name, utf8.RuneCountInString(*rctx.Name), 10, false))
+			}
+		}
 	}
 	paramOffset := req.Params["offset"]
 	if len(paramOffset) == 0 {

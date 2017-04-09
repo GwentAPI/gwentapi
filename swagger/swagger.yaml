@@ -714,6 +714,7 @@ paths:
       - description: Query to search for cards with the name starting by the entered
           value
         in: query
+        maxLength: 10
         minLength: 3
         name: name
         required: false
