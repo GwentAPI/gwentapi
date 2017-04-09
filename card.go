@@ -104,7 +104,11 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 	}
 
 	// CardController_CardVariation: end_implement
-	res, _ := factory.CreateVariation(variation, uuid)
+	res, err := factory.CreateVariation(variation, uuid, dataStore)
+	if err != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariation", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }
 
@@ -125,13 +129,17 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 
 	card, err := dc.Fetch(uuid)
 	variations, errVariation := dv.FetchFromCardID(card.ID)
-	if err != nil || errVariation != nil {
+	if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
 
 	// CardController_CardVariations: end_implement
-	res, _ := factory.CreateLinkVariationCollection(variations, card.UUID)
+	res, errVariation := factory.CreateVariationCollection(variations, card.UUID, dataStore)
+	if errVariation != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errVariation.Error())
+		return ctx.InternalServerError()
+	}
 	return ctx.OK(res)
 }
 

@@ -13,52 +13,38 @@ func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
 	dalV := dal.NewDalVariation(ds)
 	dalG := dal.NewDalGroup(ds)
 	dalF := dal.NewDalFaction(ds)
-	dalR := dal.NewDalRarity(ds)
 
-	variations, errV := dalV.FetchFromCardID(c.ID)
-	if errV != nil {
-		return nil, errV
-	}
-	categories, errC := dalCat.FetchFromArrayID(c.Categories_id)
-	if errC != nil {
-		return nil, errC
-	}
 	group, errG := dalG.FetchWithName(c.Group)
 	if errG != nil {
 		return nil, errG
 	}
+	groupMedia, _ := CreateGroupLink(group)
+
 	faction, errF := dalF.FetchWithName(c.Faction)
 	if errF != nil {
 		return nil, errF
 	}
+	factionMedia, _ := CreateFactionLink(faction)
 
+	categories, errC := dalCat.FetchFromArrayID(c.Categories_id)
+	if errC != nil {
+		return nil, errC
+	}
 	categoriesLinkMedia := make(app.GwentapiCategoryLinkCollection, len(*categories))
-	variationsLinkMedia := make(app.GwentapiVariationLinkCollection, len(*variations))
-
 	for i, category := range *categories {
 		cl, _ := CreateCategoryLink(&category)
 		categoriesLinkMedia[i] = cl
 	}
 
+	variations, errV := dalV.FetchFromCardID(c.ID)
+	if errV != nil {
+		return nil, errV
+	}
+	variationsLinkMedia := make(app.GwentapiVariationLinkCollection, len(*variations))
 	for i, variation := range *variations {
-		rarity, errR := dalR.FetchWithName(variation.Rarity)
-		if errR != nil {
-			return nil, errR
-		}
-
-		r, _ := CreateRarityLink(rarity)
-
-		variationUUID := helpers.EncodeUUID(variation.UUID)
-		cv := &app.GwentapiVariationLink{
-			Availability: variation.Availability,
-			Href:         helpers.VariationURL(uuid, variationUUID),
-			Rarity:       r,
-		}
+		cv, _ := CreateVariationLink(&variation, c.UUID, ds)
 		variationsLinkMedia[i] = cv
 	}
-
-	factionMedia, _ := CreateFactionLink(faction)
-	groupMedia, _ := CreateGroupLink(group)
 
 	result := &app.GwentapiCard{
 		Name:       c.Name,
