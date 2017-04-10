@@ -61,7 +61,7 @@ func CreateVariationLink(v *models.Variation, cardID []byte, ds *dal.DataStore) 
 	result := &app.GwentapiVariationLink{
 		Availability: v.Availability,
 		Rarity:       rarityMedia,
-		Href:         helpers.VariationURL(variationUuid, cardUUID),
+		Href:         helpers.VariationURL(cardUUID, variationUuid),
 	}
 
 	return result, nil
