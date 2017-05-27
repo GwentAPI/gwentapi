@@ -28,7 +28,7 @@ _testmain.go
 
 
 # Project related folder
-vendor/
+#vendor/
 .idea/
 client/
 tool/
