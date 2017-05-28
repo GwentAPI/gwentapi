@@ -2,8 +2,8 @@ package helpers
 
 import (
 	"fmt"
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/configuration"
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/configuration"
 )
 
 // CardHref returns the resource href.

@@ -1,16 +1,16 @@
-//go:generate goagen bootstrap -d github.com/tri125/gwentapi/design
+//go:generate goagen bootstrap -d github.com/GwentAPI/gwentapi/design
 
 package main
 
 import (
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/configuration"
+	"github.com/GwentAPI/gwentapi/dataLayer/dal"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/configuration"
-	"github.com/tri125/gwentapi/dataLayer/dal"
 )
 
 var enableGzip bool = true

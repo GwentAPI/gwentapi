@@ -1,9 +1,9 @@
 package factory
 
 import (
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/dataLayer/models"
-	"github.com/tri125/gwentapi/helpers"
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/dataLayer/models"
+	"github.com/GwentAPI/gwentapi/helpers"
 )
 
 func CreateCategory(c *models.Category) (*app.GwentapiCategory, error) {

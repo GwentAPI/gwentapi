@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/helpers"
 )
 
 // IndexController implements the index resource.

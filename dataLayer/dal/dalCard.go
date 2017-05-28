@@ -1,7 +1,7 @@
 package dal
 
 import (
-	"github.com/tri125/gwentapi/dataLayer/models"
+	"github.com/GwentAPI/gwentapi/dataLayer/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"regexp"

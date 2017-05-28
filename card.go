@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/dataLayer/dal"
+	"github.com/GwentAPI/gwentapi/dataLayer/factory"
+	"github.com/GwentAPI/gwentapi/dataLayer/models"
+	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/dataLayer/dal"
-	"github.com/tri125/gwentapi/dataLayer/factory"
-	"github.com/tri125/gwentapi/dataLayer/models"
-	"github.com/tri125/gwentapi/helpers"
 )
 
 // CardController implements the card resource.

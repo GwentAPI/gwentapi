@@ -1,10 +1,10 @@
 package factory
 
 import (
-	"github.com/tri125/gwentapi/app"
-	"github.com/tri125/gwentapi/dataLayer/dal"
-	"github.com/tri125/gwentapi/dataLayer/models"
-	"github.com/tri125/gwentapi/helpers"
+	"github.com/GwentAPI/gwentapi/app"
+	"github.com/GwentAPI/gwentapi/dataLayer/dal"
+	"github.com/GwentAPI/gwentapi/dataLayer/models"
+	"github.com/GwentAPI/gwentapi/helpers"
 )
 
 func CreateVariation(v *models.Variation, cardID []byte, ds *dal.DataStore) (*app.GwentapiVariation, error) {
