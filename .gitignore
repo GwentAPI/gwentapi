@@ -30,5 +30,6 @@ _testmain.go
 # Project related folder
 #vendor/
 .idea/
-client/
-tool/
+# Only for current directory
+/client/
+/tool/
