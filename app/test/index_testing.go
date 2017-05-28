@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=github.com/tri125/gwentapi/design
-// --out=$(GOPATH)\src\github.com\tri125\gwentapi
+// --design=github.com/GwentAPI/gwentapi/design
+// --out=$(GOPATH)\src\github.com\GwentAPI\gwentapi
 // --version=v1.1.0
 
 package test
@@ -13,9 +13,9 @@ package test
 import (
 	"bytes"
 	"fmt"
+	"github.com/GwentAPI/gwentapi/app"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/goatest"
-	"github.com/tri125/gwentapi/app"
 	"golang.org/x/net/context"
 	"io"
 	"log"
