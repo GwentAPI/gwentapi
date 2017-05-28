@@ -4,5 +4,7 @@ go:
   - 1.7.x
   - master
 
+install: true
+
 script:
 - go build -ldflags="-s" gwentapi.go
