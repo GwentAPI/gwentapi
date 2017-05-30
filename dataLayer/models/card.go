@@ -10,7 +10,7 @@ type Card struct {
 	Faction       string          "faction"
 	Flavor        *string         "flavor"
 	Info          *string         "info"
-	Strength      *int            "Strength"
+	Strength      *int            "strength"
 	Name          string          "name"
 	Positions     []string        "positions"
 	Faction_id    bson.ObjectId   "faction_id,omitempty"
