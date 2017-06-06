@@ -3,8 +3,8 @@ go:
 - 1.7.x
 install: true
 script:
-- go build -ldflags="-s" -o gwentapi-$TRAVIS_TAG.linux-amd64 github.com/GwentAPI/gwentapi
-- GOOS=windows GOARCH=amd64 go build -ldflags="-s" -o gwentapi-$TRAVIS_TAG.windows-amd64.exe github.com/GwentAPI/gwentapi
+- go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.linux-amd64 github.com/GwentAPI/gwentapi
+- GOOS=windows GOARCH=amd64 go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.windows-amd64.exe github.com/GwentAPI/gwentapi
 deploy:
   provider: releases
   skip_cleanup: true

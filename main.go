@@ -3,6 +3,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/GwentAPI/gwentapi/app"
 	"github.com/GwentAPI/gwentapi/configuration"
 	"github.com/GwentAPI/gwentapi/dataLayer/dal"
@@ -11,10 +13,26 @@ import (
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
+	"os"
 )
 
 var enableGzip bool = true
 var gzipLevel int = -1
+
+/*
+Set this variable with go build with the -ldflags="-X main.version=<value>" parameter.
+*/
+var version = "undefined"
+
+func init() {
+	versionFlag := flag.Bool("v", false, "Prints current version")
+	flag.Parse()
+
+	if *versionFlag {
+		fmt.Println(version)
+		os.Exit(0)
+	}
+}
 
 func main() {
 
