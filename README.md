@@ -18,7 +18,7 @@ GwentAPI is a RESTful API dedicated to provide information regarding GWENT®: Th
 Assuming you installed and configure all the required softwares listed above and that you have a working Go setup:
 
 ### Build the software
-1. go get github.com/GwentAPI/gwentapi
+1. ``go get github.com/GwentAPI/gwentapi``
 2. From the project directory, initialize the submodules:
     * ``git submodule init``
     * ``git submodule update``
@@ -46,8 +46,10 @@ Assuming that you have a running mongoDB instance :
 ``db_setup.py`` will create the database if not present along with all the collections. If a collection is already present, the script will refuse to run unless you force it:
 * ``python3 db_setup.py -f`` forcing the script will drop all the collections before re-populating the database.
 
-If you enabled authentication on mongoDB or you are using a different port/host other than the default port on localhost, the script support overriding the values. Learn more with:
-``python3 db_setup.py --help``. SSL is not supported. Remember that the go program **doesn't** support those different configurations at the moment.
+If you enabled authentication on mongoDB or if you are using a different port/host other than the default port on localhost, the script support overriding the values. Learn more with:
+``python3 db_setup.py --help``.
+
+SSL is not supported. Remember that the go program **doesn't** support those different configurations at the moment.
 
 
 ## How to contribute?
