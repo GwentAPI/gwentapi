@@ -14,6 +14,8 @@ import (
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 var enableGzip bool = true
@@ -87,8 +89,15 @@ func main() {
 	defer dal.ShutDown()
 
 	// Start service
-	if err := service.ListenAndServe(":8080"); err != nil {
-		service.LogError("startup", "err", err)
-	}
+	go func() {
+		service.LogInfo("startup", "message", "Service is running.")
+		if err := service.ListenAndServe(":8080"); err != nil {
+			service.LogError("startup", "err", err)
+		}
+	}()
+	sc := make(chan os.Signal, 1)
+	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+	<-sc
+	service.LogInfo("shutdown", "message", "Server stopped ungracefully by killing all connections.")
 
 }
