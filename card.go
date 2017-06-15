@@ -199,5 +199,6 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errFactory.Error())
 		return ctx.InternalServerError()
 	}
+	helpers.LastModified(ctx.ResponseData, card.Last_Modified)
 	return ctx.OK(res)
 }

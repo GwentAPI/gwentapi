@@ -2,6 +2,7 @@ package models
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"time"
 )
 
 type Card struct {
@@ -18,4 +19,5 @@ type Card struct {
 	Group_id      bson.ObjectId   "group_id,omitempty"
 	Categories_id []bson.ObjectId "categories_id,omitempty"
 	UUID          []byte          "uuid"
+	Last_Modified time.Time       "last_modified"
 }
