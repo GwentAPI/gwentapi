@@ -21,8 +21,9 @@ type GwentConfig struct {
 }
 
 type database struct {
-	URL            string
+	Host           string
 	Authentication authentication
+	Database       string
 }
 
 type authentication struct {
@@ -37,7 +38,6 @@ type app struct {
 	LogInfoFile  string
 	LogErrorFile string
 	BaseURL      string
-	DbName       string
 }
 
 func NewGwentConfig() GwentConfig {
@@ -48,10 +48,10 @@ func NewGwentConfig() GwentConfig {
 		Debug:        false,
 		Verbose:      false,
 		BaseURL:      "http://localhost:8080",
-		DbName:       "gwentapi",
 	}
 	config.Database = database{
-		URL: "127.0.0.1:27017",
+		Host:     "127.0.0.1:27017",
+		Database: "gwentapi",
 	}
 	return config
 }
