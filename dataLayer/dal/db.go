@@ -65,7 +65,7 @@ func init() {
 	var err error
 	mainDataStore.session, err = mgo.DialWithInfo(dialInfo)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to establish mongoDB connection: ", err)
 	}
 	mainDataStore.session.SetMode(mgo.Monotonic, true)
 }

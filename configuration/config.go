@@ -70,7 +70,7 @@ func init() {
 		if userConfig, err := readConfig(configFilePath); err != nil {
 			// Panicking because the user is using a configured environnement but it failed.
 			// This is an unwanted state.
-			log.Panic(err)
+			log.Fatal("Failed to read config file: ", err)
 		} else {
 			conf = *userConfig
 		}
