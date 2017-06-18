@@ -1,18 +1,21 @@
 language: go
 go:
-- 1.7.x
+- 1.8.x
 install: true
 script:
 - go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.linux-amd64 github.com/GwentAPI/gwentapi
 - GOOS=windows GOARCH=amd64 go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.windows-amd64.exe github.com/GwentAPI/gwentapi
+before_deploy:
+- zip -j "gwentapi-$TRAVIS_TAG.linux-amd64.zip" ./config.toml ./data/input/latest.jsonl ./gwentapi-$TRAVIS_TAG.linux-amd64
+- zip -j "gwentapi-$TRAVIS_TAG.windows-amd64.zip" ./config.toml ./data/input/latest.jsonl ./gwentapi-$TRAVIS_TAG.windows-amd64.exe
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: k1y/HdVbx7NNztpFsAkwol552Qx8FVm5YZcGLk7zfPVH95YDofnisSXpl8Qo8uXZvSjARBCScqQKAH9lzgfWWYLOX/a1kbo7mh9TgbhRfWNeqQ2W9tTjaK9gtc6MPO+b1aguBd2X9JqHsHXPu15YZypls5Or5QbPNrTrSEcetdmbnEZ1eyn/ZxsjgXIeU8cF/IGQaNfsyR15qIuHUyI5LlB5ABeQHjVumLlMg66FYTTItFlxNldepeW6TQ2oniG2BgK/6GpaM5pVnBdkDatiKZjKUcE8kk6JPSeEM++oBM4H+CacV8W2R26HQQY2g1H3fJSN63pjoGrUhcDJyTpe2MHRIOqxTxzG1xNIt+goagYxnfGMejBITqA9tWsFhukDwpj9QJHugJxpLu31jVmFRTC9kJ6Q/pIJhZv4w8SgmVDTFjxuK7pUFKoJHr+afpg08nt0U39tE6DQ8992IpGGjLgeN4nGK1jUwufKgh+7nN9RJDz2gT9p4wkozznbYO35f6egf94LWetjwrqW70yc/vz7EfrY9eGi159Y0PkMlM9yDM80F1WHdg84+/8qW5tDnLneZ4EzDxsOLYK+wgAMzYHpeWXWZn6rd20f3lI6tJoLHJ9/HacYEW4U+e93/4pZYWvFbTA4axRSHcuwTA4zJhDoU4S1SZYfqQ+CR6m6rkc=
   file: 
-  - gwentapi-$TRAVIS_TAG.linux-amd64
-  - gwentapi-$TRAVIS_TAG.windows-amd64.exe
+  - gwentapi-$TRAVIS_TAG.linux-amd64.zip
+  - gwentapi-$TRAVIS_TAG.windows-amd64.zip
   on:
     name: GwentAPI $TRAVIS_TAG
     repo: GwentAPI/gwentapi
