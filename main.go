@@ -37,31 +37,25 @@ func init() {
 }
 
 func main() {
-
-	//Load config
-	errC := configuration.ReadConfig()
-	if errC != nil {
-		panic("Error loading config file")
-	}
-
 	// Create service
 	service := goa.New("gwentapi")
 
 	//Create logger
 	logger := log.New("module", "app/server")
 
+	config := configuration.GetConfig()
 	//Logger configuration
 	logger.SetHandler(log.MultiHandler(
-		log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(configuration.Conf.LogInfoFile, log.LogfmtFormat())),
-		log.LvlFilterHandler(log.LvlError, log.Must.FileHandler(configuration.Conf.LogErrorFile, log.LogfmtFormat()))))
+		log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(config.App.LogInfoFile, log.LogfmtFormat())),
+		log.LvlFilterHandler(log.LvlError, log.Must.FileHandler(config.App.LogErrorFile, log.LogfmtFormat()))))
 
 	//Inject logger
 	service.WithLogger(goalog15.New(logger))
 
 	// Mount middleware
 	service.Use(middleware.RequestID())
-	service.Use(middleware.LogRequest(configuration.Conf.Verbose))
-	service.Use(middleware.ErrorHandler(service, configuration.Conf.Verbose))
+	service.Use(middleware.LogRequest(config.App.Verbose))
+	service.Use(middleware.ErrorHandler(service, config.App.Verbose))
 	service.Use(middleware.Recover())
 	if enableGzip {
 		service.Use(gzip.Middleware(gzipLevel))

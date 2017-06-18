@@ -1,19 +1,21 @@
 package dal
 
 import (
+	"github.com/GwentAPI/gwentapi/configuration"
 	"gopkg.in/mgo.v2"
+	"log"
 )
 
 var mainDataStore *DataStore
-
-const database string = "gwentapi"
 
 type DataStore struct {
 	session *mgo.Session
 }
 
 func (ds *DataStore) Collection(colName string) *mgo.Collection {
-	return ds.session.DB(database).C(colName)
+	// Use database name specified in DialWithInfo when parameter is empty
+	// Fallback to "test" if also empty.
+	return ds.session.DB("").C(colName)
 }
 
 func InitDBWithInfo(info *mgo.DialInfo) {
@@ -47,11 +49,23 @@ func ShutDown() {
 }
 
 func init() {
+	config := configuration.GetConfig()
+
+	addrs := []string{config.Database.Host}
+
+	dialInfo := &mgo.DialInfo{
+		Addrs:    addrs,
+		Database: config.Database.Database,
+		Source:   config.Database.Authentication.AuthenticationDatabase,
+		Username: config.Database.Authentication.Username,
+		Password: config.Database.Authentication.Password,
+	}
+
 	mainDataStore = &DataStore{}
 	var err error
-	mainDataStore.session, err = mgo.Dial("localhost")
+	mainDataStore.session, err = mgo.DialWithInfo(dialInfo)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	mainDataStore.session.SetMode(mgo.Monotonic, true)
 }
