@@ -1,5 +1,5 @@
 [database]
-host = "127.0.0.1:27017"
+url = "127.0.0.1:27017"
 	[database.authentication]
 	#username = "client"
 	#password = "thereisonlyonekinginthenorth"

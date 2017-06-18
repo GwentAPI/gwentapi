@@ -21,7 +21,7 @@ type GwentConfig struct {
 }
 
 type database struct {
-	Host           string
+	URL            string
 	Authentication authentication
 }
 
@@ -51,7 +51,7 @@ func NewGwentConfig() GwentConfig {
 		DbName:       "gwentapi",
 	}
 	config.Database = database{
-		Host: "127.0.0.1:27017",
+		URL: "127.0.0.1:27017",
 	}
 	return config
 }

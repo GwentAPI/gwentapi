@@ -1,12 +1,13 @@
 package dal
 
 import (
+	"github.com/GwentAPI/gwentapi/configuration"
 	"gopkg.in/mgo.v2"
 )
 
 var mainDataStore *DataStore
 
-const database string = "gwentapi"
+var database string
 
 type DataStore struct {
 	session *mgo.Session
@@ -47,9 +48,12 @@ func ShutDown() {
 }
 
 func init() {
+	config := configuration.GetConfig()
+	database = config.App.DbName
+
 	mainDataStore = &DataStore{}
 	var err error
-	mainDataStore.session, err = mgo.Dial("localhost")
+	mainDataStore.session, err = mgo.Dial(config.Database.URL)
 	if err != nil {
 		panic(err)
 	}
