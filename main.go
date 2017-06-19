@@ -13,6 +13,7 @@ import (
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -79,19 +80,47 @@ func main() {
 	c8 := NewGroupController(service)
 	app.MountGroupController(service, c8)
 
+	mux := http.NewServeMux()
+	mountMedia(config.App.MediaPath, mux)
+	mux.HandleFunc("/", service.Mux.ServeHTTP)
 	// Close the main session
 	defer dal.ShutDown()
 
 	// Start service
 	go func() {
 		service.LogInfo("startup", "message", "Service is running.")
-		if err := service.ListenAndServe(":8080"); err != nil {
+		if err := http.ListenAndServe(":8080", mux); err != nil {
 			service.LogError("startup", "err", err)
 		}
 	}()
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
 	service.LogInfo("shutdown", "message", "Server stopped ungracefully by killing all connections.")
 
+}
+
+func mountMedia(fileSystemPath string, mux *http.ServeMux) {
+	fs := justFilesFilesystem{http.Dir("./data/input/media")}
+	mux.Handle("/media/", http.StripPrefix("/media/", http.FileServer(fs)))
+}
+
+type justFilesFilesystem struct {
+	Fs http.FileSystem
+}
+
+func (fs justFilesFilesystem) Open(name string) (http.File, error) {
+	f, err := fs.Fs.Open(name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	stat, err := f.Stat()
+	if stat.IsDir() {
+		return nil, os.ErrNotExist
+	}
+
+	return f, nil
 }

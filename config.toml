@@ -27,4 +27,10 @@ verbose = false
 ## The base URL to which the application is made available.
 ## Every URL linking to a resource will point to it.
 
-baseURL= "http://localhost:8080"
+baseURL = "http://localhost:8080"
+
+## Path on the server pointing to the location of the folder
+## containing the artworks for the cards.
+## "./media" by default.
+
+mediaPath = "./data/input/media"
