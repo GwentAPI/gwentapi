@@ -17,6 +17,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 var enableGzip bool = true
@@ -83,13 +84,20 @@ func main() {
 	mux := http.NewServeMux()
 	mountMedia(config.App.MediaPath, mux)
 	mux.HandleFunc("/", service.Mux.ServeHTTP)
+	srv := &http.Server{
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
+		Handler:      mux,
+		Addr:         ":8080",
+	}
 	// Close the main session
 	defer dal.ShutDown()
 
 	// Start service
 	go func() {
 		service.LogInfo("startup", "message", "Service is running.")
-		if err := http.ListenAndServe(":8080", mux); err != nil {
+		if err := srv.ListenAndServe(); err != nil {
 			service.LogError("startup", "err", err)
 		}
 	}()
@@ -121,6 +129,5 @@ func (fs justFilesFilesystem) Open(name string) (http.File, error) {
 	if stat.IsDir() {
 		return nil, os.ErrNotExist
 	}
-
 	return f, nil
 }
