@@ -3,6 +3,17 @@ The code for GwentAPI
 
 GwentAPI is a RESTful API dedicated to provide information regarding GWENT®: The Witcher Card Game. You may use its interface to consume information on cards, factions, etc.
 
+
+# How to use
+
+GwentAPI is release for both Linux and Windows. You can find the download [here](https://github.com/GwentAPI/gwentapi/releases).
+The data allowing you to seed the database is included in the releases. Read the file ``DATABASE_INSTRUCTIONS.md`` to know how to feed the database.
+
+Change the values found in ``config.toml`` to suit your environment. The configuration file must be kept in the same directory as the executable. 
+
+
+# Install from source
+
 ## Requirement & dependencies
 
 * Bash (use MINGW/git bash or cygwin for windows)
@@ -10,7 +21,7 @@ GwentAPI is a RESTful API dedicated to provide information regarding GWENT®: Th
 * MongoDB 3.4
 * Python 3.4.2
     * pymongo 3.4.0
-* Git (optional)
+* Git
 * [jq-1.5](https://stedolan.github.io/jq/)
 
 ## Installation
@@ -19,9 +30,6 @@ Assuming you installed and configure all the required softwares listed above and
 
 ### Build the software
 1. ``go get github.com/GwentAPI/gwentapi``
-2. From the project directory, initialize the submodules:
-    * ``git submodule init``
-    * ``git submodule update``
 3. GwentAPI uses the expimental [dep](https://github.com/golang/dep) tool to manage the Go dependencies, however they are included in the ``vendor`` directory to help build the software on CI platforms.
 4. Change your monboDB credentials in the ``init()`` of the ``/dataLayer/dal/db.go`` file if needed. By default it connects to localhost on no particular users (no SSL, access control not enabled).
 5. Compile:
@@ -30,31 +38,11 @@ Assuming you installed and configure all the required softwares listed above and
     * ``go build -ldflags="-X main.version=<versionString>" ``
 7. Optionally modify the ``baseURL`` in the ``config.toml`` file to change where resources are pointing to.
 
-**The program will run on port 8080 by default.**
-    
-### Feed the database
-
-The ``data`` submodule contains everything needed to feed the database.
-
-Assuming that you have a running mongoDB instance :
-
-1. Run the ``extract.sh`` bash script, giving it the latest.jsonl file as a parameter:
-    * ``./extract.sh input/latest.jsonl`` which will use jq to extract and create collection related .jsonl files on the same directory as the script.
-2. Assuming that ``db_setup.py`` is in the same location as the newly generated files, populate the database by running db_setup.py (the command differs depending on your setup):
-    * ``python3 db_setup.py``
-    
-``db_setup.py`` will create the database if not present along with all the collections. If a collection is already present, the script will refuse to run unless you force it:
-* ``python3 db_setup.py -f`` forcing the script will drop all the collections before re-populating the database.
-
-If you enabled authentication on mongoDB or if you are using a different port/host other than the default port on localhost, the script support overriding the values. Learn more with:
-``python3 db_setup.py --help``.
-
-SSL is not supported. Remember that the go program **doesn't** support those different configurations at the moment.
-
+**The program will run on localhost on port 8080 by default.**
 
 ## How to contribute?
 
-TODO: steps on installing goa.
+Read the ``CONTRIBUTING.md`` file.
 
 ## Where are the artworks and why does latest.jsonl refers to gwentify?
 
