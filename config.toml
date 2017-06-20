@@ -33,4 +33,4 @@ baseURL = "http://localhost:8080"
 ## containing the artworks for the cards.
 ## "./media" by default.
 
-mediaPath = "./data/input/media"
+mediaPath = "./media"
