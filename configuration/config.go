@@ -38,6 +38,7 @@ type app struct {
 	LogInfoFile  string
 	LogErrorFile string
 	BaseURL      string
+	MediaPath    string
 }
 
 func NewGwentConfig() GwentConfig {
@@ -48,6 +49,7 @@ func NewGwentConfig() GwentConfig {
 		Debug:        false,
 		Verbose:      false,
 		BaseURL:      "http://localhost:8080",
+		MediaPath:    "./media",
 	}
 	config.Database = database{
 		Host:     "127.0.0.1:27017",
