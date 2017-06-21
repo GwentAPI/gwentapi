@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"github.com/GwentAPI/gwentapi/app"
@@ -16,6 +17,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 )
@@ -81,32 +83,27 @@ func main() {
 	c8 := NewGroupController(service)
 	app.MountGroupController(service, c8)
 
-	mux := http.NewServeMux()
-	mountMedia(config.App.MediaPath, mux)
-	mux.HandleFunc("/", service.Mux.ServeHTTP)
-	srv := &http.Server{
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  30 * time.Second,
-		Handler:      mux,
-		Addr:         ":8080",
-	}
 	// Close the main session
 	defer dal.ShutDown()
 
-	// Start service
-	go func() {
-		service.LogInfo("startup", "message", "Service is running.")
-		if err := srv.ListenAndServe(); err != nil {
-			service.LogError("startup", "err", err)
-		}
-	}()
+	// create a context that we can cancel
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
+	// a WaitGroup for the goroutines to tell us they've stopped
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go server(ctx, &wg, service, config)
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
-	service.LogInfo("shutdown", "message", "Server stopped ungracefully by killing all connections.")
+	//log.Debug("Received signal: shutting down.")
+	//log.Debug("Telling goroutines to stop")
+	cancel()
 
+	wg.Wait()
+	//log.Debug("All goroutines have told us they've finished.")
+	service.LogInfo("shutdown", "message", "Server gracefully stopped.")
 }
 
 func mountMedia(fileSystemPath string, mux *http.ServeMux) {
@@ -130,4 +127,35 @@ func (fs justFilesFilesystem) Open(name string) (http.File, error) {
 		return nil, os.ErrNotExist
 	}
 	return f, nil
+}
+
+func server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
+	defer wg.Done()
+
+	mux := http.NewServeMux()
+	mountMedia(config.App.MediaPath, mux)
+	mux.HandleFunc("/", service.Mux.ServeHTTP)
+	srv := &http.Server{
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
+		Handler:      mux,
+		Addr:         ":8080",
+	}
+
+	// Start service
+	go func() {
+		service.LogInfo("startup", "message", "Web server is starting.")
+		if err := srv.ListenAndServe(); err != nil {
+			service.LogError("startup", "err", err)
+		}
+	}()
+	<-ctx.Done()
+	//log.Debug("Shutdown in progress.")
+
+	// shut down gracefully, but wait no longer than 5 seconds before halting
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	srv.Shutdown(shutdownCtx)
 }
