@@ -5,6 +5,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"log"
 	"os"
+	"reflect"
 )
 
 var conf GwentConfig
@@ -105,6 +106,61 @@ func readConfig(path string) (*GwentConfig, error) {
 	if _, err := toml.DecodeFile(path, &config); err != nil {
 		return nil, err
 	} else {
+		// For missing variables, if say, it was commented out/deleted in the config file
+		// we use that function to apply their default values (defined in NewGwentConfig())
+		// to the config variable.
+		config = configApplyDefault(*config)
 		return config, nil
 	}
+}
+
+// configApplyDefault returns a pointer to a GwentConfig the values are the same for the given GwentConfig parameter
+//  but zero value fields utilize the values defined in NewGwentConfig() to initialize default values.
+func configApplyDefault(config GwentConfig) *GwentConfig {
+	defaultConfig := NewGwentConfig()
+
+	setDefaultStruct := func(base, current interface{}) {
+		s2 := reflect.ValueOf(base).Elem()
+		s := reflect.ValueOf(current).Elem()
+
+		if s2.Type() != s.Type() {
+			panic("Underlying interface type doesn't match.")
+		}
+
+		for i := 0; i < s.NumField(); i++ {
+			f := s.Field(i)
+			f2 := s2.Field(i)
+
+			if isZero(f) {
+				f.Set(reflect.Value(f2))
+			}
+		}
+	}
+	// Todo: Make the function be able to handle arbitrary struct without having to call the function twice.
+	setDefaultStruct(&defaultConfig.Database, &config.Database)
+	setDefaultStruct(&defaultConfig.App, &config.App)
+	return &config
+}
+
+// Check if the variable is the zero value of its specific type.
+func isZero(v reflect.Value) bool {
+	switch v.Kind() {
+	case reflect.Func, reflect.Map, reflect.Slice:
+		return v.IsNil()
+	case reflect.Array:
+		z := true
+		for i := 0; i < v.Len(); i++ {
+			z = z && isZero(v.Index(i))
+		}
+		return z
+	case reflect.Struct:
+		z := true
+		for i := 0; i < v.NumField(); i++ {
+			z = z && isZero(v.Field(i))
+		}
+		return z
+	}
+	// Compare other types directly:
+	z := reflect.Zero(v.Type())
+	return v.Interface() == z.Interface()
 }
