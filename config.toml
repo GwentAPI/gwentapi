@@ -25,13 +25,16 @@ debug = false
 verbose = false
 
 ## The URL where the service is publicly accessible.
-## Every URL linking to a resource will point to it.
+## Every href linking to a resource will point to it.
 ##
 ## It has no impact on how you access the service
-## from the host machine, which remains localhost:8080.
+## from the host machine, which remains localhost:8080 by default.
 ## So you still need a proxy server redirecting traffic to the app.
 
-baseURL = "http://localhost:8080"
+publicURL = "http://localhost:8080"
+
+## Port which the service is listening to
+port = ":8080"
 
 ## Path on the server pointing to the location of the folder
 ## containing the artworks for the cards.

@@ -140,7 +140,7 @@ func server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, confi
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  30 * time.Second,
 		Handler:      mux,
-		Addr:         ":8080",
+		Addr:         config.App.Port,
 	}
 
 	// Start service

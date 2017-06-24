@@ -38,7 +38,8 @@ type app struct {
 	Verbose      bool
 	LogInfoFile  string
 	LogErrorFile string
-	BaseURL      string
+	PublicURL    string
+	Port         string
 	MediaPath    string
 }
 
@@ -49,7 +50,8 @@ func NewGwentConfig() GwentConfig {
 		LogErrorFile: "./error.log",
 		Debug:        false,
 		Verbose:      false,
-		BaseURL:      "http://localhost:8080",
+		PublicURL:    "http://localhost:8080",
+		Port:         ":8080",
 		MediaPath:    "./media",
 	}
 	config.Database = database{
