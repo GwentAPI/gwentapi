@@ -28,7 +28,12 @@ var _ = Resource("faction", func() {
 		Routing(GET(""))
 		Description("Return all factions.")
 
-		Response(OK, CollectionOf(FactionMedia))
+		Response(OK, CollectionOf(FactionMedia), func() {
+			Headers(func() {
+				Header("Last-Modified", String)
+				Required("Last-Modified")
+			})
+		})
 		Response(NotFound)
 	})
 

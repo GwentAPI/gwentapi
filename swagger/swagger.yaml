@@ -249,8 +249,6 @@ definitions:
     example:
     - href: Explicabo quisquam voluptate doloribus praesentium sit.
       name: Qui aut omnis error.
-    - href: Explicabo quisquam voluptate doloribus praesentium sit.
-      name: Qui aut omnis error.
     items:
       $ref: '#/definitions/GwentapiCategoryLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.category+json; type=collection;
@@ -475,6 +473,7 @@ definitions:
       groups: Sed sed eveniet est quisquam.
       rarities: Qui eius aut amet dolorem at.
       swagger: Cumque libero illo nam nobis ut eaque.
+      version: Nihil officiis sit consequuntur rerum.
     properties:
       cards:
         description: API href for making requests on cards
@@ -500,6 +499,10 @@ definitions:
         description: Href linking to the swagger definition
         example: Cumque libero illo nam nobis ut eaque.
         type: string
+      version:
+        description: Version of the software that is currently running
+        example: Nihil officiis sit consequuntur rerum.
+        type: string
     required:
     - cards
     - factions
@@ -507,6 +510,7 @@ definitions:
     - categories
     - groups
     - swagger
+    - version
     title: 'Mediatype identifier: application/vnd.gwentapi.resource+json; view=default'
     type: object
   GwentapiVariation:
@@ -578,6 +582,38 @@ definitions:
         href: Nihil minus qui ipsam ut dolor consequatur.
         name: Pariatur et quam.
       uuid: Facere sapiente enim.
+    - art:
+        artist: Vel modi.
+        fullsizeImage: Et accusamus qui qui architecto.
+        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
+      availability: Eum voluptatum rerum natus.
+      craft:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      href: Sit assumenda quia adipisci impedit.
+      mill:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      rarity:
+        href: Nihil minus qui ipsam ut dolor consequatur.
+        name: Pariatur et quam.
+      uuid: Facere sapiente enim.
+    - art:
+        artist: Vel modi.
+        fullsizeImage: Et accusamus qui qui architecto.
+        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
+      availability: Eum voluptatum rerum natus.
+      craft:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      href: Sit assumenda quia adipisci impedit.
+      mill:
+        normal: 1.4303367e+18
+        premium: 8.4053964e+18
+      rarity:
+        href: Nihil minus qui ipsam ut dolor consequatur.
+        name: Pariatur et quam.
+      uuid: Facere sapiente enim.
     items:
       $ref: '#/definitions/GwentapiVariation'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -614,6 +650,11 @@ definitions:
     description: GwentapiVariationLinkCollection is the media type for an array of
       GwentapiVariationLink (default view)
     example:
+    - availability: Placeat aperiam atque iure.
+      href: Est dicta.
+      rarity:
+        href: Nihil minus qui ipsam ut dolor consequatur.
+        name: Pariatur et quam.
     - availability: Placeat aperiam atque iure.
       href: Est dicta.
       rarity:
@@ -679,7 +720,7 @@ info:
     name: 'The textual information presented through this API about GWENT: The Witcher
       Card Game is copyrighted by CD Projekt RED'
   title: Gwent API
-  version: "0.9"
+  version: 0.9.1
 paths:
   /v0:
     get:
@@ -997,6 +1038,9 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              type: string
           schema:
             $ref: '#/definitions/GwentapiFactionCollection'
         "404":

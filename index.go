@@ -29,6 +29,7 @@ func (c *IndexController) Show(ctx *app.ShowIndexContext) error {
 		Categories: helpers.CategoryURL(""),
 		Groups:     helpers.GroupURL(""),
 		Swagger:    helpers.SwaggerURL(),
+		Version:    version,
 	}
 	return ctx.OK(res)
 }

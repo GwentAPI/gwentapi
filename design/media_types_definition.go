@@ -14,8 +14,9 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 		Attribute("categories", String, "API href for making requests on categories")
 		Attribute("groups", String, "API href for making requests on groups")
 		Attribute("swagger", String, "Href linking to the swagger definition")
+		Attribute("version", String, "Version of the software that is currently running")
 
-		Required("cards", "factions", "rarities", "categories", "groups", "swagger")
+		Required("cards", "factions", "rarities", "categories", "groups", "swagger", "version")
 	})
 
 	View("default", func() {
@@ -25,6 +26,7 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 		Attribute("categories")
 		Attribute("groups")
 		Attribute("swagger")
+		Attribute("version")
 	})
 })
 
