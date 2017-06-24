@@ -24,8 +24,12 @@ LogErrorFile = "./error.log"
 debug = false
 verbose = false
 
-## The base URL to which the application is made available.
+## The URL where the service is publicly accessible.
 ## Every URL linking to a resource will point to it.
+##
+## It has no impact on how you access the service
+## from the host machine, which remains localhost:8080.
+## So you still need a proxy server redirecting traffic to the app.
 
 baseURL = "http://localhost:8080"
 
