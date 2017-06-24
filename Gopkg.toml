@@ -71,7 +71,7 @@
   name = "github.com/BurntSushi/toml"
 
 [[constraint]]
-  revision = "e4ce857d53544c2f9c3a81c5fcf4b7c7dc4bb6ce"
+  version = "1.2.0"
   name = "github.com/goadesign/goa"
 
 [[constraint]]

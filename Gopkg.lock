@@ -5,13 +5,13 @@
   branch = "master"
   name = "github.com/BurntSushi/toml"
   packages = ["."]
-  revision = "99064174e013895bbd9b025c31100bd1d9b590ca"
+  revision = "8b58b6030fce084b58a61e2bc3fdf183d5881ab4"
 
 [[projects]]
   branch = "master"
   name = "github.com/armon/go-metrics"
   packages = ["."]
-  revision = "93f237eba9b0602f3e73710416558854a81d9337"
+  revision = "f036747b9d0e8590f175a5d654a2194a7d9df4b5"
 
 [[projects]]
   branch = "master"
@@ -20,27 +20,28 @@
   revision = "c8e499c3ef3c3e272ed8bdcc1ccf39f73c88debc"
 
 [[projects]]
-  branch = "master"
   name = "github.com/dimfeld/httptreemux"
   packages = ["."]
-  revision = "86f7c217d9043ebc6adfd8e2ed04a0bb1e1db651"
+  revision = "55bdaa3f4bf4cf91acd94701fa2044fb487c455b"
+  version = "v4.0.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/go-stack/stack"
   packages = ["."]
-  revision = "100eb0c0a9c5b306ca2fb4f165df21d80ada4b82"
+  revision = "7a2f19628aabfe68f0766b59e74d6315f8347d22"
+  version = "v1.5.3"
 
 [[projects]]
   name = "github.com/goadesign/goa"
   packages = [".","client","design","design/apidsl","dslengine","goatest","logging/log15","middleware","middleware/gzip","uuid"]
-  revision = "e4ce857d53544c2f9c3a81c5fcf4b7c7dc4bb6ce"
+  revision = "58f3177f36f2c50ee6119da92795e48bac6d6243"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
   name = "github.com/inconshreveable/log15"
   packages = [".","term"]
-  revision = "39bacc234bf1afd0b68573e95b45871f67ba2cd4"
+  revision = "74a0988b5f804e8ce9ff74fca4f16980776dff29"
 
 [[projects]]
   branch = "master"
@@ -55,34 +56,34 @@
   revision = "717f7cf83fb78669bfab612749c2e8ff63d5be11"
 
 [[projects]]
-  branch = "master"
   name = "github.com/mattn/go-colorable"
   packages = ["."]
-  revision = "ded68f7a9561c023e790de24279db7ebf473ea80"
+  revision = "941b50ebc6efddf4c41c8e4537a5f68a4e686b24"
+  version = "v0.0.8"
 
 [[projects]]
-  branch = "master"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+  version = "v0.0.2"
 
 [[projects]]
-  branch = "master"
   name = "github.com/satori/go.uuid"
   packages = ["."]
-  revision = "5bf94b69c6b68ee1b541973bb8e1144db23a194b"
+  revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
   name = "github.com/spf13/cobra"
   packages = ["."]
-  revision = "6421115516beea57a41a46555c21899eb83f6387"
+  revision = "d638dcb7c7c1c9b62f3a6297a17834980d245dc7"
 
 [[projects]]
   branch = "master"
   name = "github.com/spf13/pflag"
   packages = ["."]
-  revision = "d16db1e50e33dff1b6cdf37596cef36742128670"
+  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
 
 [[projects]]
   branch = "master"
@@ -94,13 +95,13 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context","websocket"]
-  revision = "ffcf1bedda3b04ebb15a168a59800a73d6dc0f4d"
+  revision = "5f8847ae0d0e90b6a9dc8148e7ad616874625171"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "a55a76086885b80f79961eacb876ebd8caf3868d"
+  revision = "c23410a886927bab8ca5e80b08af6a56faeb330d"
 
 [[projects]]
   branch = "v2"
@@ -111,6 +112,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fdb85130cedad9379c26baaf00cb38b420eff60e82d5e0d84dee2140e34248ff"
+  inputs-digest = "d2b790f233a4e5308fb4ec11d560f787d1e9d3660662b344149434b34fde24c8"
   solver-name = "gps-cdcl"
   solver-version = 1
