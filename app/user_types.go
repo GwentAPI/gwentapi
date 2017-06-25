@@ -29,6 +29,16 @@ func (ut *artType) Validate() (err error) {
 	if ut.ThumbnailImage == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
 	}
+	if ut.FullsizeImage != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+		}
+	}
+	if ut.ThumbnailImage != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.ThumbnailImage); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.thumbnailImage`, *ut.ThumbnailImage, goa.FormatURI, err2))
+		}
+	}
 	return
 }
 
@@ -61,6 +71,14 @@ type ArtType struct {
 func (ut *ArtType) Validate() (err error) {
 	if ut.ThumbnailImage == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
+	}
+	if ut.FullsizeImage != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+		}
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, ut.ThumbnailImage); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.thumbnailImage`, ut.ThumbnailImage, goa.FormatURI, err2))
 	}
 	return
 }

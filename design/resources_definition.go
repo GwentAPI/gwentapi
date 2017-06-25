@@ -30,8 +30,10 @@ var _ = Resource("faction", func() {
 
 		Response(OK, CollectionOf(FactionMedia), func() {
 			Headers(func() {
-				Header("Last-Modified", String)
-				Required("Last-Modified")
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
 			})
 		})
 		Response(NotFound)
@@ -43,7 +45,14 @@ var _ = Resource("faction", func() {
 		Params(func() {
 			Param("factionID", String, "Faction ID")
 		})
-		Response(OK)
+		Response(OK, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 
 	})
@@ -59,7 +68,14 @@ var _ = Resource("rarity", func() {
 		Routing(GET(""))
 		Description("Return all rarities.")
 
-		Response(OK, CollectionOf(RarityMedia))
+		Response(OK, CollectionOf(RarityMedia), func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -69,7 +85,14 @@ var _ = Resource("rarity", func() {
 		Params(func() {
 			Param("rarityID", String, "Rarity ID")
 		})
-		Response(OK)
+		Response(OK, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 })
@@ -84,7 +107,14 @@ var _ = Resource("group", func() {
 		Routing(GET(""))
 		Description("Return all card groups.")
 
-		Response(OK, CollectionOf(GroupMedia))
+		Response(OK, CollectionOf(GroupMedia), func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -94,7 +124,14 @@ var _ = Resource("group", func() {
 		Params(func() {
 			Param("groupID", String, "Card group ID")
 		})
-		Response(OK)
+		Response(OK, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 })
@@ -109,7 +146,14 @@ var _ = Resource("category", func() {
 		Routing(GET(""))
 		Description("Return all card categories.")
 
-		Response(OK, CollectionOf(CategoryMedia))
+		Response(OK, CollectionOf(CategoryMedia), func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -119,7 +163,14 @@ var _ = Resource("category", func() {
 		Params(func() {
 			Param("categoryID", String, "Card category ID")
 		})
-		Response(OK)
+		Response(OK, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 })
@@ -154,7 +205,14 @@ var _ = Resource("card", func() {
 			})
 
 		})
-		Response(OK, PageCard)
+		Response(OK, PageCard, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -165,7 +223,14 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("cardID", String, "Card ID")
 		})
-		Response(OK)
+		Response(OK, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -176,26 +241,29 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("factionID", String, "Faction ID")
 		})
-		Response(OK, PageCard)
+		Response(OK, PageCard, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
-
-	/*Action("cardRarity", func() {
-		Description("Return all cards with given rarity id.")
-		Routing(GET("/rarities/:rarityID"))
-
-		Params(func() {
-			Param("rarityID", String, "Rarity ID")
-		})
-		Response(OK, PageCard)
-		Response(NotFound)
-	})*/
 
 	Action("cardLeader", func() {
 		Description("Return all leader cards.")
 		Routing(GET("/leaders"))
 
-		Response(OK, PageCard)
+		Response(OK, PageCard, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -206,7 +274,14 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("cardID", String, "Card ID")
 		})
-		Response(OK, CollectionOf(VariationMedia))
+		Response(OK, CollectionOf(VariationMedia), func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 
@@ -218,7 +293,14 @@ var _ = Resource("card", func() {
 			Param("cardID", String, "Card ID")
 			Param("variationID", String, "Variation ID")
 		})
-		Response(OK, VariationMedia)
+		Response(OK, VariationMedia, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
 		Response(NotFound)
 	})
 

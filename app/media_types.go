@@ -75,6 +75,9 @@ func (mt *GwentapiCard) Validate() (err error) {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	if err2 := mt.Variations.Validate(); err2 != nil {
 		err = goa.MergeErrors(err, err2)
 	}
@@ -98,6 +101,9 @@ func (mt *GwentapiCardLink) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	return
 }
@@ -159,6 +165,9 @@ func (mt *GwentapiCategory) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	return
 }
 
@@ -179,6 +188,9 @@ func (mt *GwentapiCategoryLink) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	return
 }
@@ -240,6 +252,9 @@ func (mt *GwentapiFaction) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	return
 }
 
@@ -260,6 +275,9 @@ func (mt *GwentapiFactionLink) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	return
 }
@@ -321,6 +339,9 @@ func (mt *GwentapiGroup) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	return
 }
 
@@ -341,6 +362,9 @@ func (mt *GwentapiGroupLink) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	return
 }
@@ -399,6 +423,16 @@ func (mt *GwentapiPagecard) Validate() (err error) {
 	if mt.Results == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "results"))
 	}
+	if mt.Next != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *mt.Next); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.next`, *mt.Next, goa.FormatURI, err2))
+		}
+	}
+	if mt.Previous != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *mt.Previous); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.previous`, *mt.Previous, goa.FormatURI, err2))
+		}
+	}
 	if err2 := mt.Results.Validate(); err2 != nil {
 		err = goa.MergeErrors(err, err2)
 	}
@@ -428,6 +462,9 @@ func (mt *GwentapiRarity) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	return
 }
 
@@ -448,6 +485,9 @@ func (mt *GwentapiRarityLink) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	return
 }
@@ -502,7 +542,7 @@ type GwentapiResource struct {
 	Rarities string `form:"rarities" json:"rarities" xml:"rarities"`
 	// Href linking to the swagger definition
 	Swagger string `form:"swagger" json:"swagger" xml:"swagger"`
-	// Version of the software that is currently running
+	// Semver of the software that is currently running
 	Version string `form:"version" json:"version" xml:"version"`
 }
 
@@ -528,6 +568,24 @@ func (mt *GwentapiResource) Validate() (err error) {
 	}
 	if mt.Version == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "version"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Cards); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.cards`, mt.Cards, goa.FormatURI, err2))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Categories); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.categories`, mt.Categories, goa.FormatURI, err2))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Factions); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.factions`, mt.Factions, goa.FormatURI, err2))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Groups); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.groups`, mt.Groups, goa.FormatURI, err2))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Rarities); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.rarities`, mt.Rarities, goa.FormatURI, err2))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Swagger); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.swagger`, mt.Swagger, goa.FormatURI, err2))
 	}
 	return
 }
@@ -571,6 +629,9 @@ func (mt *GwentapiVariation) Validate() (err error) {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
+	}
 	if mt.Rarity != nil {
 		if err2 := mt.Rarity.Validate(); err2 != nil {
 			err = goa.MergeErrors(err, err2)
@@ -601,6 +662,9 @@ func (mt *GwentapiVariationLink) Validate() (err error) {
 	}
 	if mt.Rarity == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "rarity"))
+	}
+	if err2 := goa.ValidateFormat(goa.FormatURI, mt.Href); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.href`, mt.Href, goa.FormatURI, err2))
 	}
 	if mt.Rarity != nil {
 		if err2 := mt.Rarity.Validate(); err2 != nil {

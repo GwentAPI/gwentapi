@@ -9,29 +9,35 @@ definitions:
     description: A card (default view)
     example:
       categories:
-      - href: Explicabo quisquam voluptate doloribus praesentium sit.
-        name: Qui aut omnis error.
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
       faction:
-        href: Sed pariatur ut debitis qui.
-        name: Molestiae dolor consectetur cupiditate asperiores ratione.
-      flavor: Vitae magnam ducimus molestiae omnis ratione id.
+        href: http://pricecruickshank.net/alan.corwin
+        name: Monster
+      flavor: Ugly – Nature's Way of saying stay away.
       group:
-        href: Unde dignissimos excepturi quas.
-        name: Aspernatur itaque incidunt dolores vero illum.
-      href: Rerum repellendus.
-      info: Eum itaque perspiciatis est quia.
-      name: Aperiam deleniti qui aperiam.
+        href: http://harris.biz/jamison
+        name: Bronze
+      href: http://koch.org/ashtyn.schaden
+      info: 'Deploy: Play all Arachasae from your Deck.'
+      name: Arachas
       positions:
-      - Velit nihil totam.
-      - Velit nihil totam.
-      strength: 4.8019746e+18
-      uuid: In laboriosam nobis excepturi.
+      - Ranged
+      strength: 3
+      uuid: oe6UPiaDSNyI-630fYz4LA
       variations:
-      - availability: Placeat aperiam atque iure.
-        href: Est dicta.
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
         rarity:
-          href: Nihil minus qui ipsam ut dolor consequatur.
-          name: Pariatur et quam.
+          href: http://kilbackemard.info/marvin
+          name: Common
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
+        rarity:
+          href: http://kilbackemard.info/marvin
+          name: Common
     properties:
       categories:
         $ref: '#/definitions/GwentapiCategoryLinkCollection'
@@ -39,39 +45,39 @@ definitions:
         $ref: '#/definitions/GwentapiFactionLink'
       flavor:
         description: Flavor text of the card
-        example: Vitae magnam ducimus molestiae omnis ratione id.
+        example: Ugly – Nature's Way of saying stay away.
         type: string
       group:
         $ref: '#/definitions/GwentapiGroupLink'
       href:
         description: API href for making requests on the card
-        example: Rerum repellendus.
+        example: http://koch.org/ashtyn.schaden
+        format: uri
         type: string
       info:
         description: Text of the card detailing its abilities and how it plays
-        example: Eum itaque perspiciatis est quia.
+        example: 'Deploy: Play all Arachasae from your Deck.'
         type: string
       name:
         description: Name of the card
-        example: Aperiam deleniti qui aperiam.
+        example: Arachas
         type: string
       positions:
         description: Positions where the card can be played
         example:
-        - Velit nihil totam.
-        - Velit nihil totam.
+        - Ranged
         items:
-          example: Velit nihil totam.
+          example: Fugiat sint dolor laboriosam veniam.
           type: string
         type: array
       strength:
         description: Strength of the card
-        example: 4.8019746e+18
+        example: 3
         format: int64
         type: integer
       uuid:
         description: Unique card UUID
-        example: In laboriosam nobis excepturi.
+        example: oe6UPiaDSNyI-630fYz4LA
         type: string
       variations:
         $ref: '#/definitions/GwentapiVariationLinkCollection'
@@ -87,16 +93,17 @@ definitions:
   GwentapiCardLink:
     description: A card (link view)
     example:
-      href: Rerum repellendus.
-      name: Aperiam deleniti qui aperiam.
+      href: http://koch.org/ashtyn.schaden
+      name: Arachas
     properties:
       href:
         description: API href for making requests on the card
-        example: Rerum repellendus.
+        example: http://koch.org/ashtyn.schaden
+        format: uri
         type: string
       name:
         description: Name of the card
-        example: Aperiam deleniti qui aperiam.
+        example: Arachas
         type: string
     required:
     - href
@@ -108,77 +115,95 @@ definitions:
       (default view)
     example:
     - categories:
-      - href: Explicabo quisquam voluptate doloribus praesentium sit.
-        name: Qui aut omnis error.
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
       faction:
-        href: Sed pariatur ut debitis qui.
-        name: Molestiae dolor consectetur cupiditate asperiores ratione.
-      flavor: Vitae magnam ducimus molestiae omnis ratione id.
+        href: http://pricecruickshank.net/alan.corwin
+        name: Monster
+      flavor: Ugly – Nature's Way of saying stay away.
       group:
-        href: Unde dignissimos excepturi quas.
-        name: Aspernatur itaque incidunt dolores vero illum.
-      href: Rerum repellendus.
-      info: Eum itaque perspiciatis est quia.
-      name: Aperiam deleniti qui aperiam.
+        href: http://harris.biz/jamison
+        name: Bronze
+      href: http://koch.org/ashtyn.schaden
+      info: 'Deploy: Play all Arachasae from your Deck.'
+      name: Arachas
       positions:
-      - Velit nihil totam.
-      - Velit nihil totam.
-      strength: 4.8019746e+18
-      uuid: In laboriosam nobis excepturi.
+      - Ranged
+      strength: 3
+      uuid: oe6UPiaDSNyI-630fYz4LA
       variations:
-      - availability: Placeat aperiam atque iure.
-        href: Est dicta.
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
         rarity:
-          href: Nihil minus qui ipsam ut dolor consequatur.
-          name: Pariatur et quam.
+          href: http://kilbackemard.info/marvin
+          name: Common
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
+        rarity:
+          href: http://kilbackemard.info/marvin
+          name: Common
     - categories:
-      - href: Explicabo quisquam voluptate doloribus praesentium sit.
-        name: Qui aut omnis error.
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
       faction:
-        href: Sed pariatur ut debitis qui.
-        name: Molestiae dolor consectetur cupiditate asperiores ratione.
-      flavor: Vitae magnam ducimus molestiae omnis ratione id.
+        href: http://pricecruickshank.net/alan.corwin
+        name: Monster
+      flavor: Ugly – Nature's Way of saying stay away.
       group:
-        href: Unde dignissimos excepturi quas.
-        name: Aspernatur itaque incidunt dolores vero illum.
-      href: Rerum repellendus.
-      info: Eum itaque perspiciatis est quia.
-      name: Aperiam deleniti qui aperiam.
+        href: http://harris.biz/jamison
+        name: Bronze
+      href: http://koch.org/ashtyn.schaden
+      info: 'Deploy: Play all Arachasae from your Deck.'
+      name: Arachas
       positions:
-      - Velit nihil totam.
-      - Velit nihil totam.
-      strength: 4.8019746e+18
-      uuid: In laboriosam nobis excepturi.
+      - Ranged
+      strength: 3
+      uuid: oe6UPiaDSNyI-630fYz4LA
       variations:
-      - availability: Placeat aperiam atque iure.
-        href: Est dicta.
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
         rarity:
-          href: Nihil minus qui ipsam ut dolor consequatur.
-          name: Pariatur et quam.
+          href: http://kilbackemard.info/marvin
+          name: Common
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
+        rarity:
+          href: http://kilbackemard.info/marvin
+          name: Common
     - categories:
-      - href: Explicabo quisquam voluptate doloribus praesentium sit.
-        name: Qui aut omnis error.
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
+      - href: http://klocko.com/beulah_mcclure
+        name: Insectoid
       faction:
-        href: Sed pariatur ut debitis qui.
-        name: Molestiae dolor consectetur cupiditate asperiores ratione.
-      flavor: Vitae magnam ducimus molestiae omnis ratione id.
+        href: http://pricecruickshank.net/alan.corwin
+        name: Monster
+      flavor: Ugly – Nature's Way of saying stay away.
       group:
-        href: Unde dignissimos excepturi quas.
-        name: Aspernatur itaque incidunt dolores vero illum.
-      href: Rerum repellendus.
-      info: Eum itaque perspiciatis est quia.
-      name: Aperiam deleniti qui aperiam.
+        href: http://harris.biz/jamison
+        name: Bronze
+      href: http://koch.org/ashtyn.schaden
+      info: 'Deploy: Play all Arachasae from your Deck.'
+      name: Arachas
       positions:
-      - Velit nihil totam.
-      - Velit nihil totam.
-      strength: 4.8019746e+18
-      uuid: In laboriosam nobis excepturi.
+      - Ranged
+      strength: 3
+      uuid: oe6UPiaDSNyI-630fYz4LA
       variations:
-      - availability: Placeat aperiam atque iure.
-        href: Est dicta.
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
         rarity:
-          href: Nihil minus qui ipsam ut dolor consequatur.
-          name: Pariatur et quam.
+          href: http://kilbackemard.info/marvin
+          name: Common
+      - availability: BaseSet
+        href: http://streich.org/orin.herzog
+        rarity:
+          href: http://kilbackemard.info/marvin
+          name: Common
     items:
       $ref: '#/definitions/GwentapiCardLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.card+json; type=collection;
@@ -187,21 +212,22 @@ definitions:
   GwentapiCategory:
     description: A card category (default view)
     example:
-      href: Et non ipsum veritatis occaecati.
-      name: Quia fugiat culpa.
-      uuid: Consequatur necessitatibus aut rerum expedita impedit architecto.
+      href: http://feeney.name/julian
+      name: Insectoid
+      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
     properties:
       href:
         description: API href for making requests on the category
-        example: Et non ipsum veritatis occaecati.
+        example: http://feeney.name/julian
+        format: uri
         type: string
       name:
         description: Name of the category
-        example: Quia fugiat culpa.
+        example: Insectoid
         type: string
       uuid:
         description: Unique category UUID
-        example: Consequatur necessitatibus aut rerum expedita impedit architecto.
+        example: 0PcjdpZ6QR2NKutLFGx-oQ
         type: string
     required:
     - uuid
@@ -213,12 +239,15 @@ definitions:
     description: GwentapiCategoryCollection is the media type for an array of GwentapiCategory
       (default view)
     example:
-    - href: Et non ipsum veritatis occaecati.
-      name: Quia fugiat culpa.
-      uuid: Consequatur necessitatibus aut rerum expedita impedit architecto.
-    - href: Et non ipsum veritatis occaecati.
-      name: Quia fugiat culpa.
-      uuid: Consequatur necessitatibus aut rerum expedita impedit architecto.
+    - href: http://feeney.name/julian
+      name: Insectoid
+      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
+    - href: http://feeney.name/julian
+      name: Insectoid
+      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
+    - href: http://feeney.name/julian
+      name: Insectoid
+      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
     items:
       $ref: '#/definitions/GwentapiCategory'
     title: 'Mediatype identifier: application/vnd.gwentapi.category+json; type=collection;
@@ -227,16 +256,17 @@ definitions:
   GwentapiCategoryLink:
     description: A card category (link view)
     example:
-      href: Explicabo quisquam voluptate doloribus praesentium sit.
-      name: Qui aut omnis error.
+      href: http://klocko.com/beulah_mcclure
+      name: Insectoid
     properties:
       href:
         description: API href for making requests on the category
-        example: Explicabo quisquam voluptate doloribus praesentium sit.
+        example: http://klocko.com/beulah_mcclure
+        format: uri
         type: string
       name:
         description: Name of the category
-        example: Qui aut omnis error.
+        example: Insectoid
         type: string
     required:
     - href
@@ -247,8 +277,10 @@ definitions:
     description: GwentapiCategoryLinkCollection is the media type for an array of
       GwentapiCategoryLink (default view)
     example:
-    - href: Explicabo quisquam voluptate doloribus praesentium sit.
-      name: Qui aut omnis error.
+    - href: http://klocko.com/beulah_mcclure
+      name: Insectoid
+    - href: http://klocko.com/beulah_mcclure
+      name: Insectoid
     items:
       $ref: '#/definitions/GwentapiCategoryLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.category+json; type=collection;
@@ -257,21 +289,22 @@ definitions:
   GwentapiFaction:
     description: A card faction (default view)
     example:
-      href: Consequatur quod repudiandae.
-      name: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
-      uuid: Architecto saepe quod aperiam.
+      href: http://pfannerstillkuhic.name/mozelle.o'reilly
+      name: Monster
+      uuid: 9wM9vGWiRzCvEwSLnLfY1w
     properties:
       href:
         description: API href for making requests on the faction
-        example: Consequatur quod repudiandae.
+        example: http://pfannerstillkuhic.name/mozelle.o'reilly
+        format: uri
         type: string
       name:
         description: Name of the faction
-        example: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
+        example: Monster
         type: string
       uuid:
         description: Unique faction UUID
-        example: Architecto saepe quod aperiam.
+        example: 9wM9vGWiRzCvEwSLnLfY1w
         type: string
     required:
     - uuid
@@ -283,12 +316,15 @@ definitions:
     description: GwentapiFactionCollection is the media type for an array of GwentapiFaction
       (default view)
     example:
-    - href: Consequatur quod repudiandae.
-      name: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
-      uuid: Architecto saepe quod aperiam.
-    - href: Consequatur quod repudiandae.
-      name: Corrupti aperiam ducimus aspernatur dignissimos numquam et.
-      uuid: Architecto saepe quod aperiam.
+    - href: http://pfannerstillkuhic.name/mozelle.o'reilly
+      name: Monster
+      uuid: 9wM9vGWiRzCvEwSLnLfY1w
+    - href: http://pfannerstillkuhic.name/mozelle.o'reilly
+      name: Monster
+      uuid: 9wM9vGWiRzCvEwSLnLfY1w
+    - href: http://pfannerstillkuhic.name/mozelle.o'reilly
+      name: Monster
+      uuid: 9wM9vGWiRzCvEwSLnLfY1w
     items:
       $ref: '#/definitions/GwentapiFaction'
     title: 'Mediatype identifier: application/vnd.gwentapi.faction+json; type=collection;
@@ -297,16 +333,17 @@ definitions:
   GwentapiFactionLink:
     description: A card faction (link view)
     example:
-      href: Sed pariatur ut debitis qui.
-      name: Molestiae dolor consectetur cupiditate asperiores ratione.
+      href: http://pricecruickshank.net/alan.corwin
+      name: Monster
     properties:
       href:
         description: API href for making requests on the faction
-        example: Sed pariatur ut debitis qui.
+        example: http://pricecruickshank.net/alan.corwin
+        format: uri
         type: string
       name:
         description: Name of the faction
-        example: Molestiae dolor consectetur cupiditate asperiores ratione.
+        example: Monster
         type: string
     required:
     - href
@@ -316,21 +353,22 @@ definitions:
   GwentapiGroup:
     description: A card group (default view)
     example:
-      href: Aperiam architecto nobis voluptatem.
-      name: Saepe illum voluptas unde.
-      uuid: In quo tenetur recusandae.
+      href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
     properties:
       href:
         description: API href for making requests on the group
-        example: Aperiam architecto nobis voluptatem.
+        example: http://bogan.name/abbey
+        format: uri
         type: string
       name:
         description: Name of the group
-        example: Saepe illum voluptas unde.
+        example: Bronze
         type: string
       uuid:
         description: Unique group UUID
-        example: In quo tenetur recusandae.
+        example: GbmwHbkcQniDKJq6rKz-bQ
         type: string
     required:
     - uuid
@@ -342,12 +380,15 @@ definitions:
     description: GwentapiGroupCollection is the media type for an array of GwentapiGroup
       (default view)
     example:
-    - href: Aperiam architecto nobis voluptatem.
-      name: Saepe illum voluptas unde.
-      uuid: In quo tenetur recusandae.
-    - href: Aperiam architecto nobis voluptatem.
-      name: Saepe illum voluptas unde.
-      uuid: In quo tenetur recusandae.
+    - href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
+    - href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
+    - href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
     items:
       $ref: '#/definitions/GwentapiGroup'
     title: 'Mediatype identifier: application/vnd.gwentapi.group+json; type=collection;
@@ -356,16 +397,17 @@ definitions:
   GwentapiGroupLink:
     description: A card group (link view)
     example:
-      href: Unde dignissimos excepturi quas.
-      name: Aspernatur itaque incidunt dolores vero illum.
+      href: http://harris.biz/jamison
+      name: Bronze
     properties:
       href:
         description: API href for making requests on the group
-        example: Unde dignissimos excepturi quas.
+        example: http://harris.biz/jamison
+        format: uri
         type: string
       name:
         description: Name of the group
-        example: Aspernatur itaque incidunt dolores vero illum.
+        example: Bronze
         type: string
     required:
     - href
@@ -375,27 +417,27 @@ definitions:
   GwentapiPagecard:
     description: Paginated card (default view)
     example:
-      count: 8.554208e+18
-      next: Non nulla.
-      previous: Ea quia voluptatibus neque esse.
+      count: 280
+      next: http://ferryhaag.name/oran
+      previous: http://steuber.biz/berenice
       results:
-      - href: Rerum repellendus.
-        name: Aperiam deleniti qui aperiam.
-      - href: Rerum repellendus.
-        name: Aperiam deleniti qui aperiam.
+      - href: http://koch.org/ashtyn.schaden
+        name: Arachas
     properties:
       count:
         description: Total number of cards stored in the database
-        example: 8.554208e+18
+        example: 280
         format: int64
         type: integer
       next:
         description: Href to the next page
-        example: Non nulla.
+        example: http://ferryhaag.name/oran
+        format: uri
         type: string
       previous:
         description: Href to the previous page
-        example: Ea quia voluptatibus neque esse.
+        example: http://steuber.biz/berenice
+        format: uri
         type: string
       results:
         $ref: '#/definitions/GwentapiCardLinkCollection'
@@ -407,21 +449,22 @@ definitions:
   GwentapiRarity:
     description: A card rarity (default view)
     example:
-      href: Minus accusantium error.
-      name: Quia sunt.
-      uuid: Veritatis doloribus est asperiores.
+      href: http://hudson.org/adrianna_leffler
+      name: Common
+      uuid: TPCvIPOjRjO0s7Jfeo1NtA
     properties:
       href:
         description: API href for making requests on the rarity
-        example: Minus accusantium error.
+        example: http://hudson.org/adrianna_leffler
+        format: uri
         type: string
       name:
         description: Name of the rarity
-        example: Quia sunt.
+        example: Common
         type: string
       uuid:
         description: Unique rarity UUID
-        example: Veritatis doloribus est asperiores.
+        example: TPCvIPOjRjO0s7Jfeo1NtA
         type: string
     required:
     - uuid
@@ -433,12 +476,15 @@ definitions:
     description: GwentapiRarityCollection is the media type for an array of GwentapiRarity
       (default view)
     example:
-    - href: Minus accusantium error.
-      name: Quia sunt.
-      uuid: Veritatis doloribus est asperiores.
-    - href: Minus accusantium error.
-      name: Quia sunt.
-      uuid: Veritatis doloribus est asperiores.
+    - href: http://hudson.org/adrianna_leffler
+      name: Common
+      uuid: TPCvIPOjRjO0s7Jfeo1NtA
+    - href: http://hudson.org/adrianna_leffler
+      name: Common
+      uuid: TPCvIPOjRjO0s7Jfeo1NtA
+    - href: http://hudson.org/adrianna_leffler
+      name: Common
+      uuid: TPCvIPOjRjO0s7Jfeo1NtA
     items:
       $ref: '#/definitions/GwentapiRarity'
     title: 'Mediatype identifier: application/vnd.gwentapi.rarity+json; type=collection;
@@ -447,16 +493,17 @@ definitions:
   GwentapiRarityLink:
     description: A card rarity (link view)
     example:
-      href: Nihil minus qui ipsam ut dolor consequatur.
-      name: Pariatur et quam.
+      href: http://kilbackemard.info/marvin
+      name: Common
     properties:
       href:
         description: API href for making requests on the rarity
-        example: Nihil minus qui ipsam ut dolor consequatur.
+        example: http://kilbackemard.info/marvin
+        format: uri
         type: string
       name:
         description: Name of the rarity
-        example: Pariatur et quam.
+        example: Common
         type: string
     required:
     - href
@@ -467,41 +514,47 @@ definitions:
     description: Listing of all available resource endpoint and a link to the api
       definition (default view)
     example:
-      cards: Rerum dolores totam dignissimos modi praesentium deleniti.
-      categories: Voluptate est voluptas illo eum rerum et.
-      factions: Dolor possimus ut et veniam.
-      groups: Sed sed eveniet est quisquam.
-      rarities: Qui eius aut amet dolorem at.
-      swagger: Cumque libero illo nam nobis ut eaque.
-      version: Nihil officiis sit consequuntur rerum.
+      cards: http://orn.info/samson
+      categories: http://mann.name/makenzie
+      factions: http://ondricka.net/valentin
+      groups: http://schowalter.info/gregory.ward
+      rarities: http://towne.org/ayden
+      swagger: http://oconnell.org/keyshawn
+      version: v0.5.5-rc.2
     properties:
       cards:
         description: API href for making requests on cards
-        example: Rerum dolores totam dignissimos modi praesentium deleniti.
+        example: http://orn.info/samson
+        format: uri
         type: string
       categories:
         description: API href for making requests on categories
-        example: Voluptate est voluptas illo eum rerum et.
+        example: http://mann.name/makenzie
+        format: uri
         type: string
       factions:
         description: API href for making requests on factions
-        example: Dolor possimus ut et veniam.
+        example: http://ondricka.net/valentin
+        format: uri
         type: string
       groups:
         description: API href for making requests on groups
-        example: Sed sed eveniet est quisquam.
+        example: http://schowalter.info/gregory.ward
+        format: uri
         type: string
       rarities:
         description: API href for making requests on rarities
-        example: Qui eius aut amet dolorem at.
+        example: http://towne.org/ayden
+        format: uri
         type: string
       swagger:
         description: Href linking to the swagger definition
-        example: Cumque libero illo nam nobis ut eaque.
+        example: http://oconnell.org/keyshawn
+        format: uri
         type: string
       version:
-        description: Version of the software that is currently running
-        example: Nihil officiis sit consequuntur rerum.
+        description: Semver of the software that is currently running
+        example: v0.5.5-rc.2
         type: string
     required:
     - cards
@@ -518,34 +571,35 @@ definitions:
       availability, and rarity. (default view)
     example:
       art:
-        artist: Vel modi.
-        fullsizeImage: Et accusamus qui qui architecto.
-        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
-      availability: Eum voluptatum rerum natus.
+        artist: Marek Madej
+        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
+        thumbnailImage: http://pacochacrona.com/donavon
+      availability: BaseSet
       craft:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
-      href: Sit assumenda quia adipisci impedit.
+        normal: 30
+        premium: 200
+      href: http://gulgowskisanford.biz/beau_graham
       mill:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
+        normal: 30
+        premium: 200
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
-      uuid: Facere sapiente enim.
+        href: http://kilbackemard.info/marvin
+        name: Common
+      uuid: pcN4QMTlTAaIOwicgNwtKA
     properties:
       art:
         $ref: '#/definitions/artType'
       availability:
         description: Describe from which set the variation comes from and its general
           availability
-        example: Eum voluptatum rerum natus.
+        example: BaseSet
         type: string
       craft:
         $ref: '#/definitions/costType'
       href:
         description: API href for making requests on the artwork
-        example: Sit assumenda quia adipisci impedit.
+        example: http://gulgowskisanford.biz/beau_graham
+        format: uri
         type: string
       mill:
         $ref: '#/definitions/costType'
@@ -553,7 +607,7 @@ definitions:
         $ref: '#/definitions/GwentapiRarityLink'
       uuid:
         description: Unique artwork UUID
-        example: Facere sapiente enim.
+        example: pcN4QMTlTAaIOwicgNwtKA
         type: string
     required:
     - uuid
@@ -567,53 +621,37 @@ definitions:
       (default view)
     example:
     - art:
-        artist: Vel modi.
-        fullsizeImage: Et accusamus qui qui architecto.
-        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
-      availability: Eum voluptatum rerum natus.
+        artist: Marek Madej
+        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
+        thumbnailImage: http://pacochacrona.com/donavon
+      availability: BaseSet
       craft:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
-      href: Sit assumenda quia adipisci impedit.
+        normal: 30
+        premium: 200
+      href: http://gulgowskisanford.biz/beau_graham
       mill:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
+        normal: 30
+        premium: 200
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
-      uuid: Facere sapiente enim.
+        href: http://kilbackemard.info/marvin
+        name: Common
+      uuid: pcN4QMTlTAaIOwicgNwtKA
     - art:
-        artist: Vel modi.
-        fullsizeImage: Et accusamus qui qui architecto.
-        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
-      availability: Eum voluptatum rerum natus.
+        artist: Marek Madej
+        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
+        thumbnailImage: http://pacochacrona.com/donavon
+      availability: BaseSet
       craft:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
-      href: Sit assumenda quia adipisci impedit.
+        normal: 30
+        premium: 200
+      href: http://gulgowskisanford.biz/beau_graham
       mill:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
+        normal: 30
+        premium: 200
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
-      uuid: Facere sapiente enim.
-    - art:
-        artist: Vel modi.
-        fullsizeImage: Et accusamus qui qui architecto.
-        thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
-      availability: Eum voluptatum rerum natus.
-      craft:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
-      href: Sit assumenda quia adipisci impedit.
-      mill:
-        normal: 1.4303367e+18
-        premium: 8.4053964e+18
-      rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
-      uuid: Facere sapiente enim.
+        href: http://kilbackemard.info/marvin
+        name: Common
+      uuid: pcN4QMTlTAaIOwicgNwtKA
     items:
       $ref: '#/definitions/GwentapiVariation'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -623,20 +661,21 @@ definitions:
     description: Variation of a card containing artworks, crafting/milling cost, set
       availability, and rarity. (link view)
     example:
-      availability: Placeat aperiam atque iure.
-      href: Est dicta.
+      availability: BaseSet
+      href: http://streich.org/orin.herzog
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
+        href: http://kilbackemard.info/marvin
+        name: Common
     properties:
       availability:
         description: Describe from which set the variation comes from and its general
           availability
-        example: Placeat aperiam atque iure.
+        example: BaseSet
         type: string
       href:
         description: API href for making requests on the artwork
-        example: Est dicta.
+        example: http://streich.org/orin.herzog
+        format: uri
         type: string
       rarity:
         $ref: '#/definitions/GwentapiRarityLink'
@@ -650,16 +689,21 @@ definitions:
     description: GwentapiVariationLinkCollection is the media type for an array of
       GwentapiVariationLink (default view)
     example:
-    - availability: Placeat aperiam atque iure.
-      href: Est dicta.
+    - availability: BaseSet
+      href: http://streich.org/orin.herzog
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
-    - availability: Placeat aperiam atque iure.
-      href: Est dicta.
+        href: http://kilbackemard.info/marvin
+        name: Common
+    - availability: BaseSet
+      href: http://streich.org/orin.herzog
       rarity:
-        href: Nihil minus qui ipsam ut dolor consequatur.
-        name: Pariatur et quam.
+        href: http://kilbackemard.info/marvin
+        name: Common
+    - availability: BaseSet
+      href: http://streich.org/orin.herzog
+      rarity:
+        href: http://kilbackemard.info/marvin
+        name: Common
     items:
       $ref: '#/definitions/GwentapiVariationLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -668,21 +712,23 @@ definitions:
   artType:
     description: Type of card art
     example:
-      artist: Vel modi.
-      fullsizeImage: Et accusamus qui qui architecto.
-      thumbnailImage: Nemo nemo autem voluptatem dolorem laudantium eum.
+      artist: Marek Madej
+      fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
+      thumbnailImage: http://pacochacrona.com/donavon
     properties:
       artist:
         description: Name of the artist
-        example: Vel modi.
+        example: Marek Madej
         type: string
       fullsizeImage:
         description: Href to full size artwork
-        example: Et accusamus qui qui architecto.
+        example: http://ondrickajohnston.biz/ewell.roberts
+        format: uri
         type: string
       thumbnailImage:
         description: Href to thumbnail size artwork
-        example: Nemo nemo autem voluptatem dolorem laudantium eum.
+        example: http://pacochacrona.com/donavon
+        format: uri
         type: string
     required:
     - thumbnailImage
@@ -691,17 +737,17 @@ definitions:
   costType:
     description: Type used to define the associated crafting/milling cost cost
     example:
-      normal: 1.4303367e+18
-      premium: 8.4053964e+18
+      normal: 30
+      premium: 200
     properties:
       normal:
         description: Normal cost
-        example: 1.4303367e+18
+        example: 30
         format: int64
         type: integer
       premium:
         description: Premium cost
-        example: 8.4053964e+18
+        example: 200
         format: int64
         type: integer
     required:
@@ -772,6 +818,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
         "404":
@@ -812,6 +862,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiCard'
         "404":
@@ -852,6 +906,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiVariationCollection'
         "404":
@@ -897,6 +955,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiVariation'
         "404":
@@ -937,6 +999,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
         "404":
@@ -972,6 +1038,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
         "404":
@@ -992,6 +1062,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiCategoryCollection'
         "404":
@@ -1018,6 +1092,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiCategory'
         "404":
@@ -1040,6 +1118,7 @@ paths:
           description: OK
           headers:
             Last-Modified:
+              description: DateTime in RFC1123 format.
               type: string
           schema:
             $ref: '#/definitions/GwentapiFactionCollection'
@@ -1067,6 +1146,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiFaction'
         "404":
@@ -1087,6 +1170,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiGroupCollection'
         "404":
@@ -1113,6 +1200,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiGroup'
         "404":
@@ -1133,6 +1224,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiRarityCollection'
         "404":
@@ -1159,6 +1254,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
           schema:
             $ref: '#/definitions/GwentapiRarity'
         "404":
@@ -1178,7 +1277,7 @@ responses:
   OK:
     description: OK
     schema:
-      $ref: '#/definitions/GwentapiCard'
+      $ref: '#/definitions/GwentapiResource'
 schemes:
 - https
 swagger: "2.0"

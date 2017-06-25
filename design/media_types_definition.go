@@ -8,13 +8,27 @@ import (
 var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 	Description("Listing of all available resource endpoint and a link to the api definition")
 	Attributes(func() {
-		Attribute("cards", String, "API href for making requests on cards")
-		Attribute("factions", String, "API href for making requests on factions")
-		Attribute("rarities", String, "API href for making requests on rarities")
-		Attribute("categories", String, "API href for making requests on categories")
-		Attribute("groups", String, "API href for making requests on groups")
-		Attribute("swagger", String, "Href linking to the swagger definition")
-		Attribute("version", String, "Version of the software that is currently running")
+		Attribute("cards", String, "API href for making requests on cards", func() {
+			Format("uri")
+		})
+		Attribute("factions", String, "API href for making requests on factions", func() {
+			Format("uri")
+		})
+		Attribute("rarities", String, "API href for making requests on rarities", func() {
+			Format("uri")
+		})
+		Attribute("categories", String, "API href for making requests on categories", func() {
+			Format("uri")
+		})
+		Attribute("groups", String, "API href for making requests on groups", func() {
+			Format("uri")
+		})
+		Attribute("swagger", String, "Href linking to the swagger definition", func() {
+			Format("uri")
+		})
+		Attribute("version", String, "Semver of the software that is currently running", func() {
+			Example("v0.5.5-rc.2")
+		})
 
 		Required("cards", "factions", "rarities", "categories", "groups", "swagger", "version")
 	})
@@ -33,9 +47,15 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 	Description("Paginated card")
 	Attributes(func() {
-		Attribute("count", Integer, "Total number of cards stored in the database")
-		Attribute("previous", String, "Href to the previous page")
-		Attribute("next", String, "Href to the next page")
+		Attribute("count", Integer, "Total number of cards stored in the database", func() {
+			Example(280)
+		})
+		Attribute("previous", String, "Href to the previous page", func() {
+			Format("uri")
+		})
+		Attribute("next", String, "Href to the next page", func() {
+			Format("uri")
+		})
 		Attribute("results", CollectionOf(CardMedia), "Results of the page containing cards")
 
 		Required("count", "results")
@@ -58,13 +78,18 @@ var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func() {
 	Description("Variation of a card containing artworks, crafting/milling cost, set availability, and rarity.")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique artwork UUID")
-		Attribute("href", String, "API href for making requests on the artwork")
-		//Attribute("card", CardMedia, "Card referred to by the artwork")
+		Attribute("uuid", String, "Unique artwork UUID", func() {
+			Example("pcN4QMTlTAaIOwicgNwtKA")
+		})
+		Attribute("href", String, "API href for making requests on the artwork", func() {
+			Format("uri")
+		})
 		Attribute("art", ArtType, "Artworks of the card variation.")
 		Attribute("mill", CostType, "Milling cost of the card variation.")
 		Attribute("craft", CostType, "Crafting cost of the card variation.")
-		Attribute("availability", String, "Describe from which set the variation comes from and its general availability")
+		Attribute("availability", String, "Describe from which set the variation comes from and its general availability", func() {
+			Example("BaseSet")
+		})
 		Attribute("rarity", RarityMedia, "Rarity of the card")
 
 		Required("uuid", "href", "availability", "rarity")
@@ -98,18 +123,32 @@ var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func()
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique card UUID")
-		Attribute("href", String, "API href for making requests on the card")
-		Attribute("name", String, "Name of the card")
+		Attribute("uuid", String, "Unique card UUID", func() {
+			Example("oe6UPiaDSNyI-630fYz4LA")
+		})
+		Attribute("href", String, "API href for making requests on the card", func() {
+			Format("uri")
+		})
+		Attribute("name", String, "Name of the card", func() {
+			Example("Arachas")
+		})
 		Attribute("group", GroupMedia, "Group of the card")
 		Attribute("faction", FactionMedia, "Faction of the card")
 
 		Attribute("categories", CollectionOf(CategoryMedia), "Categories of the card")
-		Attribute("positions", ArrayOf(String), "Positions where the card can be played")
+		Attribute("positions", ArrayOf(String), "Positions where the card can be played", func() {
+			Example([...]string{"Ranged"})
+		})
 
-		Attribute("strength", Integer, "Strength of the card")
-		Attribute("info", String, "Text of the card detailing its abilities and how it plays")
-		Attribute("flavor", String, "Flavor text of the card")
+		Attribute("strength", Integer, "Strength of the card", func() {
+			Example(3)
+		})
+		Attribute("info", String, "Text of the card detailing its abilities and how it plays", func() {
+			Example("Deploy: Play all Arachasae from your Deck.")
+		})
+		Attribute("flavor", String, "Flavor text of the card", func() {
+			Example("Ugly – Nature's Way of saying stay away.")
+		})
 		Attribute("variations", CollectionOf(VariationMedia), "Variations of the card")
 
 		Required("uuid", "href", "name", "group", "faction", "variations")
@@ -154,9 +193,15 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 	Description("A card faction")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique faction UUID")
-		Attribute("href", String, "API href for making requests on the faction")
-		Attribute("name", String, "Name of the faction")
+		Attribute("uuid", String, "Unique faction UUID", func() {
+			Example("9wM9vGWiRzCvEwSLnLfY1w")
+		})
+		Attribute("href", String, "API href for making requests on the faction", func() {
+			Format("uri")
+		})
+		Attribute("name", String, "Name of the faction", func() {
+			Example("Monster")
+		})
 
 		Required("uuid", "href", "name")
 	})
@@ -175,9 +220,15 @@ var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 	Description("A card rarity")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique rarity UUID")
-		Attribute("href", String, "API href for making requests on the rarity")
-		Attribute("name", String, "Name of the rarity")
+		Attribute("uuid", String, "Unique rarity UUID", func() {
+			Example("TPCvIPOjRjO0s7Jfeo1NtA")
+		})
+		Attribute("href", String, "API href for making requests on the rarity", func() {
+			Format("uri")
+		})
+		Attribute("name", String, "Name of the rarity", func() {
+			Example("Common")
+		})
 
 		Required("uuid", "href", "name")
 	})
@@ -197,9 +248,15 @@ var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 var GroupMedia = MediaType("application/vnd.gwentapi.group+json", func() {
 	Description("A card group")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique group UUID")
-		Attribute("href", String, "API href for making requests on the group")
-		Attribute("name", String, "Name of the group")
+		Attribute("uuid", String, "Unique group UUID", func() {
+			Example("GbmwHbkcQniDKJq6rKz-bQ")
+		})
+		Attribute("href", String, "API href for making requests on the group", func() {
+			Format("uri")
+		})
+		Attribute("name", String, "Name of the group", func() {
+			Example("Bronze")
+		})
 
 		Required("uuid", "href", "name")
 	})
@@ -219,9 +276,15 @@ var GroupMedia = MediaType("application/vnd.gwentapi.group+json", func() {
 var CategoryMedia = MediaType("application/vnd.gwentapi.category+json", func() {
 	Description("A card category")
 	Attributes(func() {
-		Attribute("uuid", String, "Unique category UUID")
-		Attribute("href", String, "API href for making requests on the category")
-		Attribute("name", String, "Name of the category")
+		Attribute("uuid", String, "Unique category UUID", func() {
+			Example("0PcjdpZ6QR2NKutLFGx-oQ")
+		})
+		Attribute("href", String, "API href for making requests on the category", func() {
+			Format("uri")
+		})
+		Attribute("name", String, "Name of the category", func() {
+			Example("Insectoid")
+		})
 
 		Required("uuid", "href", "name")
 	})
