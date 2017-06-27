@@ -28,7 +28,7 @@ import (
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListFactionInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController) http.ResponseWriter {
+func ListFactionInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -54,6 +54,10 @@ func ListFactionInternalServerError(t goatest.TInterface, ctx context.Context, s
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -84,7 +88,7 @@ func ListFactionInternalServerError(t goatest.TInterface, ctx context.Context, s
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController) http.ResponseWriter {
+func ListFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -110,6 +114,10 @@ func ListFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -136,11 +144,11 @@ func ListFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa
 	return rw
 }
 
-// ListFactionOK runs the method List of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ListFactionNotModified runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController) (http.ResponseWriter, app.GwentapiFactionCollection) {
+func ListFactionNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -166,6 +174,70 @@ func ListFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "FactionTest"), rw, req, prms)
+	listCtx, _err := app.NewListFactionContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.List(listCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ListFactionOK runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ListFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiFactionCollection) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	u := &url.URL{
+		Path: fmt.Sprintf("/v0/factions"),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -208,7 +280,7 @@ func ListFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController) (http.ResponseWriter, app.GwentapiFactionLinkCollection) {
+func ListFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiFactionLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -234,6 +306,10 @@ func ListFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -276,7 +352,7 @@ func ListFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowFactionInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string) http.ResponseWriter {
+func ShowFactionInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -302,6 +378,10 @@ func ShowFactionInternalServerError(t goatest.TInterface, ctx context.Context, s
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -333,7 +413,7 @@ func ShowFactionInternalServerError(t goatest.TInterface, ctx context.Context, s
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string) http.ResponseWriter {
+func ShowFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -359,6 +439,10 @@ func ShowFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -386,11 +470,11 @@ func ShowFactionNotFound(t goatest.TInterface, ctx context.Context, service *goa
 	return rw
 }
 
-// ShowFactionOK runs the method Show of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ShowFactionNotModified runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string) (http.ResponseWriter, *app.GwentapiFaction) {
+func ShowFactionNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -416,6 +500,71 @@ func ShowFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "FactionTest"), rw, req, prms)
+	showCtx, _err := app.NewShowFactionContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.Show(showCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ShowFactionOK runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ShowFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiFaction) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	u := &url.URL{
+		Path: fmt.Sprintf("/v0/factions/%v", factionID),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -459,7 +608,7 @@ func ShowFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string) (http.ResponseWriter, *app.GwentapiFactionLink) {
+func ShowFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.FactionController, factionID string, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiFactionLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -485,6 +634,10 @@ func ShowFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}

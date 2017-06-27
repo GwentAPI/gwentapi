@@ -29,7 +29,7 @@ import (
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int) http.ResponseWriter {
+func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -65,6 +65,10 @@ func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Contex
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -104,7 +108,7 @@ func CardFactionCardInternalServerError(t goatest.TInterface, ctx context.Contex
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int) http.ResponseWriter {
+func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -140,6 +144,10 @@ func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service 
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -175,11 +183,11 @@ func CardFactionCardNotFound(t goatest.TInterface, ctx context.Context, service 
 	return rw
 }
 
-// CardFactionCardOK runs the method CardFaction of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// CardFactionCardNotModified runs the method CardFaction of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int) (http.ResponseWriter, *app.GwentapiPagecard) {
+func CardFactionCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -215,6 +223,89 @@ func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.S
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	cardFactionCtx, _err := app.NewCardFactionCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.CardFaction(cardFactionCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// CardFactionCardOK runs the method CardFaction of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, factionID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiPagecard) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards/factions/%v", factionID),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["factionID"] = []string{fmt.Sprintf("%v", factionID)}
@@ -266,7 +357,7 @@ func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.S
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int) http.ResponseWriter {
+func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -302,6 +393,10 @@ func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -340,7 +435,7 @@ func CardLeaderCardInternalServerError(t goatest.TInterface, ctx context.Context
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int) http.ResponseWriter {
+func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -376,6 +471,10 @@ func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -410,11 +509,11 @@ func CardLeaderCardNotFound(t goatest.TInterface, ctx context.Context, service *
 	return rw
 }
 
-// CardLeaderCardOK runs the method CardLeader of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// CardLeaderCardNotModified runs the method CardLeader of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int) (http.ResponseWriter, *app.GwentapiPagecard) {
+func CardLeaderCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -450,6 +549,88 @@ func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	cardLeaderCtx, _err := app.NewCardLeaderCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.CardLeader(cardLeaderCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// CardLeaderCardOK runs the method CardLeader of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiPagecard) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards/leaders"),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -500,7 +681,7 @@ func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int) http.ResponseWriter {
+func CardVariationCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -536,6 +717,10 @@ func CardVariationCardInternalServerError(t goatest.TInterface, ctx context.Cont
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -576,7 +761,7 @@ func CardVariationCardInternalServerError(t goatest.TInterface, ctx context.Cont
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int) http.ResponseWriter {
+func CardVariationCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -612,6 +797,10 @@ func CardVariationCardNotFound(t goatest.TInterface, ctx context.Context, servic
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -648,11 +837,11 @@ func CardVariationCardNotFound(t goatest.TInterface, ctx context.Context, servic
 	return rw
 }
 
-// CardVariationCardOK runs the method CardVariation of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// CardVariationCardNotModified runs the method CardVariation of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int) (http.ResponseWriter, *app.GwentapiVariation) {
+func CardVariationCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -688,6 +877,90 @@ func CardVariationCardOK(t goatest.TInterface, ctx context.Context, service *goa
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	prms["variationID"] = []string{fmt.Sprintf("%v", variationID)}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	cardVariationCtx, _err := app.NewCardVariationCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.CardVariation(cardVariationCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// CardVariationCardOK runs the method CardVariation of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func CardVariationCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiVariation) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/%v", cardID, variationID),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -740,7 +1013,7 @@ func CardVariationCardOK(t goatest.TInterface, ctx context.Context, service *goa
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int) (http.ResponseWriter, *app.GwentapiVariationLink) {
+func CardVariationCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, variationID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiVariationLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -776,6 +1049,10 @@ func CardVariationCardOKLink(t goatest.TInterface, ctx context.Context, service 
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -828,7 +1105,7 @@ func CardVariationCardOKLink(t goatest.TInterface, ctx context.Context, service 
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationsCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) http.ResponseWriter {
+func CardVariationsCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -864,6 +1141,10 @@ func CardVariationsCardInternalServerError(t goatest.TInterface, ctx context.Con
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -903,7 +1184,7 @@ func CardVariationsCardInternalServerError(t goatest.TInterface, ctx context.Con
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationsCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) http.ResponseWriter {
+func CardVariationsCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -939,6 +1220,10 @@ func CardVariationsCardNotFound(t goatest.TInterface, ctx context.Context, servi
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -974,11 +1259,11 @@ func CardVariationsCardNotFound(t goatest.TInterface, ctx context.Context, servi
 	return rw
 }
 
-// CardVariationsCardOK runs the method CardVariations of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// CardVariationsCardNotModified runs the method CardVariations of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) (http.ResponseWriter, app.GwentapiVariationCollection) {
+func CardVariationsCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1014,6 +1299,89 @@ func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *go
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	cardVariationsCtx, _err := app.NewCardVariationsCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.CardVariations(cardVariationsCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// CardVariationsCardOK runs the method CardVariations of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiVariationCollection) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -1065,7 +1433,7 @@ func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *go
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) (http.ResponseWriter, app.GwentapiVariationLinkCollection) {
+func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiVariationLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1101,6 +1469,10 @@ func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -1152,7 +1524,7 @@ func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int) http.ResponseWriter {
+func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1192,6 +1564,10 @@ func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -1234,7 +1610,7 @@ func ListCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int) http.ResponseWriter {
+func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1274,6 +1650,10 @@ func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -1312,11 +1692,11 @@ func ListCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	return rw
 }
 
-// ListCardOK runs the method List of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ListCardNotModified runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int) (http.ResponseWriter, *app.GwentapiPagecard) {
+func ListCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1356,6 +1736,96 @@ func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	if name != nil {
+		sliceVal := []string{*name}
+		prms["name"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	listCtx, _err := app.NewListCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.List(listCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ListCardOK runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, limit int, name *string, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiPagecard) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	if name != nil {
+		sliceVal := []string{*name}
+		query["name"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards"),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	{
@@ -1410,7 +1880,7 @@ func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) http.ResponseWriter {
+func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1446,6 +1916,10 @@ func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -1485,7 +1959,7 @@ func ShowCardInternalServerError(t goatest.TInterface, ctx context.Context, serv
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) http.ResponseWriter {
+func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1521,6 +1995,10 @@ func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -1556,11 +2034,11 @@ func ShowCardNotFound(t goatest.TInterface, ctx context.Context, service *goa.Se
 	return rw
 }
 
-// ShowCardOK runs the method Show of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ShowCardNotModified runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) (http.ResponseWriter, *app.GwentapiCard) {
+func ShowCardNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1596,6 +2074,89 @@ func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		prms["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		prms["offset"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "CardTest"), rw, req, prms)
+	showCtx, _err := app.NewShowCardContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.Show(showCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ShowCardOK runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiCard) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{strconv.Itoa(limit)}
+		query["limit"] = sliceVal
+	}
+	{
+		sliceVal := []string{strconv.Itoa(offset)}
+		query["offset"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/v0/cards/%v", cardID),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}
@@ -1647,7 +2208,7 @@ func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int) (http.ResponseWriter, *app.GwentapiCardLink) {
+func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CardController, cardID string, limit int, offset int, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiCardLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1683,6 +2244,10 @@ func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["cardID"] = []string{fmt.Sprintf("%v", cardID)}

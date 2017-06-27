@@ -23,6 +23,14 @@ var _ = Resource("faction", func() {
 	BasePath("/v0/factions")
 
 	Response(InternalServerError)
+	Response(NotModified)
+
+	Headers(func() {
+		Header("If-Modified-Since", func() {
+			Description("DateTime in RFC1123 format.")
+			Example("Mon, 02 Jan 2006 15:04:05 GMT")
+		})
+	})
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -63,6 +71,14 @@ var _ = Resource("rarity", func() {
 	BasePath("/v0/rarities")
 
 	Response(InternalServerError)
+	Response(NotModified)
+
+	Headers(func() {
+		Header("If-Modified-Since", func() {
+			Description("DateTime in RFC1123 format.")
+			Example("Mon, 02 Jan 2006 15:04:05 GMT")
+		})
+	})
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -102,6 +118,14 @@ var _ = Resource("group", func() {
 	BasePath("/v0/groups")
 
 	Response(InternalServerError)
+	Response(NotModified)
+
+	Headers(func() {
+		Header("If-Modified-Since", func() {
+			Description("DateTime in RFC1123 format.")
+			Example("Mon, 02 Jan 2006 15:04:05 GMT")
+		})
+	})
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -141,6 +165,14 @@ var _ = Resource("category", func() {
 	BasePath("/v0/categories")
 
 	Response(InternalServerError)
+	Response(NotModified)
+
+	Headers(func() {
+		Header("If-Modified-Since", func() {
+			Description("DateTime in RFC1123 format.")
+			Example("Mon, 02 Jan 2006 15:04:05 GMT")
+		})
+	})
 
 	Action("list", func() {
 		Routing(GET(""))
@@ -180,6 +212,14 @@ var _ = Resource("card", func() {
 	BasePath("/v0/cards")
 
 	Response(InternalServerError)
+	Response(NotModified)
+
+	Headers(func() {
+		Header("If-Modified-Since", func() {
+			Description("DateTime in RFC1123 format.")
+			Example("Mon, 02 Jan 2006 15:04:05 GMT")
+		})
+	})
 
 	Params(func() {
 		Param("limit", Integer, func() {

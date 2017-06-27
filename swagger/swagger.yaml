@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Fugiat sint dolor laboriosam veniam.
+          example: Dolor laboriosam veniam doloribus.
           type: string
         type: array
       strength:
@@ -699,11 +699,6 @@ definitions:
       rarity:
         href: http://kilbackemard.info/marvin
         name: Common
-    - availability: BaseSet
-      href: http://streich.org/orin.herzog
-      rarity:
-        href: http://kilbackemard.info/marvin
-        name: Common
     items:
       $ref: '#/definitions/GwentapiVariationLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -813,6 +808,11 @@ paths:
         name: offset
         required: false
         type: integer
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.pagecard+json
       responses:
@@ -824,6 +824,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -857,6 +859,11 @@ paths:
         name: offset
         required: false
         type: integer
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.card+json
       responses:
@@ -868,6 +875,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiCard'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -901,6 +910,11 @@ paths:
         name: offset
         required: false
         type: integer
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.variation+json; type=collection
       responses:
@@ -912,6 +926,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiVariationCollection'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -950,6 +966,11 @@ paths:
         name: variationID
         required: true
         type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.variation+json
       responses:
@@ -961,6 +982,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiVariation'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -994,6 +1017,11 @@ paths:
         name: offset
         required: false
         type: integer
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.pagecard+json
       responses:
@@ -1005,6 +1033,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1033,6 +1063,11 @@ paths:
         name: offset
         required: false
         type: integer
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.pagecard+json
       responses:
@@ -1044,6 +1079,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiPagecard'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1057,6 +1094,12 @@ paths:
     get:
       description: Return all card categories.
       operationId: category#list
+      parameters:
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.category+json; type=collection
       responses:
@@ -1068,6 +1111,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiCategoryCollection'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1087,6 +1132,11 @@ paths:
         name: categoryID
         required: true
         type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.category+json
       responses:
@@ -1098,6 +1148,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiCategory'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1111,6 +1163,12 @@ paths:
     get:
       description: Return all factions.
       operationId: faction#list
+      parameters:
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.faction+json; type=collection
       responses:
@@ -1122,6 +1180,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiFactionCollection'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1141,6 +1201,11 @@ paths:
         name: factionID
         required: true
         type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.faction+json
       responses:
@@ -1152,6 +1217,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiFaction'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1165,6 +1232,12 @@ paths:
     get:
       description: Return all card groups.
       operationId: group#list
+      parameters:
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.group+json; type=collection
       responses:
@@ -1176,6 +1249,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiGroupCollection'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1195,6 +1270,11 @@ paths:
         name: groupID
         required: true
         type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.group+json
       responses:
@@ -1206,6 +1286,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiGroup'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1219,6 +1301,12 @@ paths:
     get:
       description: Return all rarities.
       operationId: rarity#list
+      parameters:
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.rarity+json; type=collection
       responses:
@@ -1230,6 +1318,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiRarityCollection'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":
@@ -1249,6 +1339,11 @@ paths:
         name: rarityID
         required: true
         type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
       produces:
       - application/vnd.gwentapi.rarity+json
       responses:
@@ -1260,6 +1355,8 @@ paths:
               type: string
           schema:
             $ref: '#/definitions/GwentapiRarity'
+        "304":
+          description: Not Modified
         "404":
           description: Not Found
         "500":

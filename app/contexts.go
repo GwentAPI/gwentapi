@@ -23,9 +23,10 @@ type CardFactionCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	FactionID string
-	Limit     int
-	Offset    int
+	IfModifiedSince *string
+	FactionID       string
+	Limit           int
+	Offset          int
 }
 
 // NewCardFactionCardContext parses the incoming request URL and body, performs validations and creates the
@@ -37,6 +38,12 @@ func NewCardFactionCardContext(ctx context.Context, r *http.Request, service *go
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := CardFactionCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramFactionID := req.Params["factionID"]
 	if len(paramFactionID) > 0 {
 		rawFactionID := paramFactionID[0]
@@ -79,6 +86,12 @@ func (ctx *CardFactionCardContext) OK(r *GwentapiPagecard) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *CardFactionCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *CardFactionCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -96,8 +109,9 @@ type CardLeaderCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Limit  int
-	Offset int
+	IfModifiedSince *string
+	Limit           int
+	Offset          int
 }
 
 // NewCardLeaderCardContext parses the incoming request URL and body, performs validations and creates the
@@ -109,6 +123,12 @@ func NewCardLeaderCardContext(ctx context.Context, r *http.Request, service *goa
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := CardLeaderCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
 		rctx.Limit = 20
@@ -146,6 +166,12 @@ func (ctx *CardLeaderCardContext) OK(r *GwentapiPagecard) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *CardLeaderCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *CardLeaderCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -163,10 +189,11 @@ type CardVariationCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	CardID      string
-	Limit       int
-	Offset      int
-	VariationID string
+	IfModifiedSince *string
+	CardID          string
+	Limit           int
+	Offset          int
+	VariationID     string
 }
 
 // NewCardVariationCardContext parses the incoming request URL and body, performs validations and creates the
@@ -178,6 +205,12 @@ func NewCardVariationCardContext(ctx context.Context, r *http.Request, service *
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := CardVariationCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
@@ -231,6 +264,12 @@ func (ctx *CardVariationCardContext) OKLink(r *GwentapiVariationLink) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *CardVariationCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *CardVariationCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -248,9 +287,10 @@ type CardVariationsCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	CardID string
-	Limit  int
-	Offset int
+	IfModifiedSince *string
+	CardID          string
+	Limit           int
+	Offset          int
 }
 
 // NewCardVariationsCardContext parses the incoming request URL and body, performs validations and creates the
@@ -262,6 +302,12 @@ func NewCardVariationsCardContext(ctx context.Context, r *http.Request, service 
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := CardVariationsCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
@@ -316,6 +362,12 @@ func (ctx *CardVariationsCardContext) OKLink(r GwentapiVariationLinkCollection) 
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *CardVariationsCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *CardVariationsCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -333,9 +385,10 @@ type ListCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Limit  int
-	Name   *string
-	Offset int
+	IfModifiedSince *string
+	Limit           int
+	Name            *string
+	Offset          int
 }
 
 // NewListCardContext parses the incoming request URL and body, performs validations and creates the
@@ -347,6 +400,12 @@ func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ListCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
 		rctx.Limit = 20
@@ -399,6 +458,12 @@ func (ctx *ListCardContext) OK(r *GwentapiPagecard) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ListCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -416,9 +481,10 @@ type ShowCardContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	CardID string
-	Limit  int
-	Offset int
+	IfModifiedSince *string
+	CardID          string
+	Limit           int
+	Offset          int
 }
 
 // NewShowCardContext parses the incoming request URL and body, performs validations and creates the
@@ -430,6 +496,12 @@ func NewShowCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ShowCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramCardID := req.Params["cardID"]
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
@@ -478,6 +550,12 @@ func (ctx *ShowCardContext) OKLink(r *GwentapiCardLink) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ShowCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowCardContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -495,6 +573,7 @@ type ListCategoryContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	IfModifiedSince *string
 }
 
 // NewListCategoryContext parses the incoming request URL and body, performs validations and creates the
@@ -506,6 +585,12 @@ func NewListCategoryContext(ctx context.Context, r *http.Request, service *goa.S
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ListCategoryContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	return &rctx, err
 }
 
@@ -527,6 +612,12 @@ func (ctx *ListCategoryContext) OKLink(r GwentapiCategoryLinkCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ListCategoryContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListCategoryContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -544,7 +635,8 @@ type ShowCategoryContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	CategoryID string
+	IfModifiedSince *string
+	CategoryID      string
 }
 
 // NewShowCategoryContext parses the incoming request URL and body, performs validations and creates the
@@ -556,6 +648,12 @@ func NewShowCategoryContext(ctx context.Context, r *http.Request, service *goa.S
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ShowCategoryContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramCategoryID := req.Params["categoryID"]
 	if len(paramCategoryID) > 0 {
 		rawCategoryID := paramCategoryID[0]
@@ -576,6 +674,12 @@ func (ctx *ShowCategoryContext) OKLink(r *GwentapiCategoryLink) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ShowCategoryContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowCategoryContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -593,6 +697,7 @@ type ListFactionContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	IfModifiedSince *string
 }
 
 // NewListFactionContext parses the incoming request URL and body, performs validations and creates the
@@ -604,6 +709,12 @@ func NewListFactionContext(ctx context.Context, r *http.Request, service *goa.Se
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ListFactionContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	return &rctx, err
 }
 
@@ -625,6 +736,12 @@ func (ctx *ListFactionContext) OKLink(r GwentapiFactionLinkCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ListFactionContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListFactionContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -642,7 +759,8 @@ type ShowFactionContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	FactionID string
+	IfModifiedSince *string
+	FactionID       string
 }
 
 // NewShowFactionContext parses the incoming request URL and body, performs validations and creates the
@@ -654,6 +772,12 @@ func NewShowFactionContext(ctx context.Context, r *http.Request, service *goa.Se
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ShowFactionContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramFactionID := req.Params["factionID"]
 	if len(paramFactionID) > 0 {
 		rawFactionID := paramFactionID[0]
@@ -674,6 +798,12 @@ func (ctx *ShowFactionContext) OKLink(r *GwentapiFactionLink) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ShowFactionContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowFactionContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -691,6 +821,7 @@ type ListGroupContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	IfModifiedSince *string
 }
 
 // NewListGroupContext parses the incoming request URL and body, performs validations and creates the
@@ -702,6 +833,12 @@ func NewListGroupContext(ctx context.Context, r *http.Request, service *goa.Serv
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ListGroupContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	return &rctx, err
 }
 
@@ -723,6 +860,12 @@ func (ctx *ListGroupContext) OKLink(r GwentapiGroupLinkCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ListGroupContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListGroupContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -740,7 +883,8 @@ type ShowGroupContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	GroupID string
+	IfModifiedSince *string
+	GroupID         string
 }
 
 // NewShowGroupContext parses the incoming request URL and body, performs validations and creates the
@@ -752,6 +896,12 @@ func NewShowGroupContext(ctx context.Context, r *http.Request, service *goa.Serv
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ShowGroupContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramGroupID := req.Params["groupID"]
 	if len(paramGroupID) > 0 {
 		rawGroupID := paramGroupID[0]
@@ -770,6 +920,12 @@ func (ctx *ShowGroupContext) OK(r *GwentapiGroup) error {
 func (ctx *ShowGroupContext) OKLink(r *GwentapiGroupLink) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.group+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ShowGroupContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -820,6 +976,7 @@ type ListRarityContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
+	IfModifiedSince *string
 }
 
 // NewListRarityContext parses the incoming request URL and body, performs validations and creates the
@@ -831,6 +988,12 @@ func NewListRarityContext(ctx context.Context, r *http.Request, service *goa.Ser
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ListRarityContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	return &rctx, err
 }
 
@@ -852,6 +1015,12 @@ func (ctx *ListRarityContext) OKLink(r GwentapiRarityLinkCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ListRarityContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListRarityContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -869,7 +1038,8 @@ type ShowRarityContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	RarityID string
+	IfModifiedSince *string
+	RarityID        string
 }
 
 // NewShowRarityContext parses the incoming request URL and body, performs validations and creates the
@@ -881,6 +1051,12 @@ func NewShowRarityContext(ctx context.Context, r *http.Request, service *goa.Ser
 	req := goa.ContextRequest(ctx)
 	req.Request = r
 	rctx := ShowRarityContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
 	paramRarityID := req.Params["rarityID"]
 	if len(paramRarityID) > 0 {
 		rawRarityID := paramRarityID[0]
@@ -899,6 +1075,12 @@ func (ctx *ShowRarityContext) OK(r *GwentapiRarity) error {
 func (ctx *ShowRarityContext) OKLink(r *GwentapiRarityLink) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.rarity+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// NotModified sends a HTTP response with status code 304.
+func (ctx *ShowRarityContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.

@@ -28,7 +28,7 @@ import (
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController) http.ResponseWriter {
+func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -54,6 +54,10 @@ func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -84,7 +88,7 @@ func ListRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController) http.ResponseWriter {
+func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -110,6 +114,10 @@ func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -136,11 +144,11 @@ func ListRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	return rw
 }
 
-// ListRarityOK runs the method List of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ListRarityNotModified runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController) (http.ResponseWriter, app.GwentapiRarityCollection) {
+func ListRarityNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -166,6 +174,70 @@ func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
+	listCtx, _err := app.NewListRarityContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.List(listCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ListRarityOK runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiRarityCollection) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	u := &url.URL{
+		Path: fmt.Sprintf("/v0/rarities"),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -208,7 +280,7 @@ func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController) (http.ResponseWriter, app.GwentapiRarityLinkCollection) {
+func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, ifModifiedSince *string) (http.ResponseWriter, app.GwentapiRarityLinkCollection) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -234,6 +306,10 @@ func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	if ctx == nil {
@@ -276,7 +352,7 @@ func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string) http.ResponseWriter {
+func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -302,6 +378,10 @@ func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
@@ -333,7 +413,7 @@ func ShowRarityInternalServerError(t goatest.TInterface, ctx context.Context, se
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string) http.ResponseWriter {
+func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -359,6 +439,10 @@ func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
@@ -386,11 +470,11 @@ func ShowRarityNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	return rw
 }
 
-// ShowRarityOK runs the method Show of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// ShowRarityNotModified runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string) (http.ResponseWriter, *app.GwentapiRarity) {
+func ShowRarityNotModified(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string, ifModifiedSince *string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -416,6 +500,71 @@ func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
+	}
+	prms := url.Values{}
+	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "RarityTest"), rw, req, prms)
+	showCtx, _err := app.NewShowRarityContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.Show(showCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 304 {
+		t.Errorf("invalid response status code: got %+v, expected 304", rw.Code)
+	}
+
+	// Return results
+	return rw
+}
+
+// ShowRarityOK runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiRarity) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	u := &url.URL{
+		Path: fmt.Sprintf("/v0/rarities/%v", rarityID),
+	}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
@@ -459,7 +608,7 @@ func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string) (http.ResponseWriter, *app.GwentapiRarityLink) {
+func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.RarityController, rarityID string, ifModifiedSince *string) (http.ResponseWriter, *app.GwentapiRarityLink) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -485,6 +634,10 @@ func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
+	}
+	if ifModifiedSince != nil {
+		sliceVal := []string{*ifModifiedSince}
+		req.Header["If-Modified-Since"] = sliceVal
 	}
 	prms := url.Values{}
 	prms["rarityID"] = []string{fmt.Sprintf("%v", rarityID)}
