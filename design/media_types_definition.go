@@ -7,6 +7,7 @@ import (
 
 var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 	Description("Listing of all available resource endpoint and a link to the api definition")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("cards", String, "API href for making requests on cards", func() {
 			Format("uri")
@@ -46,6 +47,7 @@ var ResourceMedia = MediaType("application/vnd.gwentapi.resource+json", func() {
 
 var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 	Description("Paginated card")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("count", Integer, "Total number of cards stored in the database", func() {
 			Example(280)
@@ -77,6 +79,7 @@ var PageCard = MediaType("application/vnd.gwentapi.pageCard+json", func() {
 
 var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func() {
 	Description("Variation of a card containing artworks, crafting/milling cost, set availability, and rarity.")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique artwork UUID", func() {
 			Example("pcN4QMTlTAaIOwicgNwtKA")
@@ -122,6 +125,7 @@ var VariationMedia = MediaType("application/vnd.gwentapi.variation+json", func()
 
 var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 	Description("A card")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique card UUID", func() {
 			Example("oe6UPiaDSNyI-630fYz4LA")
@@ -192,6 +196,7 @@ var CardMedia = MediaType("application/vnd.gwentapi.card+json", func() {
 
 var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 	Description("A card faction")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique faction UUID", func() {
 			Example("9wM9vGWiRzCvEwSLnLfY1w")
@@ -219,6 +224,7 @@ var FactionMedia = MediaType("application/vnd.gwentapi.faction+json", func() {
 
 var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 	Description("A card rarity")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique rarity UUID", func() {
 			Example("TPCvIPOjRjO0s7Jfeo1NtA")
@@ -247,6 +253,7 @@ var RarityMedia = MediaType("application/vnd.gwentapi.rarity+json", func() {
 
 var GroupMedia = MediaType("application/vnd.gwentapi.group+json", func() {
 	Description("A card group")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique group UUID", func() {
 			Example("GbmwHbkcQniDKJq6rKz-bQ")
@@ -275,6 +282,7 @@ var GroupMedia = MediaType("application/vnd.gwentapi.group+json", func() {
 
 var CategoryMedia = MediaType("application/vnd.gwentapi.category+json", func() {
 	Description("A card category")
+	ContentType("application/json; charset=utf-8")
 	Attributes(func() {
 		Attribute("uuid", String, "Unique category UUID", func() {
 			Example("0PcjdpZ6QR2NKutLFGx-oQ")

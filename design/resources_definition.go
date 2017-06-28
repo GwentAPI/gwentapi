@@ -36,7 +36,9 @@ var _ = Resource("faction", func() {
 		Routing(GET(""))
 		Description("Return all factions.")
 
-		Response(OK, CollectionOf(FactionMedia), func() {
+		Response(OK, CollectionOf(FactionMedia, func() {
+			ContentType("application/json; type=collection; charset=utf-8")
+		}), func() {
 			Headers(func() {
 				Header("Last-Modified", func() {
 					Description("DateTime in RFC1123 format.")
@@ -84,7 +86,9 @@ var _ = Resource("rarity", func() {
 		Routing(GET(""))
 		Description("Return all rarities.")
 
-		Response(OK, CollectionOf(RarityMedia), func() {
+		Response(OK, CollectionOf(RarityMedia, func() {
+			ContentType("application/json; type=collection; charset=utf-8")
+		}), func() {
 			Headers(func() {
 				Header("Last-Modified", func() {
 					Description("DateTime in RFC1123 format.")
@@ -131,7 +135,9 @@ var _ = Resource("group", func() {
 		Routing(GET(""))
 		Description("Return all card groups.")
 
-		Response(OK, CollectionOf(GroupMedia), func() {
+		Response(OK, CollectionOf(GroupMedia, func() {
+			ContentType("application/json; type=collection; charset=utf-8")
+		}), func() {
 			Headers(func() {
 				Header("Last-Modified", func() {
 					Description("DateTime in RFC1123 format.")
@@ -178,7 +184,9 @@ var _ = Resource("category", func() {
 		Routing(GET(""))
 		Description("Return all card categories.")
 
-		Response(OK, CollectionOf(CategoryMedia), func() {
+		Response(OK, CollectionOf(CategoryMedia, func() {
+			ContentType("application/json; type=collection; charset=utf-8")
+		}), func() {
 			Headers(func() {
 				Header("Last-Modified", func() {
 					Description("DateTime in RFC1123 format.")
@@ -314,7 +322,9 @@ var _ = Resource("card", func() {
 		Params(func() {
 			Param("cardID", String, "Card ID")
 		})
-		Response(OK, CollectionOf(VariationMedia), func() {
+		Response(OK, CollectionOf(VariationMedia, func() {
+			ContentType("application/json; type=collection; charset=utf-8")
+		}), func() {
 			Headers(func() {
 				Header("Last-Modified", func() {
 					Description("DateTime in RFC1123 format.")

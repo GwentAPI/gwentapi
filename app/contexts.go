@@ -82,7 +82,7 @@ func NewCardFactionCardContext(ctx context.Context, r *http.Request, service *go
 
 // OK sends a HTTP response with status code 200.
 func (ctx *CardFactionCardContext) OK(r *GwentapiPagecard) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -162,7 +162,7 @@ func NewCardLeaderCardContext(ctx context.Context, r *http.Request, service *goa
 
 // OK sends a HTTP response with status code 200.
 func (ctx *CardLeaderCardContext) OK(r *GwentapiPagecard) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -254,13 +254,13 @@ func NewCardVariationCardContext(ctx context.Context, r *http.Request, service *
 
 // OK sends a HTTP response with status code 200.
 func (ctx *CardVariationCardContext) OK(r *GwentapiVariation) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.variation+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *CardVariationCardContext) OKLink(r *GwentapiVariationLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.variation+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -454,7 +454,7 @@ func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListCardContext) OK(r *GwentapiPagecard) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.pagecard+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -540,13 +540,13 @@ func NewShowCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowCardContext) OK(r *GwentapiCard) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowCardContext) OKLink(r *GwentapiCardLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.card+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -664,13 +664,13 @@ func NewShowCategoryContext(ctx context.Context, r *http.Request, service *goa.S
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowCategoryContext) OK(r *GwentapiCategory) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.category+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowCategoryContext) OKLink(r *GwentapiCategoryLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.category+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -720,7 +720,7 @@ func NewListFactionContext(ctx context.Context, r *http.Request, service *goa.Se
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListFactionContext) OK(r GwentapiFactionCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.faction+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiFactionCollection{}
 	}
@@ -729,7 +729,7 @@ func (ctx *ListFactionContext) OK(r GwentapiFactionCollection) error {
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListFactionContext) OKLink(r GwentapiFactionLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.faction+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiFactionLinkCollection{}
 	}
@@ -788,13 +788,13 @@ func NewShowFactionContext(ctx context.Context, r *http.Request, service *goa.Se
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowFactionContext) OK(r *GwentapiFaction) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.faction+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowFactionContext) OKLink(r *GwentapiFactionLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.faction+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -844,7 +844,7 @@ func NewListGroupContext(ctx context.Context, r *http.Request, service *goa.Serv
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListGroupContext) OK(r GwentapiGroupCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.group+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiGroupCollection{}
 	}
@@ -853,7 +853,7 @@ func (ctx *ListGroupContext) OK(r GwentapiGroupCollection) error {
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListGroupContext) OKLink(r GwentapiGroupLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.group+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiGroupLinkCollection{}
 	}
@@ -912,13 +912,13 @@ func NewShowGroupContext(ctx context.Context, r *http.Request, service *goa.Serv
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowGroupContext) OK(r *GwentapiGroup) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.group+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowGroupContext) OKLink(r *GwentapiGroupLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.group+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -961,7 +961,7 @@ func NewShowIndexContext(ctx context.Context, r *http.Request, service *goa.Serv
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowIndexContext) OK(r *GwentapiResource) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.resource+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -999,7 +999,7 @@ func NewListRarityContext(ctx context.Context, r *http.Request, service *goa.Ser
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListRarityContext) OK(r GwentapiRarityCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.rarity+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiRarityCollection{}
 	}
@@ -1008,7 +1008,7 @@ func (ctx *ListRarityContext) OK(r GwentapiRarityCollection) error {
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListRarityContext) OKLink(r GwentapiRarityLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.rarity+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; type=collection; charset=utf-8")
 	if r == nil {
 		r = GwentapiRarityLinkCollection{}
 	}
@@ -1067,13 +1067,13 @@ func NewShowRarityContext(ctx context.Context, r *http.Request, service *goa.Ser
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowRarityContext) OK(r *GwentapiRarity) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.rarity+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowRarityContext) OKLink(r *GwentapiRarityLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.gwentapi.rarity+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
