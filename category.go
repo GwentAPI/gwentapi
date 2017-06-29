@@ -7,6 +7,7 @@ import (
 	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
+	"time"
 )
 
 // CategoryController implements the category resource.
@@ -37,11 +38,19 @@ func (c *CategoryController) List(ctx *app.ListCategoryContext) error {
 
 	res := make(app.GwentapiCategoryCollection, len(*categories))
 
+	lastModified := time.Time{}
+
 	for i, category := range *categories {
 		c, _ := factory.CreateCategory(&category)
+
+		if lastModified.Before(category.Last_Modified) {
+			lastModified = category.Last_Modified
+		}
+
 		res[i] = c
 	}
 	// CategoryController_List: end_implement
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -68,6 +77,6 @@ func (c *CategoryController) Show(ctx *app.ShowCategoryContext) error {
 	}
 	// CategoryController_Show: end_implement
 	res, _ := factory.CreateCategory(category)
-
+	helpers.LastModified(ctx.ResponseData, category.Last_Modified)
 	return ctx.OK(res)
 }

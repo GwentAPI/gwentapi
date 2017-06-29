@@ -7,6 +7,7 @@ import (
 	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
+	"time"
 )
 
 // RarityController implements the rarity resource.
@@ -37,12 +38,19 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 
 	res := make(app.GwentapiRarityCollection, len(*rarities))
 
+	lastModified := time.Time{}
 	for i, rarity := range *rarities {
 		r, _ := factory.CreateRarity(&rarity)
+
+		if lastModified.Before(rarity.Last_Modified) {
+			lastModified = rarity.Last_Modified
+		}
+
 		res[i] = r
 	}
 
 	// RarityController_List: end_implement
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -70,5 +78,6 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 
 	// RarityController_Show: end_implement
 	res, _ := factory.CreateRarity(rarity)
+	helpers.LastModified(ctx.ResponseData, rarity.Last_Modified)
 	return ctx.OK(res)
 }

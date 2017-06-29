@@ -5,6 +5,7 @@ import (
 	"github.com/GwentAPI/gwentapi/dataLayer/dal"
 	"github.com/GwentAPI/gwentapi/dataLayer/models"
 	"github.com/GwentAPI/gwentapi/helpers"
+	"time"
 )
 
 func CreateVariation(v *models.Variation, cardID []byte, ds *dal.DataStore) (*app.GwentapiVariation, error) {
@@ -67,15 +68,20 @@ func CreateVariationLink(v *models.Variation, cardID []byte, ds *dal.DataStore) 
 	return result, nil
 }
 
-func CreateVariationCollection(v *[]models.Variation, cardID []byte, ds *dal.DataStore) (app.GwentapiVariationCollection, error) {
+func CreateVariationCollection(v *[]models.Variation, cardID []byte, ds *dal.DataStore) (app.GwentapiVariationCollection, time.Time, error) {
 	variations := make(app.GwentapiVariationCollection, len(*v))
+	lastModified := time.Time{}
+
 	for i, variation := range *v {
 		v, err := CreateVariation(&variation, cardID, ds)
 		if err != nil {
-			return nil, err
+			return nil, time.Time{}, err
+		}
+		if lastModified.Before(variation.Last_Modified) {
+			lastModified = variation.Last_Modified
 		}
 		variations[i] = v
 	}
 
-	return variations, nil
+	return variations, lastModified, nil
 }

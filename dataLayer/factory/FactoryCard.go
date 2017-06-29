@@ -5,6 +5,7 @@ import (
 	"github.com/GwentAPI/gwentapi/dataLayer/dal"
 	"github.com/GwentAPI/gwentapi/dataLayer/models"
 	"github.com/GwentAPI/gwentapi/helpers"
+	"time"
 )
 
 func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
@@ -63,14 +64,21 @@ func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
 	return result, nil
 }
 
-func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, error) {
+func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, time.Time, error) {
 	results := make(app.GwentapiCardLinkCollection, len(*c))
+	lastModified := time.Time{}
+
 	for i, result := range *c {
 		uuid := helpers.EncodeUUID(result.UUID)
 		cl := &app.GwentapiCardLink{
 			Href: helpers.CardURL(uuid),
 			Name: result.Name,
 		}
+
+		if lastModified.Before(result.Last_Modified) {
+			lastModified = result.Last_Modified
+		}
+
 		results[i] = cl
 	}
 
@@ -82,5 +90,5 @@ func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, of
 		Previous: prev,
 		Results:  results,
 	}
-	return page, nil
+	return page, lastModified, nil
 }

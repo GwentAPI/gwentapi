@@ -7,6 +7,7 @@ import (
 	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
+	"time"
 )
 
 // FactionController implements the faction resource.
@@ -37,10 +38,19 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 
 	res := make(app.GwentapiFactionCollection, len(*factions))
 
+	lastModified := time.Time{}
+
 	for i, faction := range *factions {
 		f, _ := factory.CreateFaction(&faction)
+
+		if lastModified.Before(faction.Last_Modified) {
+			lastModified = faction.Last_Modified
+		}
+
 		res[i] = f
 	}
+
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -68,5 +78,6 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 
 	// FactionController_Show: end_implement
 	res, _ := factory.CreateFaction(faction)
+	helpers.LastModified(ctx.ResponseData, faction.Last_Modified)
 	return ctx.OK(res)
 }

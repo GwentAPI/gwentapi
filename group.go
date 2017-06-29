@@ -7,6 +7,7 @@ import (
 	"github.com/GwentAPI/gwentapi/helpers"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
+	"time"
 )
 
 // GroupController implements the group resource.
@@ -38,12 +39,19 @@ func (c *GroupController) List(ctx *app.ListGroupContext) error {
 
 	res := make(app.GwentapiGroupCollection, len(*groups))
 
+	lastModified := time.Time{}
 	for i, group := range *groups {
 		g, _ := factory.CreateGroup(&group)
+
+		if lastModified.Before(group.Last_Modified) {
+			lastModified = group.Last_Modified
+		}
+
 		res[i] = g
 	}
 
 	// GroupController_List: end_implement
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -71,5 +79,6 @@ func (c *GroupController) Show(ctx *app.ShowGroupContext) error {
 
 	// GroupController_Show: end_implement
 	res, _ := factory.CreateGroup(group)
+	helpers.LastModified(ctx.ResponseData, group.Last_Modified)
 	return ctx.OK(res)
 }

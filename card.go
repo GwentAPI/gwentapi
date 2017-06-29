@@ -49,7 +49,8 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardFaction: end_implement
-	res, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -77,7 +78,8 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardLeader: end_implement
-	res, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset)
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -109,6 +111,7 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariation", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
+	helpers.LastModified(ctx.ResponseData, variation.Last_Modified)
 	return ctx.OK(res)
 }
 
@@ -135,11 +138,12 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 	}
 
 	// CardController_CardVariations: end_implement
-	res, errVariation := factory.CreateVariationCollection(variations, card.UUID, dataStore)
+	res, lastModified, errVariation := factory.CreateVariationCollection(variations, card.UUID, dataStore)
 	if errVariation != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errVariation.Error())
 		return ctx.InternalServerError()
 	}
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
@@ -168,7 +172,8 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_List: end_implement
-	res, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset)
+	helpers.LastModified(ctx.ResponseData, lastModified)
 	return ctx.OK(res)
 }
 
