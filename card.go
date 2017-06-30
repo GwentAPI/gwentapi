@@ -51,6 +51,11 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	// CardController_CardFaction: end_implement
 	res, lastModified, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -80,6 +85,11 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	// CardController_CardLeader: end_implement
 	res, lastModified, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset)
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -112,6 +122,11 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 		return ctx.InternalServerError()
 	}
 	helpers.LastModified(ctx.ResponseData, variation.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, variation.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -144,6 +159,11 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 		return ctx.InternalServerError()
 	}
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -174,6 +194,11 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	// CardController_List: end_implement
 	res, lastModified, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset)
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -205,5 +230,10 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 		return ctx.InternalServerError()
 	}
 	helpers.LastModified(ctx.ResponseData, card.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, card.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }

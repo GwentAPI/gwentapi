@@ -51,6 +51,11 @@ func (c *RarityController) List(ctx *app.ListRarityContext) error {
 
 	// RarityController_List: end_implement
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -79,5 +84,10 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 	// RarityController_Show: end_implement
 	res, _ := factory.CreateRarity(rarity)
 	helpers.LastModified(ctx.ResponseData, rarity.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, rarity.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }

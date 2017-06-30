@@ -51,6 +51,11 @@ func (c *CategoryController) List(ctx *app.ListCategoryContext) error {
 	}
 	// CategoryController_List: end_implement
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -78,5 +83,10 @@ func (c *CategoryController) Show(ctx *app.ShowCategoryContext) error {
 	// CategoryController_Show: end_implement
 	res, _ := factory.CreateCategory(category)
 	helpers.LastModified(ctx.ResponseData, category.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, category.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }

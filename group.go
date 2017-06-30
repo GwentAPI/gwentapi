@@ -52,6 +52,11 @@ func (c *GroupController) List(ctx *app.ListGroupContext) error {
 
 	// GroupController_List: end_implement
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -80,5 +85,10 @@ func (c *GroupController) Show(ctx *app.ShowGroupContext) error {
 	// GroupController_Show: end_implement
 	res, _ := factory.CreateGroup(group)
 	helpers.LastModified(ctx.ResponseData, group.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, group.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }

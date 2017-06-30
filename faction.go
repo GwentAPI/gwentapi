@@ -51,6 +51,11 @@ func (c *FactionController) List(ctx *app.ListFactionContext) error {
 	}
 
 	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
 
@@ -79,5 +84,10 @@ func (c *FactionController) Show(ctx *app.ShowFactionContext) error {
 	// FactionController_Show: end_implement
 	res, _ := factory.CreateFaction(faction)
 	helpers.LastModified(ctx.ResponseData, faction.Last_Modified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, faction.Last_Modified) {
+			return ctx.NotModified()
+		}
+	}
 	return ctx.OK(res)
 }
