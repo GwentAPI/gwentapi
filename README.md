@@ -1,7 +1,7 @@
 # GwentAPI
 The code for GwentAPI
 
-GwentAPI is a RESTful API dedicated to provide information regarding GWENT®: The Witcher Card Game. You may use its interface to consume information on cards, factions, etc.
+GwentAPI is a RESTful API dedicated to provide information regarding GWENT®: The Witcher Card Game. You may use its interface to consume information on cards, factions, etc. You can find the API documentation at [https://gwentapi.com/swagger/](https://gwentapi.com/swagger/).
 
 
 # How to use
