@@ -3,7 +3,12 @@
 ## Doesn't support multiple hosts or clusters
 ## Default to localhost:27017
 
-#host = "127.0.0.1:27017"
+## List of server addresses separated by a comma.
+## The list can be on multiple lines.
+
+#addrs = ["127.0.0.1:27017"]
+
+#useSSLProtocol = true
 
 ## If not specified, default to the "test" database.
 
@@ -14,8 +19,8 @@ database = "gwentapi"
 	## to the value of "database" if set, otherwise "admin".
 
 	[database.authentication]
-	#username = "client"
-	#password = "thereisonlyonekinginthenorth"
+	#username = "user"
+	#password = "myPassword"
 	#authenticationDatabase = "admin"
 
 [app]

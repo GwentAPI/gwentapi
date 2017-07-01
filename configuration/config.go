@@ -22,9 +22,10 @@ type GwentConfig struct {
 }
 
 type database struct {
-	Host           string
+	Addrs          []string
 	Authentication authentication
 	Database       string
+	UseSSL         bool `toml:"useSSLProtocol"`
 }
 
 type authentication struct {
@@ -55,8 +56,9 @@ func NewGwentConfig() GwentConfig {
 		MediaPath:    "./media",
 	}
 	config.Database = database{
-		Host:     "127.0.0.1:27017",
+		Addrs:    []string{"127.0.0.1:27017"},
 		Database: "gwentapi",
+		UseSSL:   false,
 	}
 	return config
 }

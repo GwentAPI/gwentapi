@@ -1,9 +1,12 @@
 package dal
 
 import (
+	"crypto/tls"
 	"github.com/GwentAPI/gwentapi/configuration"
 	"gopkg.in/mgo.v2"
 	"log"
+	"net"
+	"time"
 )
 
 var mainDataStore *DataStore
@@ -50,8 +53,9 @@ func ShutDown() {
 
 func init() {
 	config := configuration.GetConfig()
+	tlsConfig := &tls.Config{}
 
-	addrs := []string{config.Database.Host}
+	addrs := config.Database.Addrs
 
 	dialInfo := &mgo.DialInfo{
 		Addrs:    addrs,
@@ -59,13 +63,26 @@ func init() {
 		Source:   config.Database.Authentication.AuthenticationDatabase,
 		Username: config.Database.Authentication.Username,
 		Password: config.Database.Authentication.Password,
+		Timeout:  10 * time.Second,
 	}
 
 	mainDataStore = &DataStore{}
 	var err error
+
+	if config.Database.UseSSL {
+		dialInfo.DialServer = func(addr *mgo.ServerAddr) (net.Conn, error) {
+			conn, err := tls.Dial("tcp", addr.String(), tlsConfig)
+			return conn, err
+		}
+	}
+
+	log.Println("Attempting to establish a database connection...")
+
 	mainDataStore.session, err = mgo.DialWithInfo(dialInfo)
 	if err != nil {
 		log.Fatal("Failed to establish mongoDB connection: ", err)
 	}
 	mainDataStore.session.SetMode(mgo.Monotonic, true)
+	mainDataStore.session.SetSocketTimeout(10 * time.Second)
+	log.Println("Database connection established.")
 }
