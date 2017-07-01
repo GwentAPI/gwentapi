@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"github.com/goadesign/goa"
+	"gopkg.in/mgo.v2"
 	"net/http"
 	"time"
 )
@@ -20,4 +21,12 @@ func IsModified(notModifiedSince string, lastModified time.Time) bool {
 	// Try to parse the string to the 3 formats allowed by HTTP/1.1: TimeFormat.
 	timeIfNotModifiedSince, err := http.ParseTime(notModifiedSince)
 	return err != nil || lastModified.After(timeIfNotModifiedSince)
+}
+
+func IsNotFoundError(err error) bool {
+	if err == mgo.ErrNotFound {
+		return true
+	} else {
+		return false
+	}
 }

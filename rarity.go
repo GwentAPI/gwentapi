@@ -76,7 +76,9 @@ func (c *RarityController) Show(ctx *app.ShowRarityContext) error {
 
 	rarity, err := dc.Fetch(uuid)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	} else if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Rarity", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}

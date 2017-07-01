@@ -38,9 +38,10 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 
 	collectionCount, err := dc.CountFromFaction(faction.ID)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
 		return ctx.NotFound()
 	}
+
 	limit, offset := helpers.ValidateLimitOffset(collectionCount, ctx.Limit, ctx.Offset)
 	cards, err := dc.FetchFromFactionPaging(faction.ID, limit, offset)
 
@@ -73,12 +74,15 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 	group, errGroup := dg.FetchWithName("Leader")
 	collectionCount, err := dc.CountLeader(group.ID)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
 		return ctx.NotFound()
 	}
 	limit, offset := helpers.ValidateLimitOffset(collectionCount, ctx.Limit, ctx.Offset)
 	cards, err := dc.FetchLeaderPaging(group.ID, limit, offset)
-	if err != nil || errGroup != nil {
+
+	if helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	} else if err != nil || errGroup != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardLeader", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
@@ -110,7 +114,9 @@ func (c *CardController) CardVariation(ctx *app.CardVariationCardContext) error 
 
 	variation, err := dc.Fetch(variationUUID)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	} else if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariation", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
@@ -147,7 +153,10 @@ func (c *CardController) CardVariations(ctx *app.CardVariationsCardContext) erro
 
 	card, err := dc.Fetch(uuid)
 	variations, errVariation := dv.FetchFromCardID(card.ID)
-	if err != nil {
+
+	if helpers.IsNotFoundError(err) || helpers.IsNotFoundError(errVariation) {
+		return ctx.NotFound()
+	} else if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardVariations", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
@@ -218,7 +227,9 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 
 	card, err := dc.Fetch(uuid)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	} else if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}

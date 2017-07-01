@@ -77,7 +77,9 @@ func (c *GroupController) Show(ctx *app.ShowGroupContext) error {
 
 	group, err := dc.Fetch(uuid)
 
-	if err != nil {
+	if helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	} else if err != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Group", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
 		return ctx.InternalServerError()
 	}
