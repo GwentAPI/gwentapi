@@ -430,8 +430,8 @@ func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 			}
 		}
 		if rctx.Name != nil {
-			if utf8.RuneCountInString(*rctx.Name) > 10 {
-				err = goa.MergeErrors(err, goa.InvalidLengthError(`name`, *rctx.Name, utf8.RuneCountInString(*rctx.Name), 10, false))
+			if utf8.RuneCountInString(*rctx.Name) > 100 {
+				err = goa.MergeErrors(err, goa.InvalidLengthError(`name`, *rctx.Name, utf8.RuneCountInString(*rctx.Name), 100, false))
 			}
 		}
 	}

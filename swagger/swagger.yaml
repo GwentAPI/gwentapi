@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Dolor laboriosam veniam doloribus.
+          example: Sint dolor laboriosam veniam doloribus.
           type: string
         type: array
       strength:
@@ -699,6 +699,11 @@ definitions:
       rarity:
         href: http://kilbackemard.info/marvin
         name: Common
+    - availability: BaseSet
+      href: http://streich.org/orin.herzog
+      rarity:
+        href: http://kilbackemard.info/marvin
+        name: Common
     items:
       $ref: '#/definitions/GwentapiVariationLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -796,7 +801,7 @@ paths:
       - description: Query to search for cards with the name starting by the entered
           value
         in: query
-        maxLength: 10
+        maxLength: 100
         minLength: 3
         name: name
         required: false
