@@ -31,14 +31,14 @@ func InitDBWithInfo(info *mgo.DialInfo) {
 	//Gwentapi = session.DB("gwentapi")
 }
 
-func (ds *DataStore) GetSession() *mgo.Session {
+func (ds *DataStore) GetSession() {
 	if ds.session == nil {
 		ds.session = mainDataStore.session.Copy()
 	} /* else {
 		ds.session.Copy()
 	}*/
 	// Useless
-	return ds.session.Copy()
+	//return ds.session.Copy()
 }
 
 func (ds *DataStore) Close() {
