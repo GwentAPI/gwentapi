@@ -44,3 +44,22 @@ func (dc DalVariation) FetchFromCardID(cardID bson.ObjectId) (*[]models.Variatio
 	err := dc.collection.Find(bson.M{"card_id": cardID}).All(&results)
 	return &results, err
 }
+
+func (dc DalVariation) FetchCardIDFromRarityPaging(rarityID bson.ObjectId, limit int, offset int) (*[]bson.ObjectId, error) {
+	var results []struct {
+		Card_id bson.ObjectId "card_id,omitempty"
+	}
+	err := dc.collection.Find(bson.M{"rarity_id": rarityID}).Select(bson.M{"card_id": 1}).Limit(limit).Skip(offset).All(&results)
+
+	var tmp []bson.ObjectId
+	for _, v := range results {
+		tmp = append(tmp, v.Card_id)
+	}
+
+	return &tmp, err
+}
+
+func (dc DalVariation) CountFromRarity(rarityID bson.ObjectId) (int, error) {
+	result, err := dc.collection.Find(bson.M{"rarity_id": rarityID}).Count()
+	return result, err
+}

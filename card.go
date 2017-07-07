@@ -38,7 +38,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 
 	collectionCount, err := dc.CountFromFaction(faction.ID)
 
-	if helpers.IsNotFoundError(err) {
+	if helpers.IsNotFoundError(errFaction) || helpers.IsNotFoundError(err) {
 		return ctx.NotFound()
 	}
 
@@ -51,6 +51,50 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 	}
 	// CardController_CardFaction: end_implement
 	res, lastModified, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
+	helpers.LastModified(ctx.ResponseData, lastModified)
+	if ctx.IfModifiedSince != nil {
+		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
+			return ctx.NotModified()
+		}
+	}
+	return ctx.OK(res)
+}
+
+// CardFaction runs the cardFaction action.
+func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
+	// CardController_CardRarity: start_implement
+	dataStore := &dal.DataStore{}
+	dataStore.GetSession()
+	// Close the session
+	defer dataStore.Close()
+	dv := dal.NewDalVariation(dataStore)
+	dr := dal.NewDalRarity(dataStore)
+	rarityUUID, errRarityUUID := helpers.DecodeUUID(ctx.RarityID)
+
+	if errRarityUUID != nil {
+		return ctx.NotFound()
+	}
+	rarity, errRarity := dr.Fetch(rarityUUID)
+
+	collectionCount, err := dv.CountFromRarity(rarity.ID)
+
+	if helpers.IsNotFoundError(errRarity) || helpers.IsNotFoundError(err) {
+		return ctx.NotFound()
+	}
+
+	limit, offset := helpers.ValidateLimitOffset(collectionCount, ctx.Limit, ctx.Offset)
+	cardIDs, err := dv.FetchCardIDFromRarityPaging(rarity.ID, limit, offset)
+
+	dc := dal.NewDalCard(dataStore)
+	cards, errCard := dc.FetchFromArray(*cardIDs)
+
+	if err != nil || errRarity != nil || errCard != nil {
+		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "CardRarity", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", err.Error())
+		return ctx.InternalServerError()
+	}
+
+	// CardController_CardRarity: end_implement
+	res, lastModified, _ := factory.CreatePageCard(cards, "rarities/"+ctx.RarityID, collectionCount, limit, offset)
 	helpers.LastModified(ctx.ResponseData, lastModified)
 	if ctx.IfModifiedSince != nil {
 		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {

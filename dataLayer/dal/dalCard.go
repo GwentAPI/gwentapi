@@ -76,6 +76,13 @@ func (dc DalCard) CountFromFaction(factionID bson.ObjectId) (int, error) {
 	return result, err
 }
 
+func (dc DalCard) FetchFromArray(cardIDs []bson.ObjectId) (*[]models.Card, error) {
+	results := []models.Card{}
+	err := dc.collection.Find(bson.M{"_id": bson.M{"$in": cardIDs}}).Sort("name").All(&results)
+
+	return &results, err
+}
+
 func (dc DalCard) Count() (int, error) {
 	result, err := dc.collection.Count()
 	return result, err

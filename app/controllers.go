@@ -34,6 +34,7 @@ type CardController interface {
 	goa.Muxer
 	CardFaction(*CardFactionCardContext) error
 	CardLeader(*CardLeaderCardContext) error
+	CardRarity(*CardRarityCardContext) error
 	CardVariation(*CardVariationCardContext) error
 	CardVariations(*CardVariationsCardContext) error
 	List(*ListCardContext) error
@@ -74,6 +75,21 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 	}
 	service.Mux.Handle("GET", "/v0/cards/leaders", ctrl.MuxHandler("CardLeader", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardLeader", "route", "GET /v0/cards/leaders")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewCardRarityCardContext(ctx, req, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.CardRarity(rctx)
+	}
+	service.Mux.Handle("GET", "/v0/cards/rarities/:rarityID", ctrl.MuxHandler("CardRarity", h, nil))
+	service.LogInfo("mount", "ctrl", "Card", "action", "CardRarity", "route", "GET /v0/cards/rarities/:rarityID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request

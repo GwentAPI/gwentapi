@@ -184,6 +184,92 @@ func (ctx *CardLeaderCardContext) InternalServerError() error {
 	return nil
 }
 
+// CardRarityCardContext provides the card cardRarity action context.
+type CardRarityCardContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+	IfModifiedSince *string
+	Limit           int
+	Offset          int
+	RarityID        string
+}
+
+// NewCardRarityCardContext parses the incoming request URL and body, performs validations and creates the
+// context used by the card controller cardRarity action.
+func NewCardRarityCardContext(ctx context.Context, r *http.Request, service *goa.Service) (*CardRarityCardContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	req.Request = r
+	rctx := CardRarityCardContext{Context: ctx, ResponseData: resp, RequestData: req}
+	headerIfModifiedSince := req.Header["If-Modified-Since"]
+	if len(headerIfModifiedSince) > 0 {
+		rawIfModifiedSince := headerIfModifiedSince[0]
+		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
+		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
+	paramLimit := req.Params["limit"]
+	if len(paramLimit) == 0 {
+		rctx.Limit = 20
+	} else {
+		rawLimit := paramLimit[0]
+		if limit, err2 := strconv.Atoi(rawLimit); err2 == nil {
+			rctx.Limit = limit
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("limit", rawLimit, "integer"))
+		}
+		if rctx.Limit < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`limit`, rctx.Limit, 1, true))
+		}
+	}
+	paramOffset := req.Params["offset"]
+	if len(paramOffset) == 0 {
+		rctx.Offset = 0
+	} else {
+		rawOffset := paramOffset[0]
+		if offset, err2 := strconv.Atoi(rawOffset); err2 == nil {
+			rctx.Offset = offset
+		} else {
+			err = goa.MergeErrors(err, goa.InvalidParamTypeError("offset", rawOffset, "integer"))
+		}
+		if rctx.Offset < 0 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`offset`, rctx.Offset, 0, true))
+		}
+	}
+	paramRarityID := req.Params["rarityID"]
+	if len(paramRarityID) > 0 {
+		rawRarityID := paramRarityID[0]
+		rctx.RarityID = rawRarityID
+	}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *CardRarityCardContext) OK(r *GwentapiPagecard) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/json; charset=utf-8")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// NotModified sends a HTTP response with status code 304.
+func (ctx *CardRarityCardContext) NotModified() error {
+	ctx.ResponseData.WriteHeader(304)
+	return nil
+}
+
+// NotFound sends a HTTP response with status code 404.
+func (ctx *CardRarityCardContext) NotFound() error {
+	ctx.ResponseData.WriteHeader(404)
+	return nil
+}
+
+// InternalServerError sends a HTTP response with status code 500.
+func (ctx *CardRarityCardContext) InternalServerError() error {
+	ctx.ResponseData.WriteHeader(500)
+	return nil
+}
+
 // CardVariationCardContext provides the card cardVariation action context.
 type CardVariationCardContext struct {
 	context.Context

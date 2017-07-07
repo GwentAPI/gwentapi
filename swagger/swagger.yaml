@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Sint dolor laboriosam veniam doloribus.
+          example: Fugiat sint dolor laboriosam veniam.
           type: string
         type: array
       strength:
@@ -277,6 +277,8 @@ definitions:
     description: GwentapiCategoryLinkCollection is the media type for an array of
       GwentapiCategoryLink (default view)
     example:
+    - href: http://klocko.com/beulah_mcclure
+      name: Insectoid
     - href: http://klocko.com/beulah_mcclure
       name: Insectoid
     - href: http://klocko.com/beulah_mcclure
@@ -699,11 +701,6 @@ definitions:
       rarity:
         href: http://kilbackemard.info/marvin
         name: Common
-    - availability: BaseSet
-      href: http://streich.org/orin.herzog
-      rarity:
-        href: http://kilbackemard.info/marvin
-        name: Common
     items:
       $ref: '#/definitions/GwentapiVariationLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.variation+json; type=collection;
@@ -1093,6 +1090,57 @@ paths:
       schemes:
       - https
       summary: cardLeader card
+      tags:
+      - card
+  /v0/cards/rarities/{rarityID}:
+    get:
+      description: Return all cards with given rarity id.
+      operationId: card#cardRarity
+      parameters:
+      - default: 20
+        description: Number of cards to receive
+        in: query
+        minimum: 1
+        name: limit
+        required: false
+        type: integer
+      - default: 0
+        description: Offset of the starting count
+        in: query
+        minimum: 0
+        name: offset
+        required: false
+        type: integer
+      - description: Rarity ID
+        in: path
+        name: rarityID
+        required: true
+        type: string
+      - description: DateTime in RFC1123 format.
+        in: header
+        name: If-Modified-Since
+        required: false
+        type: string
+      produces:
+      - application/vnd.gwentapi.pagecard+json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Last-Modified:
+              description: DateTime in RFC1123 format.
+              type: string
+          schema:
+            $ref: '#/definitions/GwentapiPagecard'
+        "304":
+          description: Not Modified
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      schemes:
+      - https
+      summary: cardRarity card
       tags:
       - card
   /v0/categories:

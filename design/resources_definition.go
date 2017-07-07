@@ -300,6 +300,24 @@ var _ = Resource("card", func() {
 		Response(NotFound)
 	})
 
+	Action("cardRarity", func() {
+		Description("Return all cards with given rarity id.")
+		Routing(GET("/rarities/:rarityID"))
+
+		Params(func() {
+			Param("rarityID", String, "Rarity ID")
+		})
+		Response(OK, PageCard, func() {
+			Headers(func() {
+				Header("Last-Modified", func() {
+					Description("DateTime in RFC1123 format.")
+					Example("Mon, 02 Jan 2006 15:04:05 GMT")
+				})
+			})
+		})
+		Response(NotFound)
+	})
+
 	Action("cardLeader", func() {
 		Description("Return all leader cards.")
 		Routing(GET("/leaders"))
