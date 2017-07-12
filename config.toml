@@ -6,9 +6,13 @@
 ## List of server addresses separated by a comma.
 ## The list can be on multiple lines.
 
-#addrs = ["127.0.0.1:27017"]
+addrs = [
+"thenorthernrealm-shard-00-00-bfhkk.mongodb.net:27017",
+"thenorthernrealm-shard-00-01-bfhkk.mongodb.net:27017",
+"thenorthernrealm-shard-00-02-bfhkk.mongodb.net:27017"
+]
 
-#useSSLProtocol = true
+useSSLProtocol = true
 
 ## If not specified, default to the "test" database.
 
@@ -19,9 +23,9 @@ database = "gwentapi"
 	## to the value of "database" if set, otherwise "admin".
 
 	[database.authentication]
-	#username = "user"
-	#password = "myPassword"
-	#authenticationDatabase = "admin"
+	username = "lady"
+	password = "yolo"
+	authenticationDatabase = "admin"
 
 [app]
 LogInfoFile = "./info.log"
