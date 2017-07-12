@@ -240,6 +240,11 @@ var _ = Resource("card", func() {
 			Default(0)
 			Minimum(0)
 		})
+		Param("lang", String, func() {
+			Description("Localization of the returned resource")
+			Enum("ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX")
+			Default("en-US")
+		})
 	})
 
 	Action("list", func() {

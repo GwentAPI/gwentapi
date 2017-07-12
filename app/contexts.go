@@ -25,6 +25,7 @@ type CardFactionCardContext struct {
 	*goa.RequestData
 	IfModifiedSince *string
 	FactionID       string
+	Lang            string
 	Limit           int
 	Offset          int
 }
@@ -48,6 +49,16 @@ func NewCardFactionCardContext(ctx context.Context, r *http.Request, service *go
 	if len(paramFactionID) > 0 {
 		rawFactionID := paramFactionID[0]
 		rctx.FactionID = rawFactionID
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -110,6 +121,7 @@ type CardLeaderCardContext struct {
 	*goa.ResponseData
 	*goa.RequestData
 	IfModifiedSince *string
+	Lang            string
 	Limit           int
 	Offset          int
 }
@@ -128,6 +140,16 @@ func NewCardLeaderCardContext(ctx context.Context, r *http.Request, service *goa
 		rawIfModifiedSince := headerIfModifiedSince[0]
 		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
 		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -190,6 +212,7 @@ type CardRarityCardContext struct {
 	*goa.ResponseData
 	*goa.RequestData
 	IfModifiedSince *string
+	Lang            string
 	Limit           int
 	Offset          int
 	RarityID        string
@@ -209,6 +232,16 @@ func NewCardRarityCardContext(ctx context.Context, r *http.Request, service *goa
 		rawIfModifiedSince := headerIfModifiedSince[0]
 		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
 		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -277,6 +310,7 @@ type CardVariationCardContext struct {
 	*goa.RequestData
 	IfModifiedSince *string
 	CardID          string
+	Lang            string
 	Limit           int
 	Offset          int
 	VariationID     string
@@ -301,6 +335,16 @@ func NewCardVariationCardContext(ctx context.Context, r *http.Request, service *
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
 		rctx.CardID = rawCardID
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -375,6 +419,7 @@ type CardVariationsCardContext struct {
 	*goa.RequestData
 	IfModifiedSince *string
 	CardID          string
+	Lang            string
 	Limit           int
 	Offset          int
 }
@@ -398,6 +443,16 @@ func NewCardVariationsCardContext(ctx context.Context, r *http.Request, service 
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
 		rctx.CardID = rawCardID
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -472,6 +527,7 @@ type ListCardContext struct {
 	*goa.ResponseData
 	*goa.RequestData
 	IfModifiedSince *string
+	Lang            string
 	Limit           int
 	Name            *string
 	Offset          int
@@ -491,6 +547,16 @@ func NewListCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 		rawIfModifiedSince := headerIfModifiedSince[0]
 		req.Params["If-Modified-Since"] = []string{rawIfModifiedSince}
 		rctx.IfModifiedSince = &rawIfModifiedSince
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {
@@ -569,6 +635,7 @@ type ShowCardContext struct {
 	*goa.RequestData
 	IfModifiedSince *string
 	CardID          string
+	Lang            string
 	Limit           int
 	Offset          int
 }
@@ -592,6 +659,16 @@ func NewShowCardContext(ctx context.Context, r *http.Request, service *goa.Servi
 	if len(paramCardID) > 0 {
 		rawCardID := paramCardID[0]
 		rctx.CardID = rawCardID
+	}
+	paramLang := req.Params["lang"]
+	if len(paramLang) == 0 {
+		rctx.Lang = "en-US"
+	} else {
+		rawLang := paramLang[0]
+		rctx.Lang = rawLang
+		if !(rctx.Lang == "ja-JP" || rctx.Lang == "pl-L" || rctx.Lang == "pt-BR" || rctx.Lang == "zh-TW" || rctx.Lang == "fr-FR" || rctx.Lang == "it-IT" || rctx.Lang == "ru-RU" || rctx.Lang == "zh-CN" || rctx.Lang == "de-DE" || rctx.Lang == "en-US" || rctx.Lang == "es-ES" || rctx.Lang == "es-MX") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`lang`, rctx.Lang, []interface{}{"ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX"}))
+		}
 	}
 	paramLimit := req.Params["limit"]
 	if len(paramLimit) == 0 {

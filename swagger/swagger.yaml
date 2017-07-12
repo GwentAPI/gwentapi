@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Fugiat sint dolor laboriosam veniam.
+          example: Sint dolor laboriosam veniam doloribus.
           type: string
         type: array
       strength:
@@ -788,6 +788,25 @@ paths:
       description: Return a page of cards.
       operationId: card#list
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -847,6 +866,25 @@ paths:
         name: cardID
         required: true
         type: string
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -898,6 +936,25 @@ paths:
         name: cardID
         required: true
         type: string
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -948,6 +1005,25 @@ paths:
         in: path
         name: cardID
         required: true
+        type: string
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
         type: string
       - default: 20
         description: Number of cards to receive
@@ -1005,6 +1081,25 @@ paths:
         name: factionID
         required: true
         type: string
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -1051,6 +1146,25 @@ paths:
       description: Return all leader cards.
       operationId: card#cardLeader
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -1097,6 +1211,25 @@ paths:
       description: Return all cards with given rarity id.
       operationId: card#cardRarity
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - ja-JP
+        - pl-L
+        - pt-BR
+        - zh-TW
+        - fr-FR
+        - it-IT
+        - ru-RU
+        - zh-CN
+        - de-DE
+        - en-US
+        - es-ES
+        - es-MX
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
