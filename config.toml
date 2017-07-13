@@ -5,7 +5,7 @@
   LogErrorFile = "./error.log"
   PublicURL = "http://localhost:8080"
   Port = ":8080"
-  MediaPath = "./media"
+  MediaPath = "./manipulator/media/"
 
 [Database]
   Addrs = ["127.0.0.1:27017"]
