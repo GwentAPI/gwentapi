@@ -107,7 +107,7 @@ func main() {
 }
 
 func mountMedia(fileSystemPath string, mux *http.ServeMux) {
-	fs := justFilesFilesystem{http.Dir("./data/input/media")}
+	fs := justFilesFilesystem{http.Dir(fileSystemPath)}
 	mux.Handle("/media/", http.StripPrefix("/media/", http.FileServer(fs)))
 }
 

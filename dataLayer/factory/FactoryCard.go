@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
+func CreateCard(c *models.Card, ds *dal.DataStore, locale string) (*app.GwentapiCard, error) {
 	uuid := helpers.EncodeUUID(c.UUID)
 	dalCat := dal.NewDalCategory(ds)
 	dalV := dal.NewDalVariation(ds)
@@ -47,11 +47,15 @@ func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
 		variationsLinkMedia[i] = cv
 	}
 
+	name := c.Name[locale]
+	flavor := c.Flavor[locale]
+	info := c.Info[locale]
+
 	result := &app.GwentapiCard{
-		Name:       c.Name,
+		Name:       name,
 		Categories: categoriesLinkMedia,
-		Flavor:     c.Flavor,
-		Info:       c.Info,
+		Flavor:     &flavor,
+		Info:       &info,
 		Strength:   c.Strength,
 		Positions:  c.Positions,
 		Faction:    factionMedia,
@@ -64,7 +68,7 @@ func CreateCard(c *models.Card, ds *dal.DataStore) (*app.GwentapiCard, error) {
 	return result, nil
 }
 
-func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int) (*app.GwentapiPagecard, time.Time, error) {
+func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, offset int, locale string) (*app.GwentapiPagecard, time.Time, error) {
 	results := make(app.GwentapiCardLinkCollection, len(*c))
 	lastModified := time.Time{}
 
@@ -72,7 +76,7 @@ func CreatePageCard(c *[]models.Card, url string, resultCount int, limit int, of
 		uuid := helpers.EncodeUUID(result.UUID)
 		cl := &app.GwentapiCardLink{
 			Href: helpers.CardURL(uuid),
-			Name: result.Name,
+			Name: result.Name[locale],
 		}
 
 		if lastModified.Before(result.Last_Modified) {

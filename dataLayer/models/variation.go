@@ -24,6 +24,7 @@ type Cost struct {
 }
 
 type Art struct {
+	Artist         string  "artist,omitempty"
 	FullsizeImage  *string "fullsizeImage"
 	ThumbnailImage string  "thumbnailImage"
 }

@@ -14,6 +14,7 @@ type (
 
 	CardQuery struct {
 		Name string
+		Lang string
 	}
 )
 
@@ -46,9 +47,11 @@ func (dc DalCard) FetchAllPaging(limit int, offset int) (*[]models.Card, int, er
 func (dc DalCard) FetchQueryPaging(limit int, offset int, cardQuery CardQuery) (*[]models.Card, int, error) {
 	results := []models.Card{}
 	pattern := `^` + regexp.QuoteMeta(cardQuery.Name)
-	query := dc.collection.Find(bson.M{"name": bson.RegEx{pattern, "i"}}).Limit(limit).Sort("name").Skip(offset)
+	fieldToSearch := "name." + cardQuery.Lang
+
+	query := dc.collection.Find(bson.M{fieldToSearch: bson.RegEx{pattern, "i"}}).Limit(limit).Sort(fieldToSearch).Skip(offset)
 	err := query.All(&results)
-	count, _ := dc.collection.Find(bson.M{"name": bson.RegEx{pattern, "i"}}).Count()
+	count, _ := dc.collection.Find(bson.M{fieldToSearch: bson.RegEx{pattern, "i"}}).Count()
 	// db driver is bugged
 	//count, _ := query.Count()
 	return &results, count, err

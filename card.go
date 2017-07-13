@@ -50,7 +50,7 @@ func (c *CardController) CardFaction(ctx *app.CardFactionCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardFaction: end_implement
-	res, lastModified, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "factions/"+ctx.FactionID, collectionCount, limit, offset, ctx.Lang)
 	helpers.LastModified(ctx.ResponseData, lastModified)
 	if ctx.IfModifiedSince != nil {
 		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
@@ -94,7 +94,7 @@ func (c *CardController) CardRarity(ctx *app.CardRarityCardContext) error {
 	}
 
 	// CardController_CardRarity: end_implement
-	res, lastModified, _ := factory.CreatePageCard(cards, "rarities/"+ctx.RarityID, collectionCount, limit, offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "rarities/"+ctx.RarityID, collectionCount, limit, offset, ctx.Lang)
 	helpers.LastModified(ctx.ResponseData, lastModified)
 	if ctx.IfModifiedSince != nil {
 		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
@@ -131,7 +131,7 @@ func (c *CardController) CardLeader(ctx *app.CardLeaderCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_CardLeader: end_implement
-	res, lastModified, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "leaders", collectionCount, limit, offset, ctx.Lang)
 	helpers.LastModified(ctx.ResponseData, lastModified)
 	if ctx.IfModifiedSince != nil {
 		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
@@ -234,7 +234,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 	var resultCount int
 
 	if ctx.Name != nil && len(*ctx.Name) >= 3 {
-		query := dal.CardQuery{Name: *ctx.Name}
+		query := dal.CardQuery{Name: *ctx.Name, Lang: ctx.Lang}
 		cards, resultCount, serviceError = dc.FetchQueryPaging(ctx.Limit, ctx.Offset, query)
 	} else {
 		cards, resultCount, serviceError = dc.FetchAllPaging(ctx.Limit, ctx.Offset)
@@ -245,7 +245,7 @@ func (c *CardController) List(ctx *app.ListCardContext) error {
 		return ctx.InternalServerError()
 	}
 	// CardController_List: end_implement
-	res, lastModified, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset)
+	res, lastModified, _ := factory.CreatePageCard(cards, "", resultCount, ctx.Limit, ctx.Offset, ctx.Lang)
 	helpers.LastModified(ctx.ResponseData, lastModified)
 	if ctx.IfModifiedSince != nil {
 		if !helpers.IsModified(*ctx.IfModifiedSince, lastModified) {
@@ -279,7 +279,7 @@ func (c *CardController) Show(ctx *app.ShowCardContext) error {
 	}
 
 	// CardController_Show: end_implement
-	res, errFactory := factory.CreateCard(card, dataStore)
+	res, errFactory := factory.CreateCard(card, dataStore, ctx.Lang)
 	if errFactory != nil {
 		ctx.ResponseData.Service.LogError("InternalServerError", "req_id", middleware.ContextRequestID(ctx), "ctrl", "Card", "action", "Show", ctx.RequestData.Request.Method, ctx.RequestData.Request.URL, "databaseError", errFactory.Error())
 		return ctx.InternalServerError()

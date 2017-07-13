@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Fugiat sint dolor laboriosam veniam.
+          example: Dolor laboriosam veniam doloribus.
           type: string
         type: array
       strength:
@@ -277,8 +277,6 @@ definitions:
     description: GwentapiCategoryLinkCollection is the media type for an array of
       GwentapiCategoryLink (default view)
     example:
-    - href: http://klocko.com/beulah_mcclure
-      name: Insectoid
     - href: http://klocko.com/beulah_mcclure
       name: Insectoid
     - href: http://klocko.com/beulah_mcclure
@@ -788,6 +786,23 @@ paths:
       description: Return a page of cards.
       operationId: card#list
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -847,20 +862,23 @@ paths:
         name: cardID
         required: true
         type: string
-      - default: 20
-        description: Number of cards to receive
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
-        minimum: 1
-        name: limit
+        name: lang
         required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
+        type: string
       - description: DateTime in RFC1123 format.
         in: header
         name: If-Modified-Since
@@ -898,20 +916,23 @@ paths:
         name: cardID
         required: true
         type: string
-      - default: 20
-        description: Number of cards to receive
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
-        minimum: 1
-        name: limit
+        name: lang
         required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
+        type: string
       - description: DateTime in RFC1123 format.
         in: header
         name: If-Modified-Since
@@ -949,20 +970,23 @@ paths:
         name: cardID
         required: true
         type: string
-      - default: 20
-        description: Number of cards to receive
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
-        minimum: 1
-        name: limit
+        name: lang
         required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
+        type: string
       - description: Variation ID
         in: path
         name: variationID
@@ -1004,6 +1028,23 @@ paths:
         in: path
         name: factionID
         required: true
+        type: string
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
+        in: query
+        name: lang
+        required: false
         type: string
       - default: 20
         description: Number of cards to receive
@@ -1051,6 +1092,23 @@ paths:
       description: Return all leader cards.
       operationId: card#cardLeader
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query
@@ -1097,6 +1155,23 @@ paths:
       description: Return all cards with given rarity id.
       operationId: card#cardRarity
       parameters:
+      - default: en-US
+        description: Localization of the returned resource
+        enum:
+        - en-US
+        - de-DE
+        - es-ES
+        - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
+        in: query
+        name: lang
+        required: false
+        type: string
       - default: 20
         description: Number of cards to receive
         in: query

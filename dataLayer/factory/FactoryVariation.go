@@ -31,10 +31,17 @@ func CreateVariation(v *models.Variation, cardID []byte, ds *dal.DataStore) (*ap
 
 	//fullSizeUrl := helpers.MediaURL(v.Art.FullsizeImage)
 	thumbnailSizeUrl := helpers.MediaURL(v.Art.ThumbnailImage)
+
 	art := &app.ArtType{
 		//FullsizeImage:  &fullSizeUrl,
 		ThumbnailImage: thumbnailSizeUrl,
 	}
+
+	if v.Art.Artist != "" {
+		artistName := v.Art.Artist
+		art.Artist = &artistName
+	}
+
 	result := &app.GwentapiVariation{
 		Availability: v.Availability,
 		Rarity:       rarityMedia,
