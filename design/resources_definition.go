@@ -230,19 +230,9 @@ var _ = Resource("card", func() {
 	})
 
 	Params(func() {
-		Param("limit", Integer, func() {
-			Description("Number of cards to receive")
-			Minimum(1)
-			Default(20)
-		})
-		Param("offset", Integer, func() {
-			Description("Offset of the starting count")
-			Default(0)
-			Minimum(0)
-		})
 		Param("lang", String, func() {
 			Description("Localization of the returned resource")
-			Enum("ja-JP", "pl-L", "pt-BR", "zh-TW", "fr-FR", "it-IT", "ru-RU", "zh-CN", "de-DE", "en-US", "es-ES", "es-MX")
+			Enum("en-US", "de-DE", "es-ES", "es-MX", "fr-FR", "it-IT", "ja-JP", "pl-PL", "pt-BR", "ru-RU")
 			Default("en-US")
 		})
 	})
@@ -251,6 +241,16 @@ var _ = Resource("card", func() {
 		Routing(GET(""))
 		Description("Return a page of cards.")
 		Params(func() {
+			Param("limit", Integer, func() {
+				Description("Number of cards to receive")
+				Minimum(1)
+				Default(20)
+			})
+			Param("offset", Integer, func() {
+				Description("Offset of the starting count")
+				Default(0)
+				Minimum(0)
+			})
 			Param("name", String, func() {
 				Description("Query to search for cards with the name starting by the entered value")
 				MinLength(3)
@@ -293,6 +293,16 @@ var _ = Resource("card", func() {
 
 		Params(func() {
 			Param("factionID", String, "Faction ID")
+			Param("limit", Integer, func() {
+				Description("Number of cards to receive")
+				Minimum(1)
+				Default(20)
+			})
+			Param("offset", Integer, func() {
+				Description("Offset of the starting count")
+				Default(0)
+				Minimum(0)
+			})
 		})
 		Response(OK, PageCard, func() {
 			Headers(func() {
@@ -311,6 +321,16 @@ var _ = Resource("card", func() {
 
 		Params(func() {
 			Param("rarityID", String, "Rarity ID")
+			Param("limit", Integer, func() {
+				Description("Number of cards to receive")
+				Minimum(1)
+				Default(20)
+			})
+			Param("offset", Integer, func() {
+				Description("Offset of the starting count")
+				Default(0)
+				Minimum(0)
+			})
 		})
 		Response(OK, PageCard, func() {
 			Headers(func() {
@@ -326,6 +346,19 @@ var _ = Resource("card", func() {
 	Action("cardLeader", func() {
 		Description("Return all leader cards.")
 		Routing(GET("/leaders"))
+
+		Params(func() {
+			Param("limit", Integer, func() {
+				Description("Number of cards to receive")
+				Minimum(1)
+				Default(20)
+			})
+			Param("offset", Integer, func() {
+				Description("Offset of the starting count")
+				Default(0)
+				Minimum(0)
+			})
+		})
 
 		Response(OK, PageCard, func() {
 			Headers(func() {

@@ -67,7 +67,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Sint dolor laboriosam veniam doloribus.
+          example: Dolor laboriosam veniam doloribus.
           type: string
         type: array
       strength:
@@ -277,8 +277,6 @@ definitions:
     description: GwentapiCategoryLinkCollection is the media type for an array of
       GwentapiCategoryLink (default view)
     example:
-    - href: http://klocko.com/beulah_mcclure
-      name: Insectoid
     - href: http://klocko.com/beulah_mcclure
       name: Insectoid
     - href: http://klocko.com/beulah_mcclure
@@ -791,18 +789,16 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
@@ -869,36 +865,20 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
         type: string
-      - default: 20
-        description: Number of cards to receive
-        in: query
-        minimum: 1
-        name: limit
-        required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
       - description: DateTime in RFC1123 format.
         in: header
         name: If-Modified-Since
@@ -939,36 +919,20 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
         type: string
-      - default: 20
-        description: Number of cards to receive
-        in: query
-        minimum: 1
-        name: limit
-        required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
       - description: DateTime in RFC1123 format.
         in: header
         name: If-Modified-Since
@@ -1009,36 +973,20 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
         type: string
-      - default: 20
-        description: Number of cards to receive
-        in: query
-        minimum: 1
-        name: limit
-        required: false
-        type: integer
-      - default: 0
-        description: Offset of the starting count
-        in: query
-        minimum: 0
-        name: offset
-        required: false
-        type: integer
       - description: Variation ID
         in: path
         name: variationID
@@ -1084,18 +1032,16 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
@@ -1149,18 +1095,16 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
@@ -1214,18 +1158,16 @@ paths:
       - default: en-US
         description: Localization of the returned resource
         enum:
-        - ja-JP
-        - pl-L
-        - pt-BR
-        - zh-TW
-        - fr-FR
-        - it-IT
-        - ru-RU
-        - zh-CN
-        - de-DE
         - en-US
+        - de-DE
         - es-ES
         - es-MX
+        - fr-FR
+        - it-IT
+        - ja-JP
+        - pl-PL
+        - pt-BR
+        - ru-RU
         in: query
         name: lang
         required: false
