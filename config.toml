@@ -1,14 +1,48 @@
-[App]
-  Debug = false
-  Verbose = false
-  LogInfoFile = "./info.log"
-  LogErrorFile = "./error.log"
-  PublicURL = "http://localhost:8080"
-  Port = ":8080"
-  MediaPath = "./manipulator/media/"
+[database]
 
-[Database]
-  Addrs = ["127.0.0.1:27017"]
-  Database = "gwentTest"
-  useSSLProtocol = false
-  [Database.Authentication]
+## Doesn't support multiple hosts or clusters
+## Default to localhost:27017
+
+## List of server addresses separated by a comma.
+## The list can be on multiple lines.
+
+#addrs = ["127.0.0.1:27017"]
+
+#useSSLProtocol = true
+
+## If not specified, default to the "test" database.
+
+database = "gwentapi"
+
+	## If authentication is enabled on your mongod comment out these lines.
+	## If authenticationDatabase is left empty it is defaulted 
+	## to the value of "database" if set, otherwise "admin".
+
+	[database.authentication]
+	#username = "user"
+	#password = "myPassword"
+	#authenticationDatabase = "admin"
+
+[app]
+LogInfoFile = "./info.log"
+LogErrorFile = "./error.log"
+debug = false
+verbose = false
+
+## The URL where the service is publicly accessible.
+## Every href linking to a resource will point to it.
+##
+## It has no impact on how you access the service
+## from the host machine, which remains localhost:8080 by default.
+## So you still need a proxy server redirecting traffic to the app.
+
+publicURL = "http://localhost:8080"
+
+## Port which the service is listening to
+port = ":8080"
+
+## Path on the server pointing to the location of the folder
+## containing the artworks for the cards.
+## "./media" by default.
+
+mediaPath = "./media"
