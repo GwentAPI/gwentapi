@@ -15,5 +15,5 @@ The ``manipulator`` submodule contains the software needed to feed the database.
 Assuming that you have a running mongoDB instance and you are located in the submodule folder:
 
 1. Compile the program
-2. Obtain a copy of the card date in json
+2. Obtain a copy of the card data in json
 3. Run manipulator by inputing the json file ``manipulator -db gwentapi -input data.json``
