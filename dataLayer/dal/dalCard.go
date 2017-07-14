@@ -30,13 +30,13 @@ func (dc DalCard) Fetch(uuid []byte) (*models.Card, error) {
 
 func (dc DalCard) FetchAll() (*[]models.Card, error) {
 	results := []models.Card{}
-	err := dc.collection.Find(nil).Sort("name").All(&results)
+	err := dc.collection.Find(nil).Sort("name.en-US").All(&results)
 	return &results, err
 }
 
 func (dc DalCard) FetchAllPaging(limit int, offset int) (*[]models.Card, int, error) {
 	results := []models.Card{}
-	query := dc.collection.Find(nil).Limit(limit).Sort("name").Skip(offset)
+	query := dc.collection.Find(nil).Limit(limit).Sort("name.en-US").Skip(offset)
 	err := query.All(&results)
 	count, _ := dc.collection.Find(nil).Count()
 	// db driver is bugged
@@ -59,13 +59,13 @@ func (dc DalCard) FetchQueryPaging(limit int, offset int, cardQuery CardQuery) (
 
 func (dc DalCard) FetchLeaderPaging(groupID bson.ObjectId, limit int, offset int) (*[]models.Card, error) {
 	results := []models.Card{}
-	err := dc.collection.Find(bson.M{"group_id": groupID}).Limit(limit).Sort("name").Skip(offset).All(&results)
+	err := dc.collection.Find(bson.M{"group_id": groupID}).Limit(limit).Sort("name.en-US").Skip(offset).All(&results)
 	return &results, err
 }
 
 func (dc DalCard) FetchFromFactionPaging(factionID bson.ObjectId, limit int, offset int) (*[]models.Card, error) {
 	results := []models.Card{}
-	err := dc.collection.Find(bson.M{"faction_id": factionID}).Limit(limit).Sort("name").Skip(offset).All(&results)
+	err := dc.collection.Find(bson.M{"faction_id": factionID}).Limit(limit).Sort("name.en-US").Skip(offset).All(&results)
 	return &results, err
 }
 
@@ -81,7 +81,7 @@ func (dc DalCard) CountFromFaction(factionID bson.ObjectId) (int, error) {
 
 func (dc DalCard) FetchFromArray(cardIDs []bson.ObjectId) (*[]models.Card, error) {
 	results := []models.Card{}
-	err := dc.collection.Find(bson.M{"_id": bson.M{"$in": cardIDs}}).Sort("name").All(&results)
+	err := dc.collection.Find(bson.M{"_id": bson.M{"$in": cardIDs}}).Sort("name.en-US").All(&results)
 
 	return &results, err
 }
