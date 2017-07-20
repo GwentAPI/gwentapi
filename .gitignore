@@ -28,8 +28,9 @@ _testmain.go
 
 
 # Project related folder
-#vendor/
+vendor/
 .idea/
+Gopkg.lock
 # Only for current directory
 /client/
 /tool/
