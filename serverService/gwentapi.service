@@ -1,0 +1,11 @@
+[Unit]
+Description=GwentAPI Service - Restful Gwent service
+Requires=network.target
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/gwentapi
+
+[Install]
+WantedBy=multi-user.target
