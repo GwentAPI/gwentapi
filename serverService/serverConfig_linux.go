@@ -6,7 +6,6 @@ import (
 	"github.com/coreos/go-systemd/activation"
 	"github.com/goadesign/goa"
 	"net/http"
-	"os"
 	"sync"
 	"time"
 )
@@ -49,27 +48,4 @@ func Server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, confi
 	defer cancel()
 
 	srv.Shutdown(shutdownCtx)
-}
-
-func mountMedia(fileSystemPath string, mux *http.ServeMux) {
-	fs := justFilesFilesystem{http.Dir(fileSystemPath)}
-	mux.Handle("/media/", http.StripPrefix("/media/", http.FileServer(fs)))
-}
-
-type justFilesFilesystem struct {
-	Fs http.FileSystem
-}
-
-func (fs justFilesFilesystem) Open(name string) (http.File, error) {
-	f, err := fs.Fs.Open(name)
-
-	if err != nil {
-		return nil, err
-	}
-
-	stat, err := f.Stat()
-	if stat.IsDir() {
-		return nil, os.ErrNotExist
-	}
-	return f, nil
 }
