@@ -5,7 +5,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/gwentapi
+ExecStart=/usr/local/bin/gwentapi -daemon
 
 [Install]
 WantedBy=multi-user.target

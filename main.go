@@ -21,6 +21,7 @@ import (
 	"syscall"
 )
 
+var daemonize *bool
 var enableGzip bool = true
 var gzipLevel int = -1
 
@@ -31,6 +32,7 @@ var version = "undefined"
 
 func init() {
 	versionFlag := flag.Bool("v", false, "Prints current version")
+	daemonize = flag.Bool("daemon", false, "Linux option only: Daemonize the program by using systemd socket activation feature. Be sure to set up the systemd service first.")
 	flag.Parse()
 
 	if *versionFlag {
@@ -92,7 +94,11 @@ func main() {
 	// a WaitGroup for the goroutines to tell us they've stopped
 	wg := sync.WaitGroup{}
 	wg.Add(1)
-	go serverService.Server(ctx, &wg, service, config)
+	if *daemonize {
+		go serverService.SocketActivatedServer(ctx, &wg, service, config)
+	} else {
+		go serverService.Server(ctx, &wg, service, config)
+	}
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc

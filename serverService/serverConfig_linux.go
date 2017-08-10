@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func Server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
+func SocketActivatedServer(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
 	defer wg.Done()
 
 	listeners, err := activation.Listeners(true)
