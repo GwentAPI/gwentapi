@@ -5,6 +5,7 @@ import (
 	"github.com/GwentAPI/gwentapi/configuration"
 	"github.com/coreos/go-systemd/activation"
 	"github.com/goadesign/goa"
+	"log"
 	"net/http"
 	"sync"
 	"time"
