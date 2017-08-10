@@ -9,19 +9,19 @@ import (
 	"github.com/GwentAPI/gwentapi/app"
 	"github.com/GwentAPI/gwentapi/configuration"
 	"github.com/GwentAPI/gwentapi/dataLayer/dal"
+	"github.com/GwentAPI/gwentapi/serverService"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
 	log "github.com/inconshreveable/log15"
-	"net/http"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
-	"time"
 )
 
+var daemonize *bool
 var enableGzip bool = true
 var gzipLevel int = -1
 
@@ -32,6 +32,7 @@ var version = "undefined"
 
 func init() {
 	versionFlag := flag.Bool("v", false, "Prints current version")
+	daemonize = flag.Bool("daemon", false, "Linux option only: Daemonize the program by using systemd socket activation feature. Be sure to set up the systemd service first.")
 	flag.Parse()
 
 	if *versionFlag {
@@ -93,7 +94,11 @@ func main() {
 	// a WaitGroup for the goroutines to tell us they've stopped
 	wg := sync.WaitGroup{}
 	wg.Add(1)
-	go server(ctx, &wg, service, config)
+	if *daemonize {
+		go serverService.SocketActivatedServer(ctx, &wg, service, config)
+	} else {
+		go serverService.Server(ctx, &wg, service, config)
+	}
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
@@ -104,58 +109,4 @@ func main() {
 	wg.Wait()
 	//log.Debug("All goroutines have told us they've finished.")
 	service.LogInfo("shutdown", "message", "Server gracefully stopped.")
-}
-
-func mountMedia(fileSystemPath string, mux *http.ServeMux) {
-	fs := justFilesFilesystem{http.Dir(fileSystemPath)}
-	mux.Handle("/media/", http.StripPrefix("/media/", http.FileServer(fs)))
-}
-
-type justFilesFilesystem struct {
-	Fs http.FileSystem
-}
-
-func (fs justFilesFilesystem) Open(name string) (http.File, error) {
-	f, err := fs.Fs.Open(name)
-
-	if err != nil {
-		return nil, err
-	}
-
-	stat, err := f.Stat()
-	if stat.IsDir() {
-		return nil, os.ErrNotExist
-	}
-	return f, nil
-}
-
-func server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
-	defer wg.Done()
-
-	mux := http.NewServeMux()
-	mountMedia(config.App.MediaPath, mux)
-	mux.HandleFunc("/", service.Mux.ServeHTTP)
-	srv := &http.Server{
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  30 * time.Second,
-		Handler:      mux,
-		Addr:         config.App.Port,
-	}
-
-	// Start service
-	go func() {
-		service.LogInfo("startup", "message", "Web server is starting.")
-		if err := srv.ListenAndServe(); err != nil {
-			service.LogError("startup", "err", err)
-		}
-	}()
-	<-ctx.Done()
-	//log.Debug("Shutdown in progress.")
-
-	// shut down gracefully, but wait no longer than 5 seconds before halting
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	srv.Shutdown(shutdownCtx)
 }

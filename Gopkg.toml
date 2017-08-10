@@ -71,7 +71,7 @@
   name = "github.com/BurntSushi/toml"
 
 [[constraint]]
-  version = "1.2.0"
+  branch = "v1"
   name = "github.com/goadesign/goa"
 
 [[constraint]]
@@ -93,3 +93,7 @@
 [[constraint]]
   branch = "v2"
   name = "gopkg.in/mgo.v2"
+
+[[constraint]]
+  version = "v14"
+  name = "github.com/coreos/go-systemd"

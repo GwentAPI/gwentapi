@@ -19,10 +19,15 @@ Change the values found in ``config.toml`` to suit your environment. The configu
 * [Go 1.8](https://golang.org/dl/)
 * MongoDB 3.4
 * Git
+* [dep](https://github.com/golang/dep)
 
 ## Installation
 
 Assuming you installed and configure all the required softwares listed above and that you have a working Go setup:
+
+### Install the go dependencies
+
+``dep ensure``
 
 ### Build the software
 1. ``go get github.com/GwentAPI/gwentapi``
