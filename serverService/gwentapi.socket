@@ -1,3 +1,7 @@
+[Unit]
+Description=GwentAPI Socket
+PartOf=gwentapi.service
+
 [Socket]
 ListenStream=127.0.0.1:8080
 
