@@ -15,11 +15,11 @@ func SocketActivatedServer(ctx context.Context, wg *sync.WaitGroup, service *goa
 
 	listeners, err := activation.Listeners(true)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	if len(listeners) != 1 {
-		panic("Unexpected number of socket activation fds")
+		log.Panic("Unexpected number of socket activation fds. Number: ", len(listeners))
 	}
 
 	mux := http.NewServeMux()

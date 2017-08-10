@@ -5,7 +5,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/gwentapi -daemon
+WorkingDirectory=/usr/local/bin/GwentAPI
+ExecStart=/usr/local/bin/GwentAPI/gwentapi -daemon
 
 [Install]
 WantedBy=multi-user.target
