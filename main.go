@@ -14,14 +14,14 @@ import (
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/gzip"
-	log "github.com/inconshreveable/log15"
+	log15 "github.com/inconshreveable/log15"
+	"log"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
 )
 
-var daemonize *bool
 var enableGzip bool = true
 var gzipLevel int = -1
 
@@ -32,7 +32,6 @@ var version = "undefined"
 
 func init() {
 	versionFlag := flag.Bool("v", false, "Prints current version")
-	daemonize = flag.Bool("daemon", false, "Linux option only: Daemonize the program by using systemd socket activation feature. Be sure to set up the systemd service first.")
 	flag.Parse()
 
 	if *versionFlag {
@@ -46,13 +45,13 @@ func main() {
 	service := goa.New("gwentapi")
 
 	//Create logger
-	logger := log.New("module", "app/server")
+	logger := log15.New("module", "app/server")
 
 	config := configuration.GetConfig()
 	//Logger configuration
-	logger.SetHandler(log.MultiHandler(
-		log.LvlFilterHandler(log.LvlInfo, log.Must.FileHandler(config.App.LogInfoFile, log.LogfmtFormat())),
-		log.LvlFilterHandler(log.LvlError, log.Must.FileHandler(config.App.LogErrorFile, log.LogfmtFormat()))))
+	logger.SetHandler(log15.MultiHandler(
+		log15.LvlFilterHandler(log15.LvlInfo, log15.Must.FileHandler(config.App.LogInfoFile, log15.LogfmtFormat())),
+		log15.LvlFilterHandler(log15.LvlError, log15.Must.FileHandler(config.App.LogErrorFile, log15.LogfmtFormat()))))
 
 	//Inject logger
 	service.WithLogger(goalog15.New(logger))
@@ -94,11 +93,8 @@ func main() {
 	// a WaitGroup for the goroutines to tell us they've stopped
 	wg := sync.WaitGroup{}
 	wg.Add(1)
-	if *daemonize {
-		go serverService.SocketActivatedServer(ctx, &wg, service, config)
-	} else {
-		go serverService.Server(ctx, &wg, service, config)
-	}
+	go serverService.StartServer(ctx, &wg, service, config)
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
@@ -108,5 +104,5 @@ func main() {
 
 	wg.Wait()
 	//log.Debug("All goroutines have told us they've finished.")
-	service.LogInfo("shutdown", "message", "Server gracefully stopped.")
+	log.Println("Server gracefully stopped.")
 }

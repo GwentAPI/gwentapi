@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/GwentAPI/gwentapi/configuration"
 	"github.com/goadesign/goa"
+	"log"
 	"net/http"
 	"os"
 	"sync"
@@ -33,7 +34,7 @@ func (fs justFilesFilesystem) Open(name string) (http.File, error) {
 	return f, nil
 }
 
-func Server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
+func StartServer(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, config configuration.GwentConfig) {
 	defer wg.Done()
 
 	mux := http.NewServeMux()
@@ -48,14 +49,9 @@ func Server(ctx context.Context, wg *sync.WaitGroup, service *goa.Service, confi
 	}
 
 	// Start service
-	go func() {
-		service.LogInfo("startup", "message", "Web server is starting.")
-		if err := srv.ListenAndServe(); err != nil {
-			service.LogError("startup", "err", err)
-		}
-	}()
+	go startService(srv)
 	<-ctx.Done()
-	//log.Debug("Shutdown in progress.")
+	log.Println("Shutdown in progress.")
 
 	// shut down gracefully, but wait no longer than 5 seconds before halting
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
