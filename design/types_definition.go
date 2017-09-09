@@ -20,7 +20,7 @@ var ArtType = Type("artType", func() {
 		Format("uri")
 	})
 
-	Required("thumbnailImage")
+	Required("thumbnailImage", "mediumsizeImage")
 })
 
 var CostType = Type("costType", func() {

@@ -31,6 +31,9 @@ func (ut *artType) Validate() (err error) {
 	if ut.ThumbnailImage == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "thumbnailImage"))
 	}
+	if ut.MediumsizeImage == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "mediumsizeImage"))
+	}
 	if ut.FullsizeImage != nil {
 		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
 			err = goa.MergeErrors(err, goa.InvalidFormatError(`request.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
@@ -59,7 +62,7 @@ func (ut *artType) Publicize() *ArtType {
 		pub.FullsizeImage = ut.FullsizeImage
 	}
 	if ut.MediumsizeImage != nil {
-		pub.MediumsizeImage = ut.MediumsizeImage
+		pub.MediumsizeImage = *ut.MediumsizeImage
 	}
 	if ut.ThumbnailImage != nil {
 		pub.ThumbnailImage = *ut.ThumbnailImage
@@ -74,7 +77,7 @@ type ArtType struct {
 	// Href to full size artwork
 	FullsizeImage *string `form:"fullsizeImage,omitempty" json:"fullsizeImage,omitempty" xml:"fullsizeImage,omitempty"`
 	// Href to medium size artwork
-	MediumsizeImage *string `form:"mediumsizeImage,omitempty" json:"mediumsizeImage,omitempty" xml:"mediumsizeImage,omitempty"`
+	MediumsizeImage string `form:"mediumsizeImage" json:"mediumsizeImage" xml:"mediumsizeImage"`
 	// Href to thumbnail size artwork
 	ThumbnailImage string `form:"thumbnailImage" json:"thumbnailImage" xml:"thumbnailImage"`
 }
@@ -84,15 +87,16 @@ func (ut *ArtType) Validate() (err error) {
 	if ut.ThumbnailImage == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`type`, "thumbnailImage"))
 	}
+	if ut.MediumsizeImage == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`type`, "mediumsizeImage"))
+	}
 	if ut.FullsizeImage != nil {
 		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
 			err = goa.MergeErrors(err, goa.InvalidFormatError(`type.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
 		}
 	}
-	if ut.MediumsizeImage != nil {
-		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.MediumsizeImage); err2 != nil {
-			err = goa.MergeErrors(err, goa.InvalidFormatError(`type.mediumsizeImage`, *ut.MediumsizeImage, goa.FormatURI, err2))
-		}
+	if err2 := goa.ValidateFormat(goa.FormatURI, ut.MediumsizeImage); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`type.mediumsizeImage`, ut.MediumsizeImage, goa.FormatURI, err2))
 	}
 	if err2 := goa.ValidateFormat(goa.FormatURI, ut.ThumbnailImage); err2 != nil {
 		err = goa.MergeErrors(err, goa.InvalidFormatError(`type.thumbnailImage`, ut.ThumbnailImage, goa.FormatURI, err2))

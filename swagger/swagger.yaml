@@ -65,7 +65,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Voluptas debitis debitis.
+          example: Debitis debitis reprehenderit voluptas doloremque voluptatem et.
           type: string
         type: array
       strength:
@@ -183,8 +183,6 @@ definitions:
     example:
     - href: http://bodehickle.net/gardner
       name: Insectoid
-    - href: http://bodehickle.net/gardner
-      name: Insectoid
     items:
       $ref: '#/definitions/GwentapiCategoryLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.category+json; type=collection;
@@ -281,6 +279,12 @@ definitions:
     - href: http://bogan.name/abbey
       name: Bronze
       uuid: GbmwHbkcQniDKJq6rKz-bQ
+    - href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
+    - href: http://bogan.name/abbey
+      name: Bronze
+      uuid: GbmwHbkcQniDKJq6rKz-bQ
     items:
       $ref: '#/definitions/GwentapiGroup'
     title: 'Mediatype identifier: application/vnd.gwentapi.group+json; type=collection;
@@ -370,9 +374,6 @@ definitions:
     description: GwentapiRarityCollection is the media type for an array of GwentapiRarity
       (default view)
     example:
-    - href: http://schaden.info/lia
-      name: Common
-      uuid: TPCvIPOjRjO0s7Jfeo1NtA
     - href: http://schaden.info/lia
       name: Common
       uuid: TPCvIPOjRjO0s7Jfeo1NtA
@@ -618,6 +619,7 @@ definitions:
         type: string
     required:
     - thumbnailImage
+    - mediumsizeImage
     title: artType
     type: object
   costType:
