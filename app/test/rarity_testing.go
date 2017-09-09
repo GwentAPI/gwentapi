@@ -264,7 +264,7 @@ func ListRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		var ok bool
 		mt, ok = resp.(app.GwentapiRarityCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiRarityCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiRarityCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -336,7 +336,7 @@ func ListRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 		var ok bool
 		mt, ok = resp.(app.GwentapiRarityLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiRarityLinkCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiRarityLinkCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -592,7 +592,7 @@ func ShowRarityOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		var ok bool
 		mt, ok = resp.(*app.GwentapiRarity)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiRarity", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiRarity", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -665,7 +665,7 @@ func ShowRarityOKLink(t goatest.TInterface, ctx context.Context, service *goa.Se
 		var ok bool
 		mt, ok = resp.(*app.GwentapiRarityLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiRarityLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiRarityLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

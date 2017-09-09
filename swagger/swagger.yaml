@@ -9,18 +9,16 @@ definitions:
     description: A card (default view)
     example:
       categories:
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      - href: http://klocko.com/beulah_mcclure
+      - href: http://bodehickle.net/gardner
         name: Insectoid
       faction:
-        href: http://pricecruickshank.net/alan.corwin
+        href: http://bogan.info/francesco.hegmann
         name: Monster
       flavor: Ugly – Nature's Way of saying stay away.
       group:
-        href: http://harris.biz/jamison
+        href: http://prohaskamarks.name/austyn.hartmann
         name: Bronze
-      href: http://koch.org/ashtyn.schaden
+      href: http://torpmarquardt.info/lauriane
       info: 'Deploy: Play all Arachasae from your Deck.'
       name: Arachas
       positions:
@@ -29,14 +27,14 @@ definitions:
       uuid: oe6UPiaDSNyI-630fYz4LA
       variations:
       - availability: BaseSet
-        href: http://streich.org/orin.herzog
+        href: http://koepp.name/lucius_braun
         rarity:
-          href: http://kilbackemard.info/marvin
+          href: http://mcclure.info/eddie
           name: Common
       - availability: BaseSet
-        href: http://streich.org/orin.herzog
+        href: http://koepp.name/lucius_braun
         rarity:
-          href: http://kilbackemard.info/marvin
+          href: http://mcclure.info/eddie
           name: Common
     properties:
       categories:
@@ -51,7 +49,7 @@ definitions:
         $ref: '#/definitions/GwentapiGroupLink'
       href:
         description: API href for making requests on the card
-        example: http://koch.org/ashtyn.schaden
+        example: http://torpmarquardt.info/lauriane
         format: uri
         type: string
       info:
@@ -67,7 +65,7 @@ definitions:
         example:
         - Ranged
         items:
-          example: Dolor laboriosam veniam doloribus.
+          example: Voluptas debitis debitis.
           type: string
         type: array
       strength:
@@ -93,12 +91,12 @@ definitions:
   GwentapiCardLink:
     description: A card (link view)
     example:
-      href: http://koch.org/ashtyn.schaden
+      href: http://torpmarquardt.info/lauriane
       name: Arachas
     properties:
       href:
         description: API href for making requests on the card
-        example: http://koch.org/ashtyn.schaden
+        example: http://torpmarquardt.info/lauriane
         format: uri
         type: string
       name:
@@ -114,96 +112,8 @@ definitions:
     description: GwentapiCardLinkCollection is the media type for an array of GwentapiCardLink
       (default view)
     example:
-    - categories:
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      faction:
-        href: http://pricecruickshank.net/alan.corwin
-        name: Monster
-      flavor: Ugly – Nature's Way of saying stay away.
-      group:
-        href: http://harris.biz/jamison
-        name: Bronze
-      href: http://koch.org/ashtyn.schaden
-      info: 'Deploy: Play all Arachasae from your Deck.'
+    - href: http://torpmarquardt.info/lauriane
       name: Arachas
-      positions:
-      - Ranged
-      strength: 3
-      uuid: oe6UPiaDSNyI-630fYz4LA
-      variations:
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
-    - categories:
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      faction:
-        href: http://pricecruickshank.net/alan.corwin
-        name: Monster
-      flavor: Ugly – Nature's Way of saying stay away.
-      group:
-        href: http://harris.biz/jamison
-        name: Bronze
-      href: http://koch.org/ashtyn.schaden
-      info: 'Deploy: Play all Arachasae from your Deck.'
-      name: Arachas
-      positions:
-      - Ranged
-      strength: 3
-      uuid: oe6UPiaDSNyI-630fYz4LA
-      variations:
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
-    - categories:
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      - href: http://klocko.com/beulah_mcclure
-        name: Insectoid
-      faction:
-        href: http://pricecruickshank.net/alan.corwin
-        name: Monster
-      flavor: Ugly – Nature's Way of saying stay away.
-      group:
-        href: http://harris.biz/jamison
-        name: Bronze
-      href: http://koch.org/ashtyn.schaden
-      info: 'Deploy: Play all Arachasae from your Deck.'
-      name: Arachas
-      positions:
-      - Ranged
-      strength: 3
-      uuid: oe6UPiaDSNyI-630fYz4LA
-      variations:
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
-      - availability: BaseSet
-        href: http://streich.org/orin.herzog
-        rarity:
-          href: http://kilbackemard.info/marvin
-          name: Common
     items:
       $ref: '#/definitions/GwentapiCardLink'
     title: 'Mediatype identifier: application/vnd.gwentapi.card+json; type=collection;
@@ -242,12 +152,6 @@ definitions:
     - href: http://feeney.name/julian
       name: Insectoid
       uuid: 0PcjdpZ6QR2NKutLFGx-oQ
-    - href: http://feeney.name/julian
-      name: Insectoid
-      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
-    - href: http://feeney.name/julian
-      name: Insectoid
-      uuid: 0PcjdpZ6QR2NKutLFGx-oQ
     items:
       $ref: '#/definitions/GwentapiCategory'
     title: 'Mediatype identifier: application/vnd.gwentapi.category+json; type=collection;
@@ -256,12 +160,12 @@ definitions:
   GwentapiCategoryLink:
     description: A card category (link view)
     example:
-      href: http://klocko.com/beulah_mcclure
+      href: http://bodehickle.net/gardner
       name: Insectoid
     properties:
       href:
         description: API href for making requests on the category
-        example: http://klocko.com/beulah_mcclure
+        example: http://bodehickle.net/gardner
         format: uri
         type: string
       name:
@@ -277,9 +181,9 @@ definitions:
     description: GwentapiCategoryLinkCollection is the media type for an array of
       GwentapiCategoryLink (default view)
     example:
-    - href: http://klocko.com/beulah_mcclure
+    - href: http://bodehickle.net/gardner
       name: Insectoid
-    - href: http://klocko.com/beulah_mcclure
+    - href: http://bodehickle.net/gardner
       name: Insectoid
     items:
       $ref: '#/definitions/GwentapiCategoryLink'
@@ -319,12 +223,6 @@ definitions:
     - href: http://pfannerstillkuhic.name/mozelle.o'reilly
       name: Monster
       uuid: 9wM9vGWiRzCvEwSLnLfY1w
-    - href: http://pfannerstillkuhic.name/mozelle.o'reilly
-      name: Monster
-      uuid: 9wM9vGWiRzCvEwSLnLfY1w
-    - href: http://pfannerstillkuhic.name/mozelle.o'reilly
-      name: Monster
-      uuid: 9wM9vGWiRzCvEwSLnLfY1w
     items:
       $ref: '#/definitions/GwentapiFaction'
     title: 'Mediatype identifier: application/vnd.gwentapi.faction+json; type=collection;
@@ -333,12 +231,12 @@ definitions:
   GwentapiFactionLink:
     description: A card faction (link view)
     example:
-      href: http://pricecruickshank.net/alan.corwin
+      href: http://bogan.info/francesco.hegmann
       name: Monster
     properties:
       href:
         description: API href for making requests on the faction
-        example: http://pricecruickshank.net/alan.corwin
+        example: http://bogan.info/francesco.hegmann
         format: uri
         type: string
       name:
@@ -383,12 +281,6 @@ definitions:
     - href: http://bogan.name/abbey
       name: Bronze
       uuid: GbmwHbkcQniDKJq6rKz-bQ
-    - href: http://bogan.name/abbey
-      name: Bronze
-      uuid: GbmwHbkcQniDKJq6rKz-bQ
-    - href: http://bogan.name/abbey
-      name: Bronze
-      uuid: GbmwHbkcQniDKJq6rKz-bQ
     items:
       $ref: '#/definitions/GwentapiGroup'
     title: 'Mediatype identifier: application/vnd.gwentapi.group+json; type=collection;
@@ -397,12 +289,12 @@ definitions:
   GwentapiGroupLink:
     description: A card group (link view)
     example:
-      href: http://harris.biz/jamison
+      href: http://prohaskamarks.name/austyn.hartmann
       name: Bronze
     properties:
       href:
         description: API href for making requests on the group
-        example: http://harris.biz/jamison
+        example: http://prohaskamarks.name/austyn.hartmann
         format: uri
         type: string
       name:
@@ -418,10 +310,12 @@ definitions:
     description: Paginated card (default view)
     example:
       count: 280
-      next: http://ferryhaag.name/oran
-      previous: http://steuber.biz/berenice
+      next: http://volkman.name/kenyatta
+      previous: http://hacketttromp.net/sam
       results:
-      - href: http://koch.org/ashtyn.schaden
+      - href: http://torpmarquardt.info/lauriane
+        name: Arachas
+      - href: http://torpmarquardt.info/lauriane
         name: Arachas
     properties:
       count:
@@ -431,12 +325,12 @@ definitions:
         type: integer
       next:
         description: Href to the next page
-        example: http://ferryhaag.name/oran
+        example: http://volkman.name/kenyatta
         format: uri
         type: string
       previous:
         description: Href to the previous page
-        example: http://steuber.biz/berenice
+        example: http://hacketttromp.net/sam
         format: uri
         type: string
       results:
@@ -449,13 +343,13 @@ definitions:
   GwentapiRarity:
     description: A card rarity (default view)
     example:
-      href: http://hudson.org/adrianna_leffler
+      href: http://schaden.info/lia
       name: Common
       uuid: TPCvIPOjRjO0s7Jfeo1NtA
     properties:
       href:
         description: API href for making requests on the rarity
-        example: http://hudson.org/adrianna_leffler
+        example: http://schaden.info/lia
         format: uri
         type: string
       name:
@@ -476,13 +370,13 @@ definitions:
     description: GwentapiRarityCollection is the media type for an array of GwentapiRarity
       (default view)
     example:
-    - href: http://hudson.org/adrianna_leffler
+    - href: http://schaden.info/lia
       name: Common
       uuid: TPCvIPOjRjO0s7Jfeo1NtA
-    - href: http://hudson.org/adrianna_leffler
+    - href: http://schaden.info/lia
       name: Common
       uuid: TPCvIPOjRjO0s7Jfeo1NtA
-    - href: http://hudson.org/adrianna_leffler
+    - href: http://schaden.info/lia
       name: Common
       uuid: TPCvIPOjRjO0s7Jfeo1NtA
     items:
@@ -493,12 +387,12 @@ definitions:
   GwentapiRarityLink:
     description: A card rarity (link view)
     example:
-      href: http://kilbackemard.info/marvin
+      href: http://mcclure.info/eddie
       name: Common
     properties:
       href:
         description: API href for making requests on the rarity
-        example: http://kilbackemard.info/marvin
+        example: http://mcclure.info/eddie
         format: uri
         type: string
       name:
@@ -514,42 +408,42 @@ definitions:
     description: Listing of all available resource endpoint and a link to the api
       definition (default view)
     example:
-      cards: http://orn.info/samson
-      categories: http://mann.name/makenzie
-      factions: http://ondricka.net/valentin
-      groups: http://schowalter.info/gregory.ward
-      rarities: http://towne.org/ayden
-      swagger: http://oconnell.org/keyshawn
+      cards: http://keeling.biz/stan_ebert
+      categories: http://mckenzie.name/marlee_graham
+      factions: http://johnson.info/kelli_kassulke
+      groups: http://blick.biz/lia
+      rarities: http://schroederharris.net/myron
+      swagger: http://bahringer.org/rey.hackett
       version: v0.5.5-rc.2
     properties:
       cards:
         description: API href for making requests on cards
-        example: http://orn.info/samson
+        example: http://keeling.biz/stan_ebert
         format: uri
         type: string
       categories:
         description: API href for making requests on categories
-        example: http://mann.name/makenzie
+        example: http://mckenzie.name/marlee_graham
         format: uri
         type: string
       factions:
         description: API href for making requests on factions
-        example: http://ondricka.net/valentin
+        example: http://johnson.info/kelli_kassulke
         format: uri
         type: string
       groups:
         description: API href for making requests on groups
-        example: http://schowalter.info/gregory.ward
+        example: http://blick.biz/lia
         format: uri
         type: string
       rarities:
         description: API href for making requests on rarities
-        example: http://towne.org/ayden
+        example: http://schroederharris.net/myron
         format: uri
         type: string
       swagger:
         description: Href linking to the swagger definition
-        example: http://oconnell.org/keyshawn
+        example: http://bahringer.org/rey.hackett
         format: uri
         type: string
       version:
@@ -572,18 +466,19 @@ definitions:
     example:
       art:
         artist: Marek Madej
-        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
-        thumbnailImage: http://pacochacrona.com/donavon
+        fullsizeImage: http://huel.net/rylan
+        mediumsizeImage: http://jacobs.info/wyman
+        thumbnailImage: http://legros.net/ally.simonis
       availability: BaseSet
       craft:
         normal: 30
         premium: 200
-      href: http://gulgowskisanford.biz/beau_graham
+      href: http://bergstrom.biz/zachariah_jacobi
       mill:
         normal: 30
         premium: 200
       rarity:
-        href: http://kilbackemard.info/marvin
+        href: http://mcclure.info/eddie
         name: Common
       uuid: pcN4QMTlTAaIOwicgNwtKA
     properties:
@@ -598,7 +493,7 @@ definitions:
         $ref: '#/definitions/costType'
       href:
         description: API href for making requests on the artwork
-        example: http://gulgowskisanford.biz/beau_graham
+        example: http://bergstrom.biz/zachariah_jacobi
         format: uri
         type: string
       mill:
@@ -622,34 +517,19 @@ definitions:
     example:
     - art:
         artist: Marek Madej
-        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
-        thumbnailImage: http://pacochacrona.com/donavon
+        fullsizeImage: http://huel.net/rylan
+        mediumsizeImage: http://jacobs.info/wyman
+        thumbnailImage: http://legros.net/ally.simonis
       availability: BaseSet
       craft:
         normal: 30
         premium: 200
-      href: http://gulgowskisanford.biz/beau_graham
+      href: http://bergstrom.biz/zachariah_jacobi
       mill:
         normal: 30
         premium: 200
       rarity:
-        href: http://kilbackemard.info/marvin
-        name: Common
-      uuid: pcN4QMTlTAaIOwicgNwtKA
-    - art:
-        artist: Marek Madej
-        fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
-        thumbnailImage: http://pacochacrona.com/donavon
-      availability: BaseSet
-      craft:
-        normal: 30
-        premium: 200
-      href: http://gulgowskisanford.biz/beau_graham
-      mill:
-        normal: 30
-        premium: 200
-      rarity:
-        href: http://kilbackemard.info/marvin
+        href: http://mcclure.info/eddie
         name: Common
       uuid: pcN4QMTlTAaIOwicgNwtKA
     items:
@@ -662,9 +542,9 @@ definitions:
       availability, and rarity. (link view)
     example:
       availability: BaseSet
-      href: http://streich.org/orin.herzog
+      href: http://koepp.name/lucius_braun
       rarity:
-        href: http://kilbackemard.info/marvin
+        href: http://mcclure.info/eddie
         name: Common
     properties:
       availability:
@@ -674,7 +554,7 @@ definitions:
         type: string
       href:
         description: API href for making requests on the artwork
-        example: http://streich.org/orin.herzog
+        example: http://koepp.name/lucius_braun
         format: uri
         type: string
       rarity:
@@ -690,14 +570,19 @@ definitions:
       GwentapiVariationLink (default view)
     example:
     - availability: BaseSet
-      href: http://streich.org/orin.herzog
+      href: http://koepp.name/lucius_braun
       rarity:
-        href: http://kilbackemard.info/marvin
+        href: http://mcclure.info/eddie
         name: Common
     - availability: BaseSet
-      href: http://streich.org/orin.herzog
+      href: http://koepp.name/lucius_braun
       rarity:
-        href: http://kilbackemard.info/marvin
+        href: http://mcclure.info/eddie
+        name: Common
+    - availability: BaseSet
+      href: http://koepp.name/lucius_braun
+      rarity:
+        href: http://mcclure.info/eddie
         name: Common
     items:
       $ref: '#/definitions/GwentapiVariationLink'
@@ -708,8 +593,9 @@ definitions:
     description: Type of card art
     example:
       artist: Marek Madej
-      fullsizeImage: http://ondrickajohnston.biz/ewell.roberts
-      thumbnailImage: http://pacochacrona.com/donavon
+      fullsizeImage: http://huel.net/rylan
+      mediumsizeImage: http://jacobs.info/wyman
+      thumbnailImage: http://legros.net/ally.simonis
     properties:
       artist:
         description: Name of the artist
@@ -717,12 +603,17 @@ definitions:
         type: string
       fullsizeImage:
         description: Href to full size artwork
-        example: http://ondrickajohnston.biz/ewell.roberts
+        example: http://huel.net/rylan
+        format: uri
+        type: string
+      mediumsizeImage:
+        description: Href to medium size artwork
+        example: http://jacobs.info/wyman
         format: uri
         type: string
       thumbnailImage:
         description: Href to thumbnail size artwork
-        example: http://pacochacrona.com/donavon
+        example: http://legros.net/ally.simonis
         format: uri
         type: string
     required:
@@ -906,7 +797,7 @@ paths:
       summary: show card
       tags:
       - card
-  /v0/cards/{cardID}/variations:
+  /v0/cards/{cardID}/variations/:
     get:
       description: Return the variations of a card with the given id.
       operationId: card#cardVariations

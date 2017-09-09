@@ -264,7 +264,7 @@ func ListFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		var ok bool
 		mt, ok = resp.(app.GwentapiFactionCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiFactionCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiFactionCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -336,7 +336,7 @@ func ListFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		var ok bool
 		mt, ok = resp.(app.GwentapiFactionLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiFactionLinkCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiFactionLinkCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -592,7 +592,7 @@ func ShowFactionOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		var ok bool
 		mt, ok = resp.(*app.GwentapiFaction)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiFaction", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiFaction", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -665,7 +665,7 @@ func ShowFactionOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		var ok bool
 		mt, ok = resp.(*app.GwentapiFactionLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiFactionLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiFactionLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

@@ -13,6 +13,9 @@ var ArtType = Type("artType", func() {
 	Attribute("artist", String, "Name of the artist", func() {
 		Example("Marek Madej")
 	})
+	Attribute("mediumsizeImage", String, "Href to medium size artwork", func() {
+		Format("uri")
+	})
 	Attribute("thumbnailImage", String, "Href to thumbnail size artwork", func() {
 		Format("uri")
 	})

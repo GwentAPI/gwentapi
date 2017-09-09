@@ -264,7 +264,7 @@ func ListCategoryOK(t goatest.TInterface, ctx context.Context, service *goa.Serv
 		var ok bool
 		mt, ok = resp.(app.GwentapiCategoryCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCategoryCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCategoryCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -336,7 +336,7 @@ func ListCategoryOKLink(t goatest.TInterface, ctx context.Context, service *goa.
 		var ok bool
 		mt, ok = resp.(app.GwentapiCategoryLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCategoryLinkCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCategoryLinkCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -592,7 +592,7 @@ func ShowCategoryOK(t goatest.TInterface, ctx context.Context, service *goa.Serv
 		var ok bool
 		mt, ok = resp.(*app.GwentapiCategory)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCategory", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCategory", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -665,7 +665,7 @@ func ShowCategoryOKLink(t goatest.TInterface, ctx context.Context, service *goa.
 		var ok bool
 		mt, ok = resp.(*app.GwentapiCategoryLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCategoryLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCategoryLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

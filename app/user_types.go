@@ -20,6 +20,8 @@ type artType struct {
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
 	FullsizeImage *string `form:"fullsizeImage,omitempty" json:"fullsizeImage,omitempty" xml:"fullsizeImage,omitempty"`
+	// Href to medium size artwork
+	MediumsizeImage *string `form:"mediumsizeImage,omitempty" json:"mediumsizeImage,omitempty" xml:"mediumsizeImage,omitempty"`
 	// Href to thumbnail size artwork
 	ThumbnailImage *string `form:"thumbnailImage,omitempty" json:"thumbnailImage,omitempty" xml:"thumbnailImage,omitempty"`
 }
@@ -27,16 +29,21 @@ type artType struct {
 // Validate validates the artType type instance.
 func (ut *artType) Validate() (err error) {
 	if ut.ThumbnailImage == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "thumbnailImage"))
 	}
 	if ut.FullsizeImage != nil {
 		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
-			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`request.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+		}
+	}
+	if ut.MediumsizeImage != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.MediumsizeImage); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`request.mediumsizeImage`, *ut.MediumsizeImage, goa.FormatURI, err2))
 		}
 	}
 	if ut.ThumbnailImage != nil {
 		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.ThumbnailImage); err2 != nil {
-			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.thumbnailImage`, *ut.ThumbnailImage, goa.FormatURI, err2))
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`request.thumbnailImage`, *ut.ThumbnailImage, goa.FormatURI, err2))
 		}
 	}
 	return
@@ -51,6 +58,9 @@ func (ut *artType) Publicize() *ArtType {
 	if ut.FullsizeImage != nil {
 		pub.FullsizeImage = ut.FullsizeImage
 	}
+	if ut.MediumsizeImage != nil {
+		pub.MediumsizeImage = ut.MediumsizeImage
+	}
 	if ut.ThumbnailImage != nil {
 		pub.ThumbnailImage = *ut.ThumbnailImage
 	}
@@ -63,6 +73,8 @@ type ArtType struct {
 	Artist *string `form:"artist,omitempty" json:"artist,omitempty" xml:"artist,omitempty"`
 	// Href to full size artwork
 	FullsizeImage *string `form:"fullsizeImage,omitempty" json:"fullsizeImage,omitempty" xml:"fullsizeImage,omitempty"`
+	// Href to medium size artwork
+	MediumsizeImage *string `form:"mediumsizeImage,omitempty" json:"mediumsizeImage,omitempty" xml:"mediumsizeImage,omitempty"`
 	// Href to thumbnail size artwork
 	ThumbnailImage string `form:"thumbnailImage" json:"thumbnailImage" xml:"thumbnailImage"`
 }
@@ -70,15 +82,20 @@ type ArtType struct {
 // Validate validates the ArtType type instance.
 func (ut *ArtType) Validate() (err error) {
 	if ut.ThumbnailImage == "" {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "thumbnailImage"))
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`type`, "thumbnailImage"))
 	}
 	if ut.FullsizeImage != nil {
 		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.FullsizeImage); err2 != nil {
-			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`type.fullsizeImage`, *ut.FullsizeImage, goa.FormatURI, err2))
+		}
+	}
+	if ut.MediumsizeImage != nil {
+		if err2 := goa.ValidateFormat(goa.FormatURI, *ut.MediumsizeImage); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`type.mediumsizeImage`, *ut.MediumsizeImage, goa.FormatURI, err2))
 		}
 	}
 	if err2 := goa.ValidateFormat(goa.FormatURI, ut.ThumbnailImage); err2 != nil {
-		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.thumbnailImage`, ut.ThumbnailImage, goa.FormatURI, err2))
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`type.thumbnailImage`, ut.ThumbnailImage, goa.FormatURI, err2))
 	}
 	return
 }
@@ -94,10 +111,10 @@ type costType struct {
 // Validate validates the costType type instance.
 func (ut *costType) Validate() (err error) {
 	if ut.Premium == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "premium"))
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "premium"))
 	}
 	if ut.Normal == nil {
-		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "normal"))
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "normal"))
 	}
 	return
 }

@@ -58,7 +58,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardFaction(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/factions/:factionID", ctrl.MuxHandler("CardFaction", h, nil))
+	service.Mux.Handle("GET", "/v0/cards/factions/:factionID", ctrl.MuxHandler("cardFaction", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardFaction", "route", "GET /v0/cards/factions/:factionID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -73,7 +73,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardLeader(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/leaders", ctrl.MuxHandler("CardLeader", h, nil))
+	service.Mux.Handle("GET", "/v0/cards/leaders", ctrl.MuxHandler("cardLeader", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardLeader", "route", "GET /v0/cards/leaders")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -88,7 +88,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardRarity(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/rarities/:rarityID", ctrl.MuxHandler("CardRarity", h, nil))
+	service.Mux.Handle("GET", "/v0/cards/rarities/:rarityID", ctrl.MuxHandler("cardRarity", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardRarity", "route", "GET /v0/cards/rarities/:rarityID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -103,7 +103,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardVariation(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/:cardID/variations/:variationID", ctrl.MuxHandler("CardVariation", h, nil))
+	service.Mux.Handle("GET", "/v0/cards/:cardID/variations/:variationID", ctrl.MuxHandler("cardVariation", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "CardVariation", "route", "GET /v0/cards/:cardID/variations/:variationID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -118,8 +118,8 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.CardVariations(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/:cardID/variations", ctrl.MuxHandler("CardVariations", h, nil))
-	service.LogInfo("mount", "ctrl", "Card", "action", "CardVariations", "route", "GET /v0/cards/:cardID/variations")
+	service.Mux.Handle("GET", "/v0/cards/:cardID/variations/", ctrl.MuxHandler("cardVariations", h, nil))
+	service.LogInfo("mount", "ctrl", "Card", "action", "CardVariations", "route", "GET /v0/cards/:cardID/variations/")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -133,7 +133,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.List(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards", ctrl.MuxHandler("List", h, nil))
+	service.Mux.Handle("GET", "/v0/cards", ctrl.MuxHandler("list", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "List", "route", "GET /v0/cards")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -148,7 +148,7 @@ func MountCardController(service *goa.Service, ctrl CardController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/cards/:cardID", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0/cards/:cardID", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Card", "action", "Show", "route", "GET /v0/cards/:cardID")
 }
 
@@ -176,7 +176,7 @@ func MountCategoryController(service *goa.Service, ctrl CategoryController) {
 		}
 		return ctrl.List(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/categories", ctrl.MuxHandler("List", h, nil))
+	service.Mux.Handle("GET", "/v0/categories", ctrl.MuxHandler("list", h, nil))
 	service.LogInfo("mount", "ctrl", "Category", "action", "List", "route", "GET /v0/categories")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -191,7 +191,7 @@ func MountCategoryController(service *goa.Service, ctrl CategoryController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/categories/:categoryID", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0/categories/:categoryID", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Category", "action", "Show", "route", "GET /v0/categories/:categoryID")
 }
 
@@ -219,7 +219,7 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 		}
 		return ctrl.List(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/factions", ctrl.MuxHandler("List", h, nil))
+	service.Mux.Handle("GET", "/v0/factions", ctrl.MuxHandler("list", h, nil))
 	service.LogInfo("mount", "ctrl", "Faction", "action", "List", "route", "GET /v0/factions")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -234,7 +234,7 @@ func MountFactionController(service *goa.Service, ctrl FactionController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/factions/:factionID", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0/factions/:factionID", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Faction", "action", "Show", "route", "GET /v0/factions/:factionID")
 }
 
@@ -262,7 +262,7 @@ func MountGroupController(service *goa.Service, ctrl GroupController) {
 		}
 		return ctrl.List(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/groups", ctrl.MuxHandler("List", h, nil))
+	service.Mux.Handle("GET", "/v0/groups", ctrl.MuxHandler("list", h, nil))
 	service.LogInfo("mount", "ctrl", "Group", "action", "List", "route", "GET /v0/groups")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -277,7 +277,7 @@ func MountGroupController(service *goa.Service, ctrl GroupController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/groups/:groupID", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0/groups/:groupID", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Group", "action", "Show", "route", "GET /v0/groups/:groupID")
 }
 
@@ -304,7 +304,7 @@ func MountIndexController(service *goa.Service, ctrl IndexController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Index", "action", "Show", "route", "GET /v0")
 }
 
@@ -332,7 +332,7 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 		}
 		return ctrl.List(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/rarities", ctrl.MuxHandler("List", h, nil))
+	service.Mux.Handle("GET", "/v0/rarities", ctrl.MuxHandler("list", h, nil))
 	service.LogInfo("mount", "ctrl", "Rarity", "action", "List", "route", "GET /v0/rarities")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -347,6 +347,6 @@ func MountRarityController(service *goa.Service, ctrl RarityController) {
 		}
 		return ctrl.Show(rctx)
 	}
-	service.Mux.Handle("GET", "/v0/rarities/:rarityID", ctrl.MuxHandler("Show", h, nil))
+	service.Mux.Handle("GET", "/v0/rarities/:rarityID", ctrl.MuxHandler("show", h, nil))
 	service.LogInfo("mount", "ctrl", "Rarity", "action", "Show", "route", "GET /v0/rarities/:rarityID")
 }

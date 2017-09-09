@@ -264,7 +264,7 @@ func ListGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		var ok bool
 		mt, ok = resp.(app.GwentapiGroupCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiGroupCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -336,7 +336,7 @@ func ListGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		var ok bool
 		mt, ok = resp.(app.GwentapiGroupLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLinkCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiGroupLinkCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -592,7 +592,7 @@ func ShowGroupOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		var ok bool
 		mt, ok = resp.(*app.GwentapiGroup)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroup", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiGroup", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -665,7 +665,7 @@ func ShowGroupOKLink(t goatest.TInterface, ctx context.Context, service *goa.Ser
 		var ok bool
 		mt, ok = resp.(*app.GwentapiGroupLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiGroupLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiGroupLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

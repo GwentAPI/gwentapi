@@ -373,7 +373,7 @@ func CardFactionCardOK(t goatest.TInterface, ctx context.Context, service *goa.S
 		var ok bool
 		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiPagecard", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -729,7 +729,7 @@ func CardLeaderCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 		var ok bool
 		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiPagecard", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -1089,7 +1089,7 @@ func CardRarityCardOK(t goatest.TInterface, ctx context.Context, service *goa.Se
 		var ok bool
 		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiPagecard", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -1389,7 +1389,7 @@ func CardVariationCardOK(t goatest.TInterface, ctx context.Context, service *goa
 		var ok bool
 		mt, ok = resp.(*app.GwentapiVariation)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariation", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiVariation", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -1473,7 +1473,7 @@ func CardVariationCardOKLink(t goatest.TInterface, ctx context.Context, service 
 		var ok bool
 		mt, ok = resp.(*app.GwentapiVariationLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariationLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiVariationLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -1515,7 +1515,7 @@ func CardVariationsCardInternalServerError(t goatest.TInterface, ctx context.Con
 		query["lang"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/", cardID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -1586,7 +1586,7 @@ func CardVariationsCardNotFound(t goatest.TInterface, ctx context.Context, servi
 		query["lang"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/", cardID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -1657,7 +1657,7 @@ func CardVariationsCardNotModified(t goatest.TInterface, ctx context.Context, se
 		query["lang"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/", cardID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -1728,7 +1728,7 @@ func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *go
 		query["lang"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/", cardID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -1769,7 +1769,7 @@ func CardVariationsCardOK(t goatest.TInterface, ctx context.Context, service *go
 		var ok bool
 		mt, ok = resp.(app.GwentapiVariationCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariationCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiVariationCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -1811,7 +1811,7 @@ func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service
 		query["lang"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/v0/cards/%v/variations", cardID),
+		Path:     fmt.Sprintf("/v0/cards/%v/variations/", cardID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -1852,7 +1852,7 @@ func CardVariationsCardOKLink(t goatest.TInterface, ctx context.Context, service
 		var ok bool
 		mt, ok = resp.(app.GwentapiVariationLinkCollection)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiVariationLinkCollection", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiVariationLinkCollection", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -2240,7 +2240,7 @@ func ListCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 		var ok bool
 		mt, ok = resp.(*app.GwentapiPagecard)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiPagecard", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiPagecard", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -2536,7 +2536,7 @@ func ShowCardOK(t goatest.TInterface, ctx context.Context, service *goa.Service,
 		var ok bool
 		mt, ok = resp.(*app.GwentapiCard)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCard", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCard", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {
@@ -2619,7 +2619,7 @@ func ShowCardOKLink(t goatest.TInterface, ctx context.Context, service *goa.Serv
 		var ok bool
 		mt, ok = resp.(*app.GwentapiCardLink)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiCardLink", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiCardLink", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

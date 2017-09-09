@@ -136,7 +136,7 @@ func ShowIndexOK(t goatest.TInterface, ctx context.Context, service *goa.Service
 		var ok bool
 		mt, ok = resp.(*app.GwentapiResource)
 		if !ok {
-			t.Fatalf("invalid response media: got %+v, expected instance of app.GwentapiResource", resp)
+			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.GwentapiResource", resp, resp)
 		}
 		_err = mt.Validate()
 		if _err != nil {

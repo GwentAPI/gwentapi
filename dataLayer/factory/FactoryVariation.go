@@ -34,7 +34,8 @@ func CreateVariation(v *models.Variation, cardID []byte, ds *dal.DataStore) (*ap
 
 	art := &app.ArtType{
 		//FullsizeImage:  &fullSizeUrl,
-		ThumbnailImage: thumbnailSizeUrl,
+		MediumsizeImage: &thumbnailSizeUrl,
+		ThumbnailImage:  thumbnailSizeUrl,
 	}
 
 	if v.Art.Artist != "" {
