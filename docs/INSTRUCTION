@@ -1,0 +1,271 @@
+INSTRUCTION
+
+Updating
+
+1- 
+Login as root or su into root if login for root is already disabled
+
+apt-get update
+apt-get upgrade
+
+apt-get install sudo curl fail2ban git mysql-server nginx ufw
+
+
+Firewall:
+
+ufw default deny incoming
+
+ufw default allow outgoing
+
+ufw allow ssh
+
+ufw allow http
+
+ufw allow https
+
+ufw enable
+
+verify with:
+
+ufw status verbose
+
+
+Configure fail2ban:
+
+cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+
+
+Create new user account:
+
+adduser username
+
+
+3- Configure sudo
+
+run visudo
+
+add the following line:
+
+USER_NAME   ALL=(ALL) ALL
+
+
+Securing SSH
+
+1- Generate SSH key
+	ssh-keygen -t rsa -b 4096
+	Name: <name>_rsa
+	Enter passphrase to encrypt key pair
+
+	(There is a bug, the file might not be correctly created under the .ssh folder, but the parent directory with cygwin)
+
+	Under .ssh create a file called "config"
+
+	With the following content:
+
+Host <name>
+	HostName <ip or hostname>
+	User <user you are loging as>
+	IdentityFile <path to private key>
+
+ie:
+
+Host vm
+	HostName 192.168.56.129
+	User tri125
+	IdentityFile ~/.ssh/vm_rsa
+
+2- Copy public key to the server
+
+ssh-copy-id [-i [identity_file]] user@host
+
+ssh-copy-id -i ~/.ssh/vm_rsa.pub tri125@192.168.56.129
+
+
+3- Disable password login
+
+sudo nano /etc/ssh/sshd_config
+
+find the line that includes PermitRootLogin and modify it to ensure that root can't connect directly throught ssh:
+
+PermitRootLogin no
+
+Limit user logins:
+
+AllowUsers <user1> <user2> [...]
+
+Disable password login:
+
+PasswordAuthentification no
+
+Reload the service
+
+service sshd restart
+
+
+
+MySQL configuration:
+
+mysql_install_db
+mysql_secure_installation
+
+Remove anonymous users
+Disallow root login remotely
+Remove test database and access to it
+Reload privileges table
+
+To connect from the CLI use:
+
+mysql -u USERNAME -p
+
+In Ubuntu, table names (and perhaps database names) are case-sensitive. Let's remove that.
+
+nano /etc/mysql/my.cnf
+
+Underneath the [mysqld] section add:
+
+lower_case_table_names = 1
+
+then restart
+
+service mysql restart
+
+
+
+10- Installing Go from binaries
+
+https://golang.org/dl/
+
+Download the 64-bit version of go1.6.3 of whatever architecture neccesary
+
+wget https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz
+
+extract to /usr/local:
+
+tar -C /usr/local -xzf go1.6.3.linux-amd64.tar.gz
+
+Add /usr/local/go/bin to the PATH
+
+for user account:
+
+Create Go workspace directory, then
+
+nano ~/.profile
+
+add lines:
+
+export GOPATH="$HOME/<workspace>"
+export PATH="$PATH:$GOPATH/bin"
+
+
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/<workspace>
+
+Reload:
+
+source ~/.profile
+
+Create directory structure:
+
+src/github.com/user/
+
+
+
+Configuring nginx
+
+Find IP with
+
+ip addr show
+
+Disable default website
+
+rm /etc/nginx/sites-enabled/default
+
+Copy default:
+
+cp /etc/nginx/sites-availables/default /etc/nginx/sites-availables/gwentapi
+
+put site at:
+
+cp -R source/ destination/  to copy entire folder
+
+/var/www/html/<dir>
+
+Configure the nginx sites-available file.
+
+enable the website:
+
+ln -s /etc/nginx/sites-available/gwentapi /etc/nginx/sites-enabled/gwentapi
+
+
+nginx http config:
+
+
+nano /etc/nginx/nginx.conf
+
+server_tokens off;
+
+gzip_types
+
+
+
+service nginx reload
+
+
+
+Install gwentapi dependencies
+
+go get github.com/go-sql-driver/mysql            3654d25ec346ee8ce71a68431025458d52a38ac0
+go get github.com/goadesign/goa                  c5446e8dbf20febf04dae99a455b65333494d705
+go get github.com/goadesign/goa/goagen           c5446e8dbf20febf04dae99a455b65333494d705
+go get github.com/inconshreveable/log15			 0b45fb2e7866a5e51227a4de1fce4933b154ec36
+go get github.com/BurntSushi/toml				 99064174e013895bbd9b025c31100bd1d9b590ca
+
+
+netstat -tulpn  to moniter which software is using which ports
+
+Clone gwentapi project
+
+Run database scripts:
+
+mysql -u USERNAME -p < <script>
+
+Dont forget to remove any lines using DROP USERS on first INSERT.
+
+
+
+Compile go code:
+go build -o <outputName>
+
+run it in the background:
+
+./<outputName> &
+
+
+
+Install certbot:
+
+create file:
+
+nano /etc/apt/sources.list.d/certbot.list
+
+with the following line:
+
+deb http://ftp.debian.org/debian jessie-backports main
+
+apt-get update
+
+apt-get install certbot -t jessie-backports
+
+
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+
+
+
+groupadd ssl-cert
+usermod -aG <group> <username>
+groups <username>
+
+chgrp -R ssl-cert /etc/letsencrypt/
+
+chmod -R g+r /etc/letsencrypt/  (maybe execute too)
