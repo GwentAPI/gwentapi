@@ -8,11 +8,9 @@ install:
 script:
 - go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.linux-amd64 github.com/GwentAPI/gwentapi
 - GOOS=windows GOARCH=amd64 go build -ldflags="-s -X main.version=$TRAVIS_TAG" -o gwentapi-$TRAVIS_TAG.windows-amd64.exe github.com/GwentAPI/gwentapi
-- go build -ldflags="-s" -o manipulator-$TRAVIS_TAG.linux-amd64 github.com/GwentAPI/gwentapi/manipulator
-- GOOS=windows GOARCH=amd64 go build -ldflags="-s" -o manipulator-$TRAVIS_TAG.windows-amd64.exe github.com/GwentAPI/gwentapi/manipulator
 before_deploy:
-- zip -j "gwentapi-$TRAVIS_TAG.linux-amd64.zip" ./config.toml ./serverService/gwentapi.service ./serverService/gwentapi.socket ./manipulator-$TRAVIS_TAG.linux-amd64 ./gwentapi-$TRAVIS_TAG.linux-amd64
-- zip -j "gwentapi-$TRAVIS_TAG.windows-amd64.zip" ./config.toml ./manipulator-$TRAVIS_TAG.windows-amd64.exe ./gwentapi-$TRAVIS_TAG.windows-amd64.exe
+- zip -j "gwentapi-$TRAVIS_TAG.linux-amd64.zip" ./config.toml ./serverService/gwentapi.service ./serverService/gwentapi.socket ./gwentapi-$TRAVIS_TAG.linux-amd64
+- zip -j "gwentapi-$TRAVIS_TAG.windows-amd64.zip" ./config.toml ./gwentapi-$TRAVIS_TAG.windows-amd64.exe
 deploy:
   provider: releases
   skip_cleanup: true

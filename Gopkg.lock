@@ -62,12 +62,6 @@
   revision = "74a0988b5f804e8ce9ff74fca4f16980776dff29"
 
 [[projects]]
-  name = "github.com/inconshreveable/mousetrap"
-  packages = ["."]
-  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
-  version = "v1.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/manveru/faker"
   packages = ["."]
@@ -86,28 +80,10 @@
   version = "v0.0.2"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/rainycape/unidecode"
-  packages = ["."]
-  revision = "cb7f23ec59bec0d61b19c56cd88cee3d0cc1870c"
-
-[[projects]]
   name = "github.com/satori/go.uuid"
   packages = ["."]
   revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
   version = "v1.1.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/spf13/cobra"
-  packages = ["."]
-  revision = "b26b538f693051ac6518e65672de3144ce3fbedc"
-
-[[projects]]
-  name = "github.com/spf13/pflag"
-  packages = ["."]
-  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
-  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -136,6 +112,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ceaac62c466728edf6f02afed4858d0948527b5dbc497657a772f2fee8b2b5ac"
+  inputs-digest = "c6030ee8f27887894fe5973113cbeda5d9e8d61e25a9014362fcf7eb3e612e08"
   solver-name = "gps-cdcl"
   solver-version = 1
